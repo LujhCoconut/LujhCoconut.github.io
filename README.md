@@ -1,3 +1,3 @@
-# zjnucoconut.github.io
+# lujhcoconut.github.io
 Personal Homepage of Jiahao Lu
 卢佳豪的个人主页
