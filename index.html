@@ -1,104 +1,271 @@
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
-    <title>Jiahao Lu</title>
-    
-    <!-- Meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Responsive Resume Template">
-    <meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
-    
-    
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
-    
-    <!-- FontAwesome JS-->
-    <script defer src="https://use.fontawesome.com/releases/v5.1.1/js/all.js" integrity="sha384-BtvRZcyfv4r0x/phJt9Y9HhnN5ur1Z+kZbKVgzVBAlQZX4jvAuImlIz+bG7TS00a" crossorigin="anonymous"></script>
-       
-    <!-- Theme CSS -->  
-    <link id="theme-style" rel="stylesheet" href="assets/css/pillar-1.css">
-
+	<title>DevResume - Bootstrap Resume/CV Template For Software Developers</title>
+	
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+	<link rel="shortcut icon" href="favicon.ico"> 
+	
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+	
+	<!-- FontAwesome JS-->
+	<script defer src="assets/fontawesome/js/all.min.js"></script>
+	
+	<!-- Theme CSS -->  
+	<link id="theme-style" rel="stylesheet" href="assets/css/devresume.css">
 
 </head> 
 
-<body>	
-    <article class="resume-wrapper text-center position-relative">
-	    <div class="resume-wrapper-inner mx-auto text-left bg-white shadow-lg">
-		    <header class="resume-header pt-4 pt-md-0">
-			    <div class="media flex-column flex-md-row">
-				    <img class="mr-3 img-fluid picture mx-auto" src="assets/images/lujh.png" alt="">
-				    <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0">
-					    <div class="primary-info">
-						    <h1 class="name mt-0 mb-1 text-white text-uppercase text-uppercase">Jiahao Lu</h1>
-						    <div class="title mb-3">Undergraduate</div>
-						    <ul class="list-unstyled">
-							    <li class="mb-2"><a href="#"><i class="far fa-envelope fa-fw mr-2" data-fa-transform="grow-3"></i>lujhcoconut@zjnu.edu.cn</a></li>
-						    </ul>
-					    </div><!--//primary-info-->
-					    <div class="secondary-info ml-md-auto mt-2">
-						    <ul class="resume-social list-unstyled">
-				                <li class="mb-3"><a href="#"><span class="fa-container text-center mr-2"><i class="fab fa-github-alt fa-fw"></i></span><a href="https://github.com/ZJNUCoconut"> github.com/ZJNUCoconut</a></a></li>
-						    </ul>
-					    </div><!--//secondary-info-->
-				    </div><!--//media-body-->
-			    </div><!--//media-->
-		    </header>
-
-		    
-		    <div class="resume-body p-5">
-			    <section class="resume-section summary-section mb-5">
-				    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">About Me</h2>
-				    <div class="resume-section-content">
-					    <p class="mb-0">I am currently an undergraduate in the School of Computer Science and Technology of Zhejiang Normal University (2020 - 2024). I will also be a graduate student at Institute of Artificial Intelligence  of Xiamen University.In the future, I will study in the Intelligent Computing and Storage System Laboratory at Xiamen University.
-
-							<br/>我当前是浙江师范大学计算机科学与技术学院本科生,也即将是厦门大学人工智能研究院的准研究生。未来，我将在厦门大学智能计算与存储系统实验室学习。
+<body>
+	
+	<div class="main-wrapper">
+		<div class="container px-3 px-lg-5">
+			<article class="resume-wrapper mx-auto theme-bg-light p-5 mb-5 my-5 shadow-lg">
+				
+				<div class="resume-header">
+					<div class="row align-items-center">
+						<div class="resume-title col-12 col-md-6 col-lg-8 col-xl-9">
+							<h2 class="resume-name mb-0 text-uppercase">Simon Doe</h2>
+							<div class="resume-tagline mb-3 mb-md-0">Senior Software Engineer</div>
+						</div><!--//resume-title-->
+						<div class="resume-contact col-12 col-md-6 col-lg-4 col-xl-3">
+							<ul class="list-unstyled mb-0">
+								<li class="mb-2"><i class="fas fa-phone-square fa-fw fa-lg me-2 "></i><a class="resume-link" href="tel:#">0123 4567 890</a></li>
+								<li class="mb-2"><i class="fas fa-envelope-square fa-fw fa-lg me-2"></i><a class="resume-link" href="mailto:#">simon@yourwebsite.com</a></li>
+								<li class="mb-2"><i class="fas fa-globe fa-fw fa-lg me-2"></i><a class="resume-link" href="#">www.yourwebsite.com</a></li>
+								<li class="mb-0"><i class="fas fa-map-marker-alt fa-fw fa-lg me-2"></i>New York</li>
+							</ul>
+						</div><!--//resume-contact-->
+					</div><!--//row-->
+					
+				</div><!--//resume-header-->
+				<hr>
+				<div class="resume-intro py-3">
+					<div class="row align-items-center">
+						<div class="col-12 col-md-3 col-xl-2 text-center">
+						    <img class="resume-profile-image mb-3 mb-md-0 me-md-5  ms-md-0 rounded mx-auto" src="assets/images/resume-profile.png" alt="image">
+						</div>
 						
-						<p> My current research interests include computer architecture(storage system), operating system, cloud computing.
-						<br/>当前我的研究兴趣包括存储系统、操作系统和云计算。
-						</p>
-				    </div>
-                    <p></p>
-                    
-				    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Publications</h2>
-				    <br/>	
+						<div class="col text-start">
+							<p class="mb-0">Summarise your career here. <a class="theme-link" href="https://themes.3rdwavemedia.com/resources/sketch-template/resume-sketch-sketch-resume-template-for-software-developers/" target="_blank">You can make a PDF version of your resume using our free Sketch template here</a>. Donec quam felis, ultricies nec, pellentesque eu. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.  Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. </p>
+						</div><!--//col-->
+					</div>
+				</div><!--//resume-intro-->
+				<hr>
+				<div class="resume-body">
+					<div class="row">
+						<div class="resume-main col-12 col-lg-8 col-xl-9   pe-0   pe-lg-5">
+							<section class="work-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Work Experiences</h3>
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Senior Software Engineer</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">Google | 2023 - Present</div>
+										
+									</div>
+									<div class="item-content">
+										<p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Donec pede justo, fringilla vel. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis.</p>
+										<ul class="resume-list">
+											<li>Lorem ipsum dolor sit amet, consectetuer.</li>
+											<li>Aenean commodo ligula eget dolor.</li>
+											<li>Etiam ultricies nisi vel augue.</li>
+										</ul>
+									</div>
+								</div><!--//item-->
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Lead Software Developer</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">Apple | 2022 - 2023</div>
+										
+									</div>
+									<div class="item-content">
+										<p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Donec pede justo, fringilla vel.</p>
+										<ul class="resume-list">
+											<li>Lorem ipsum dolor sit amet, consectetuer.</li>
+											<li>Aenean commodo ligula eget dolor.</li>
+										</ul>
+									</div>
+								</div><!--//item-->
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Senior Software Developer</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">Dropbox | 2020 - 2022</div>
+										
+									</div>
+									<div class="item-content">
+										<p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+									</div>
+								</div><!--//item-->
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Senior Developer</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">Uber | 2019 - 2020</div>
+										
+									</div>
+									<div class="item-content">
+										<p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus. </p>
+									</div>
+								</div><!--//item-->
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Backend Developer</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">Amazon | 2018 - 2019</div>
+										
+									</div>
+									<div class="item-content">
+										<p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+									</div>
+								</div><!--//item-->
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Frontend Developer</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">Startup | 2017 - 2018</div>
+										
+									</div>
+									<div class="item-content">
+										<p>Role description goes here ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus. </p>
+									</div>
+								</div><!--//item-->
+								
+							</section><!--//work-section-->
 
-					<h5>Conference Papers: </h5>	
-				    <br/>	
-						
-					<h5>Journal Papers: </h5>
-				    <br/>
-				    <br/>
-						
-					<h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Honors & Awards </h2>
-					<li>
-						Academic Excellence Scholarship of Zhejiang Normal University
-					</li><br />
-				    
-					<h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">Research & Project Experience</h2>
-					<li>Optimization of Cross-Rack Bottleneck for Erasure-Coded Cluster Storage 
-						<br/>    纠删码集群存储系统跨机架瓶颈优化（科研项目）
-						<br/> An open source research project with the help of ChinaSys Academic Opensource Innovation Platform.(2022 - 2023)
-					</li><br />
-					<li>Management System for Academic Degrees Based on Blockchain 
-						<br/>    基于区块链的学历学位认证管理系统（普通项目）
-						<br/> Finalists of the 7th China International "Internet plus" Undergraduate Innovation and Entrepreneurship Competition.(2021 - 2022)
-					</li><br />
-				        <li>Panorama Information System of Manufacturing Industry Chain Based on Knowledge Graph
-						<br/>    基于知识图谱的制造产业链全景信息系统 (普通项目)
-						<br/> Third Prize Winner of the Eastern Regional Competition of the China University Student Service Outsourcing Innovation and Entrepreneurship Competition.(2023)
-						
-					</li><br /><br/>
-			    </section><!--//summary-section-->
-	    </div>
-    </article>  
-
-    <footer class="footer text-center pt-2 pb-5">
-	     <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
-                <small class="copyright">Designed with <i class="fas fa-heart"></i> by <a href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-    </footer>
-
+							
+							<section class="project-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Projects</h3>
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Project Lorem Ipsum</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">Open Source</div>
+										
+									</div>
+									<div class="item-content">
+										<p>You can use this section for your side projects. You can <a href="#" class="theme-link">provide a project link here</a> as well. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+										
+										
+									</div>
+								</div><!--//item-->
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Project Sed Fringilla</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">Open Source</div>
+										
+									</div>
+									<div class="item-content">
+										<p>You can use this section for your side projects. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+										
+									</div>
+								</div><!--//item-->
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Project Praesent </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">Open Source</div>
+										
+									</div>
+									<div class="item-content">
+										<p>You can use this section for your side projects. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
+										
+									</div>
+								</div><!--//item-->
+							</section><!--//project-section-->	
+						</div><!--//resume-main-->
+						<aside class="resume-aside col-12 col-lg-4 col-xl-3 px-lg-4 pb-lg-4">
+							<section class="skills-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Skills</h3>
+								<div class="item">
+									<h4 class="item-title">Technical</h4>
+									<ul class="list-unstyled resume-skills-list">
+										<li class="mb-2">JavaScript/Angular/React/Vue</li>
+										<li class="mb-2">Python/Ruby/PHP<li>
+											<li class="mb-2">Node.js/ASP.NET</li>
+											<li class="mb-2">PostgreSQL/MySQL</li>
+											<li class="mb-2">Object-oriented design</li>
+											<li class="mb-2">Design and implement database structures</li>
+											<li>Lead and deliver complex software systems</li>
+										</ul>
+									</div><!--//item-->
+									<div class="item">
+										<h4 class="item-title">Professional</h4>
+										<ul class="list-unstyled resume-skills-list">
+											<li class="mb-2">Effective communication</li>
+											<li class="mb-2">Team player<li>
+												<li class="mb-2">Strong problem solver</li>
+												<li>Good time management</li>
+											</ul>
+										</div><!--//item-->
+									</section><!--//skills-section-->
+									<section class="education-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Education</h3>
+										<ul class="list-unstyled resume-education-list">
+											<li class="mb-3">
+												<div class="resume-degree font-weight-bold">MSc in Computer Science</div>
+												<div class="resume-degree-org text-muted">University College London</div>
+												<div class="resume-degree-time text-muted">2012 - 2016</div>
+											</li>
+											<li>
+												<div class="resume-degree font-weight-bold">BSc Maths and Physics</div>
+												<div class="resume-degree-org text-muted">Imperial College London</div>
+												<div class="resume-degree-time text-muted">2016 - 2017</div>
+											</li>
+										</ul>
+									</section><!--//education-section-->
+									<section class="education-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Awards</h3>
+										<ul class="list-unstyled resume-awards-list">
+											<li class="mb-3">
+												<div class="font-weight-bold">Award Lorem Ipsum</div>
+												<div class="text-muted">Microsoft lorem ipsum (2023)</div>
+											</li>
+											<li>
+												<div class="font-weight-bold">Award Donec Sodales</div>
+												<div class="text-muted">Oracle Aenean (2020)</div>
+											</li>
+										</ul>
+									</section><!--//education-section-->
+									<section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Languages</h3>
+										<ul class="list-unstyled resume-lang-list">
+											<li class="mb-2">English <span class="text-muted">(Native)</span></li>
+											<li>Spanish <span class="text-muted">(Professional)</span></li>
+										</ul>
+									</section><!--//certificates-section-->
+									<section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Interests</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2">Climbing</li>
+											<li class="mb-2">Snowboarding</li>
+											<li class="mb-2">Photography</li>
+											<li>Travelling</li>
+										</ul>
+									</section><!--//certificates-section-->
+									
+								</aside><!--//resume-aside-->
+							</div><!--//row-->
+						</div><!--//resume-body-->
+						<hr>
+						<div class="resume-footer text-center">
+							<ul class="resume-social-list list-inline mx-auto mb-0 d-inline-block text-muted">
+								<li class="list-inline-item mb-lg-0 me-3"><a class="resume-link" href="#"><i class="fab fa-github-square fa-2x me-2" data-fa-transform="down-4"></i><span class="d-none d-lg-inline-block text-muted">github.com/username</span></a></li>
+								<li class="list-inline-item mb-lg-0 me-3"><a class="resume-link" href="#"><i class="fab fa-linkedin fa-2x me-2" data-fa-transform="down-4"></i><span class="d-none d-lg-inline-block text-muted">linkedin.com/in/username</span></a></li>
+								<li class="list-inline-item mb-lg-0 me-lg-3"><a class="resume-link" href="#"><i class="fab fa-twitter-square fa-2x me-2" data-fa-transform="down-4"></i><span class="d-none d-lg-inline-block text-muted">@twittername</span></a></li>
+							</ul>
+						</div><!--//resume-footer-->
+					</article>
+					
+				</div><!--//container-->
+				
+				<footer class="footer text-center py-4">
+					<!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+					<small class="copyright text-muted">Designed with <span class="sr-only">love</span><i class="fas fa-heart"></i> by <a class="theme-link" href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+				</footer>
+				
+			</div><!--//main-wrapper-->
+			
 
 </body>
 </html> 
