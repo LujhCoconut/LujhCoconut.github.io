@@ -83,3 +83,49 @@ GPGPU并不比GPU更厉害，只是去掉GPU的图形显示部分，将其余部
 
 ## GPU内存层次结构和CUDA编程模型
 
+有许多高效管理GPU并将计算任务卸载到GPU的编程模型被提出，如CUDA , OpenACC , OpenCL等。其中CUDA是由NVIDIA开发的GPU并行编程模型，是本文主要关注的Model。
+
+程序员必须定义一个类似函数的CUDA内核来将计算卸载到GPU。然后，在GPU上执行CUDA内核，由𝑁个不同的CUDA线程并行执行𝑁次。每个CUDA线程都有一个唯一的线程ID，用于决定控制流和计算要访问的内存地址。
+
+CUDA线程分组为一个线程块，线程块分组为一个网格grid。程序员在网格grid启动CUDA内核时指定了网格的配置。
+
+<img src="NVIDIA GPU H.png" alt="NVIDIA GPU H.png" style="zoom:50%;" />
+
+图1显示了NVIDIA GPU的最新微体系结构的内存层次结构。一个GPU由几十个流式多处理器（SMs）组成。网格中的每个线程块都被映射到GPU中的一个SM。一个SM包含几百个CUDA核。一个线程块中的一个线程被映射到一个CUDA核心，而一个SM可以同时处理多个线程块。
+
+每个SM都有不同类型的内存单元，如寄存器、L1缓存、共享内存（scratchpad memory）和constant memory（read-only memory）。寄存器对每个线程都是私有的，其他内存单元在SM中共享。在SM之外，有一个跨所有SM共享的L2缓存。全局内存是一个芯片外的DRAM，通常只有几GB到几十GB。与传统存储体系结构一样，更靠近CUDA核心（SMs）的内存单元具有较低的延迟和较小的容量。尽管GPU提供了数十GB的全局内存，但DNN的工作负载严重缺乏足够的全局内存。
+
+由于**GPU线程不能直接访问主存**，除非程序员将主存空间映射到GPU内存空间，因此程序员必须手动在GPU全局内存和CPU主存之间移动数据。此外，访问映射到GPU内存空间的主内存会影响性能，因为它在每次内存访问上导致PCIe传输。为此，NVIDIA提出了统一内存（UM）。
+
+
+
+### **重识CUDA Unified Memory**
+
+它提供了一个单一的内存地址空间，可以被同一系统中的CPU和GPU同时访问。
+
+当GPU访问的页面不在GPU内存中时，GPU会发出页面故障中断信号，NVIDIA设备驱动程序会将故障页面从系统的任何地方迁移到GPU。从而使得GPU拥有虚拟内存机制，进而允许UM使GPU内存超额订阅，而无需程序员的任何干预。
+
+尽管UM很强大，但它的缺点是GPU页面故障处理代价高昂。GPU中的每个流多处理器（SM）都存在一个TLB。当GPU中出现page fault时，相应SM的TLB将被锁定，在SM的所有故障都得到解决之前，无法处理任何新的转换。
+
+此外，page fault需要在CPU和GPU之间进行昂贵的迁移页面和页面驱逐的I/O操作。因此，强烈建议插入CUDA预取API函数（例如，（cudaMemPrefetchAsync())或CUDA USER-HINT API函数（例如，（cudaMemPrefetchAsync()）），以减少PAGE FAULT。
+
+
+
+### NVIDIA Page Fault Handler
+
+当NVIDIA GPU引发page fault中断信号时，NVIDIA驱动程序捕获中断信号并处理它。故障缓冲区是NVIDIA GPU中的一个循环队列。它存储错误的访问信息。GPU可以同时产生多个故障，在故障缓冲区中同一页面可以有多个故障条目。UM块是一组最多512个连续的页面和NVIDIA驱动程序的管理单元。在同一UM块中的所有页面都由NVIDIA驱动程序一起处理。
+
+> UM块的最大大小是4KB×512=2MB
+
+每个UM块对象都包含UM块中所有页面的信息，例如哪个处理器具有这些页面，以及这些页面是否被映射为具有读保护或写保护。如果UM块包含故障页面，我们将UM块成为故障UM块。
+
+<img src="NVIDIA Page Fault.png" style="zoom:67%;" />
+
+图3显示了page fault处理的示意图。首先，NVIDIA驱动程序从GPU（1）中的故障缓冲区获取有故障访问的页面地址和访问类型。然后，NVIDIA驱动程序预处理故障（2）。它会删除重复的地址，并根据它们的UM块对它们进行分组。接下来，NVIDIA驱动程序检查每个故障UM块的可用GPU内存空间(3)。如果没有GPU内存空间可用于出现故障的UM块，它会将一些页面从GPU驱逐到CPU(4)。然后，它在GPU中填充故障页面（即，它将GPU内存空间分配给出现故障的页面）(5)，它会将页面转移到GPU上(6)。当传输完成时，UM块的故障页面将被映射到GPU（7）。重复此过程，直到处理所有出现故障的UM块（8）。最后，NVIDIA驱动程序向GPU发送一个回放信号，故障处理程序完成（9）。
+
+
+
+------
+
+## DeepUM Overview
+
