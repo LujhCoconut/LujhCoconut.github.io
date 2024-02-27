@@ -41,7 +41,7 @@ DNN需要的参数量非常庞大，因此通常需要大量的GPU进行训练�
 
 Unified memory在程序员的视角中，维护了一个统一的内存池，在CPU与GPU中共享。使用了单一指针进行托管内存，由系统来自动地进行内存迁移。
 
-<img src="\homepage\ASPLOS\CUDA UM.png" style="zoom: 80%;" />
+<img src="CUDA UM.png" style="zoom: 80%;" />
 
 CUDA UM其主要优势在
 
