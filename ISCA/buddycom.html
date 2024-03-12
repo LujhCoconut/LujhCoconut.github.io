@@ -1,0 +1,867 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left: 0.25em solid rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+</style>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+<style type="text/css">
+		#category a{
+			text-decoration: none; 
+			color: black;
+		}
+		/* #category {line-height: 2em;} */
+		.newh{
+			padding-top: 0.5em;
+			padding-bottom: 0.5em;
+		}
+		.newh:hover{
+			background: #E6F0FE;
+		}
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 200px; */
+            padding-right: 0px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 200px; */
+            padding-right: 0px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 300px; */
+            padding-left: 0px;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .book-body {
+            padding-left: 0px;
+        }
+    }
+
+    @media (min-width: 600px) {
+        #category {
+            /* 绝对定位 */
+            position: fixed;
+            /* 目录显示的位置 */
+						float: left;
+						margin-right: 2em;
+            /* right: 0px; */
+            top: 0;
+            /* 目录栏的高度,这里设置为60%主要是为了不挡住返回顶部和折叠按钮 */
+            height: 93%;
+            /* 设置边框这样和正文对比比较明显 */
+            border: 0 solid #eaeaea;
+            /* 开启垂直滚动条 */
+            overflow-y: scroll;
+						width:25%;
+						display:block;
+						/* z-index: 99;; */
+						background: white;
+						
+        }
+
+        /* 正文的样式 */
+        #write {
+            width:100%;
+            display: block;
+						/* float:right; */
+        }
+        img{
+        	display: block;
+        }
+				
+        code,tt{
+            color:#c7254e;
+            background-color:#f9f2f4;
+        }
+				
+        /* 返回顶部按钮样式 */
+        #topButton {
+            position: fixed;
+            float: right;
+            right: 10px;
+            top: 95%;
+						z-index: 99;
+        }
+
+        /* 展开或者折叠 */
+        #foldOrUnfold {
+            position: fixed;
+            float: right;
+            right: 10px;
+            top: 89%;
+						z-index: 99;
+        }
+    }
+
+    @media (-webkit-max-device-pixel-ratio: 1) {
+        ::-webkit-scrollbar-track-piece {
+            background-color: #FFF
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #c2c2c2;
+            background-clip: padding-box;
+            min-height: 28px
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #A0A0A0
+        }
+    }
+		@media (max-width: 400px) {
+			#category {
+					/* 绝对定位 */
+					position: fixed;
+					/* 目录显示的位置 */
+					float: left;
+					/* right: 0px; */
+					top: 0;
+					width: 45%;
+					/* 目录栏的高度,这里设置为60%主要是为了不挡住返回顶部和折叠按钮 */
+					height: 90%;
+					/* 设置边框这样和正文对比比较明显 */
+					border: 2px solid #eaeaea;
+					/* 开启垂直滚动条 */
+					overflow-y: scroll;
+					z-index: 99;
+					display: none;
+					background: white;
+					font-size: 20px;
+					/* line-height: 2em; */
+			}
+			
+			/* 正文的样式 */
+			#book_body {
+					width: 100%;
+					display: block;
+			}
+			img{
+				display: block;
+			}
+			code,tt{
+					color:#c7254e;
+					background-color:#f9f2f4;
+			}
+
+			/* 返回顶部按钮样式 */
+			#topButton {
+					position: fixed;
+					float: right;
+					right: 2%;
+					top: 95%;
+					z-index:99;
+			}
+
+			/* 目录展开或者折叠 */
+			#foldOrUnfold {
+					position: fixed;
+					float: left;
+					right: 4%;
+					top: 90%;
+					z-index:99;
+			}
+	}
+</style>
+<!--侧栏目录生成代码-->
+<script>
+    $(document).ready(function () {
+        $("h1,h2,h3,h4,h5,h6").each(function (i, item) {
+            //获取标签的名字,h1,还是h2
+            var tag = $(item).get(0).localName;
+            //为该标签设置id属性
+            $(item).attr("id", "wow" + i);
+            //添加一个页内超链接,并设置class选择器
+            $("#category").append('<div class="newh"><a class="new' + tag + '" href="#wow' + i + '">' + $(item).text() +
+                '</a></div>');
+            //为每一个标题超链接的class属性设置左边距
+            $(".newh1").css("margin-left", "0em");
+            $(".newh2").css("margin-left", "1em");
+            $(".newh3").css("margin-left", "2em");
+            $(".newh4").css("margin-left", "3em");
+            $(".newh5").css("margin-left", "4em");
+            $(".newh6").css("margin-left", "5em");
+						$(".newh1").css("font-size", "1.5em");
+						$(".newh2").css("font-size", "1.2em");
+						$(".newh3").css("font-size", "1em");
+						$(".newh4").css("font-size", "0.9em");
+						$(".newh5").css("font-size", "0.8em");
+						$(".newh1").css("font-weight", "bold");
+						$(".newh2").css("font-weight", "bold");
+        });
+        //设置class选择器为.book-body的html内容
+        $(".book-body").html($(".book-body").nextAll())
+				$(".newh").on("click",function(){
+					console.log($(this).children("a"));
+					$(this).children("a")[0].click();
+				});
+    });
+</script>
+<script>
+    // 展开或者折叠目录功能
+    function showOrCloseCategory() {
+        var id = document.getElementById("category");
+        var write = document.getElementById("write");
+				//console.log(id.style.display);
+        //如果展开了
+        if (id.style.display == 'block') {
+            //console.log("开始展开");
+            id.style.display = 'none';
+						write.style.float = "";
+						write.style.left = "0em";
+        }
+        //如果被折叠了
+        else if (id.style.display == 'none') {
+            //console.log("开始折叠");
+            id.style.display = 'block';
+						write.style.float = "right";
+						write.style.left = "1em";
+        }
+    }
+    // 返回顶部功能
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+<!--返回顶部-->
+<button onclick="topFunction()" id="topButton">TOP↑</button>
+<button onclick="showOrCloseCategory()" id="foldOrUnfold">目录</button>
+
+<!--文章主体部分-->
+<div class="book-body" id="book_body"> </div>
+<!--目录栏-->
+<div class="book-summary" id="category" style="display:none"></div>
+<title>DeepUM</title>
+
+
+</head>
+<script src="../../autoload.js"></script>
+<p><a class="resume-link" href="../index.html">返回主页</a><br/><a class="resume-link" href="../ASPLOS.html">返回上一页</a></p>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='isca20-buddy-compression'><span>[ISCA&#39;20] Buddy Compression</span></h1><p><strong><span>Title:</span></strong><span> Buddy Compression: Enabling Larger Memory for Deep Learning and HPC Workloads on GPUs</span></p><p><strong><span>Keywords:</span></strong><span> Compression ; GPU Memory ; Buddy system</span></p><p><strong><span>Major Contribution:</span></strong></p><ul><li><p><span>论文首次推出了使用通用压缩技术来提高 GPU 内存容量的设计。Buddy 压缩是独一无二的，因为当数据的可压缩性发生变化时，它不需要任何额外的数据移动。</span></p></li><li><p><span>提供了对具有代表性数据的GPU工作负载的内存值的深入分析，并获得了有效的GPU压缩的见解。</span></p></li><li><p><span>伙伴压缩平均可实现1.9×（HPC）或1.5×（DL训练）压缩，并在无约束内存容量GPU的2%范围内执行。</span></p></li><li><p><span>最后，提出了一个关于DL训练的案例研究，以了解使用伙伴压缩来扩大GPU内存容量的好处和权衡。</span></p></li></ul><p>&nbsp;</p><hr /><h2 id='本文简介'><span>本文简介</span></h2><p><span>GPU加速了高吞吐量的应用程序，这需要比传统的仅CPU系统更高数量级的内存带宽。然而，这种高带宽存储器的容量往往相对较小。伙伴压缩是一种架构，它利用了主机更大的伙伴内存或分解内存，有效地增加了GPU的内存容量。伙伴压缩将每个压缩的128B内存条目分为高带宽GPU内存和较慢但较大的伙伴内存之间，这样可压缩内存条目完全从GPU内存访问，而不可压缩条目从非GPU内存中获取部分数据。使用“伙伴压缩”，可压缩性的变化不会导致昂贵的页面移动或重新分配。对于代表性的HPC应用，伙伴压缩平均实现1.9×的有效GPU内存扩展，对于深度学习训练，平均实现1.5×，执行在没有内存限制的不现实的系统的2%以内。这使得Buddy压缩对需要额外GPU内存容量的性能意识开发人员具有吸引力</span></p><p>&nbsp;</p><hr /><h2 id='相关简介'><span>相关简介</span></h2><h3 id='read-modified-write'><span>Read-Modified-Write</span></h3><p><span>读改写操作，即先读出存储器中的数据，对其进行修改后，再写入存储器。这样的操作其实在大多数情况下都是非常简单的，不值一提，但是在某些有性能要求的场景下，就需要一些考虑。</span></p><p>&nbsp;</p><h3 id='bit-plane-compression-bpc'><span>Bit-Plane Compression (BPC)</span></h3><p><span>是一种被广泛使用的压缩方法，尤其在高性能计算和深度学习工作负载中，它能达到稳健的压缩比。这种压缩方法的基本思想是将数据分解成一系列的&quot;bit-planes&quot;，然后独立地压缩每一个 “bit-plane”。具体来说，首先，BPC 将每个数据项分解成一系列的二进制位（即 “bit-planes”）。例如，一个32位的浮点数可以被分解成32个&quot;bit-plane&quot;。然后，BPC 对每个 “bit-plane” 进行压缩。通常，高位的&quot;bit-plane&quot;（表示更大的值）包含的信息更少，因此可以被更大程度地压缩。BPC 的一个主要优点是，它可以按需解压缩数据。也就是说，如果一个计算只需要数据的一部分信息（例如，只需要高位的&quot;bit-plane&quot;），那么只需要解压缩相应的 “bit-plane” 就可以了。这可以进一步提高计算效率。</span></p><p>&nbsp;</p><hr /><h2 id='introduction'><span>Introduction</span></h2><p><span>gpu被广泛用于高内存占用的应用程序，包括高性能计算（HPC）和深度学习（DL）。HPC的应用，如平面尺度的模拟和流体和分子动力学的建模，已经发展到需要非常大的模型。DL网络也在增长，它们的模型尺寸要么太大，无法在GPU上运行，要么足够大，只有一个小批量可以放在GPU上运行，可能导致低利用率和准确性问题。</span></p><p><span>尽管内存需求不断增加，但计算类GPU可能会</span><strong><span>继续优先考虑内存速度而不是容量</span></strong><span>，以</span><strong><span>保持其许多并行内核</span></strong><span>的繁忙。高带宽内存（HBM）必须适应有限的包空间和芯片外围，这样即使是目前(2020年)最高容量的GPU也只有4个HBM堆栈站点，导致最大容量为32GB。同时，非HBM图形DDR内存不能以每个通道超过1级的速度高速驱动，并且通道的数量已经接近实际的引脚计数限制。因此，与CPU或其他网络连接设备相比，像GPU这样的加速器总是具有相对有限的最大容量。</span></p><p><span>目前，具有大内存占用的应用程序必须求助于没有吸引力的选项来弥补有限的GPU内存。他们可以</span></p><ul><li><p><span>扩展到许多GPU容量目的（无效利用资源）</span></p></li><li><p><span>显式协调CPU和GPU之间的数据移动保持在设备内存限制（添加算法复杂性）</span></p></li><li><p><span>依赖off-GPU内存访问或统一内存自动超订阅设备内存（限制性能）。</span></p><p><span>本文探讨了内存压缩作为一种性能和通用的GPU内存扩展的替代方案</span></p></li></ul><p><span>虽然已经研究了CPU的主内存压缩，GPU架构提出了非常不同的权衡。CPU压缩技术假设压缩后的页面大小不同，当可压缩性改变时，它们会重新分配页面。这样的</span><strong><span>动态页面重新分配在GPU中将会非常昂贵</span></strong><span>，因为它们有巨大的内存带宽[17]。此外，虽然特定于领域的压缩已经被提议用于大内存占用的GPU工作负载，但用于容量的通用压缩仍未被探索</span></p><blockquote><p><span>T. Zheng, D. Nellans, A. Zulfiqar, M. Stephenson, and S. W. Keckler,“</span><strong><span>Towards High Performance Paged Memory for GPUs</span></strong><span>,” in Proceedings </span><em><span>of the International Symposium on High Performance Computer</span></em><span> </span><em><span>Architecture (HPCA)</span></em><span>, 2016.</span></p></blockquote><p><img src="buddy_memf1.png" style="zoom:67%;" /></p><p><span>图1展示的是GPU侧和Buddy memory(容量更大但是更慢一侧（主机内存或者分散内存）)进行的划分。它将每个压缩的128B内存条目分割到高带宽的GPU内存和一个较慢但更大的伙伴内存之间。这样，可以被压缩的内存条目完全从GPU内存中获取，而无法压缩的条目则从离GPU较远的内存中获取部分数据。压缩后的大小在128B以下的，可以直接从GPU内存中读取。压缩后，大小在128B以上的，128B的部分在GPU内存中读取，而超过的部分在伙伴内存中读取</span></p><p><img src="buddy_memf2.png" style="zoom:67%;" /></p><p><span>如果数据的可压缩性随时间而变化，这种设计不需要重新分配或移动页面。像NVLink 、OpenCAPI 或CXL这样的</span><strong><span>高带宽互连</span></strong><span>可以实现这种设计，因为它</span><strong><span>确保了对伙伴内存的低开销访问</span></strong><span>，只要大部分数据压缩以适应GPU设备内存</span></p><p>&nbsp;</p><h2 id='overview-and-background'><span>Overview and Background</span></h2><h3 id='目标负载'><span>目标负载</span></h3><p><strong><span>高性能场景</span></strong></p><p><span>现在应对高性能场景对GPU内存容量大小的要求通常是根据Unified Memory这种和CPU共享的虚拟内存进行优化。具体可以参见博客ASPLOS页面中DeepUM的部分。本文是一种更一般且性能良好的替代方案。</span></p><p><strong><span>深度学习负载</span></strong></p><p><span>深度学习的广度和深度的不断增加会导致出现更多的数据从而撞内存墙。一些领域定制的优化堆栈的方法可能有在训练迭代的过程中进行异步卸载。Buddy Memory可以在扩展深度学习内存容量这一方面上与领域定制方法正交或者互补。它不会对具体优化算法有改变。伙伴压缩可以省略可压缩数据的所有通信，而DL卸载必须在每次迭代中传输一些数据。这种带宽的减少可能会提高性能，它可能允许伙伴压缩操作与显著降低的能耗。</span></p><h3 id='相关工作'><span>相关工作</span></h3><p><strong><span>内存压缩</span></strong><span> 内存压缩已以各种形式用于扩展有效的CPU内存容量。大多数现代操作系统都会压缩交换空间，以减少对磁盘的分页操作。与CPU内存容量的压缩不同，由于GPU数据的结构差异和频繁的压缩变化，这些方法效率低，不适用于通用GPU内存容量压缩。大多数GPU的图形管道包括特定于领域的有损纹理内存压缩，以减少图形纹理的足迹。据本文作者所知，硬件压缩目前还没有用于GPU上的通用计算工作负载。</span></p><h3 id='相关技术'><span>相关技术</span></h3><p><strong><span>高带宽互连</span></strong><span> 高带宽互连是伙伴压缩的关键启用器，可以应用于任何具有主机内存高带宽互连的GPU上。</span></p><p><strong><span>UM</span></strong><span>  参见博客ASPLOS DeepUM中的相关介绍</span></p><p>&nbsp;</p><p>&nbsp;</p><h2 id='buddy-compression设计与实现'><span>Buddy Compression设计与实现</span></h2><p><span>图上显示的内存占用了64B，伙伴内存占用了64B。这是由目标压缩比2x计算出来的。每一个sector是一个32B大小的扇区，对于每一个数据块，我们首先对他进行一个压缩。根据压缩比来确定要压缩多少，选择对应的压缩算法去压缩就可以了。</span></p><ul><li><p><span>当4x压缩的时候，压缩完就可以剩下32B了，可以直接在内存中读取</span></p></li><li><p><span>当2x压缩的时候，压缩完就剩下64B了，可以直接在内存中读取</span></p></li><li><p><span>当1.33x压缩的时候，压缩完由32B需要从伙伴内存中读取</span></p></li><li><p><span>当不压缩也就是1x的时候，64B从内存中读取，64B从伙伴内存中读取</span>
+</p></li></ul><p><img src="buddy_memf3.png" style="zoom:67%;" /></p><p><span>硬件内存压缩算法应该是快速的，只需要很少的能量，但会导致高压缩率。图5a比较了几种低成本的压缩算法。位平面压缩（BPC）是最具吸引力的伙伴压缩，因为它在HPC和DL工作负载上都实现了健壮的压缩比。由于伙伴压缩是与算法无关的，它将与任何低成本的硬件压缩算法能够协同工作。</span></p><p><img src="buddy_memf4.png" style="zoom: 50%;" /></p><p><span>大多数CPU主内存压缩策略都按照</span><strong><span>缓存块粒度</span></strong><span>进行操作，以</span><strong><span>避免读-修改-写（RMW）开销</span></strong><span>。伙伴压缩共享这个设计决策，并使用128B压缩粒度来匹配GPU缓存块大小。</span></p><p>&nbsp;</p><p>&nbsp;</p><h3 id='buddy-memory的剥离区域'><span>Buddy Memory的剥离区域</span></h3><p><span>在启动时，驱动程序为每个GPU划出一个连续的固定buddy-memory区域。这些区域永远不会被主机CPU直接访问，从而消除了任何一致性问题，并使得buddy-memory的地址转换简单且快速。</span></p><p>&nbsp;</p><h3 id='地址翻译'><span>地址翻译</span></h3><p><span>访问压缩数据需要额外的地址转换和元数据，这些数据可以告知</span></p><ul><li><p><span>目标压缩比</span></p></li><li><p><span>特定记忆条目是否被压缩到目标比率</span></p></li><li><p><span>没有压缩到目标比率的内存条目访问伙伴内存中的地址。</span></p></li></ul><p><span>伙伴存储分割区域的全局基本物理地址存储在全局伙伴基本地址寄存器中（GBBR）</span></p><p><span>GPU 的页表和 TLB 被</span><strong><span>增强</span></strong><span>以存储页面是否被压缩（1 bit）、目标压缩比（3 bits）以及 buddy-page 从全局基地址的偏移量的信息。</span></p><p>&nbsp;</p><h3 id='元数据'><span>元数据</span></h3><p><span>Buddy Compression 适用于 GPU 固定内存。支持 CPU 共享（UM 或 ATS）内存需要额外的地址转换机制和系统级模拟，这部分被留给未来的研究（也就是不支持）。Buddy Compression 将地址转换元数据存储在 GPU 页表中，非 GPU 对等体无法访问这些转换元数据，因此他们无法请求到 Buddy-Compressed GPU 内存</span></p><p><span>每个128B内存条目的压缩大小使用4位的元数据。将这些元数据存储在设备内存中由驱动程序分配的专用区域内，存储开销为 0.4%。尽管选择的压缩大小严格地只需要每个压缩缓存线有 5 个状态（3 bits），但论文保留 4 bits 的元数据以对齐到 2 的幂，并为其他用途或未来的压缩变化预留状态。</span></p><p><span>缓存用于避免具有良好局部性的工作负载的元数据流量。图6b显示了元数据缓存命中率作为元数据缓存大小的函数。大多数应用程序的命中率都很高。我们使用一个4路64KB的元数据缓存，它被分成8个切片，每个内存控制器1个。每个128B个元数据缓存条目被分成4个32B个扇区，从而导致每个元数据扇区上的63个相邻内存条目对应的元数据预取丢失。元数据使用与常规物理地址交错相同的哈希机制跨HBM2通道进行交错。图6a显示了元数据设置和转换的高级视图。简单的基于GBBR-偏移量的寻址使得整个转换机制易于实现。</span></p><p><img src="buddy_memf5.png" referrerpolicy="no-referrer"></p><p>&nbsp;</p><hr /><h2 id='buddy-compression-benefits'><span>Buddy Compression Benefits</span></h2><h3 id='no-page-faulting-expense'><span>No page-faulting expense</span></h3><p><span>GPU的巨大并行性增加了其整体吞吐量。然而，基于驱动程序的页面故障处理是远程的和非分布式的，这使得GPU页面故障代价昂贵。内存中数据的可压缩性可能会降低，这需要为以前的基于CPU的内存压缩方案进行新的页面分配。GPU 的页面故障开销使得这些基于 CPU 的压缩方案难以为继。伙伴压缩的独特之处在于，</span><strong><span>每个内存条目的可压缩性只影响其自身的分配，而可压缩性的变化永远不会导致页面移动或重新分配</span></strong><span>。</span><strong><span>如果内存条目的压缩大小超过设备分配，其上部扇区溢出到伙伴内存；如果压缩大小减小，陈旧但从未访问的值将保留在伙伴内存中，直到分配被释放。</span></strong></p><h3 id='low-translation-overhead'><strong><span>Low Translation Overhead</span></strong></h3><p><span>内存带宽是GPU偶尔出现的瓶颈。相应地，对GPU主存的带宽压缩进行了深入的研究。伙伴压缩使用压缩来放大GPU内存的带宽和容量。然而，如前面所述，容量压缩需要额外的元数据访问才能翻译到压缩的地址空间，这强调了减少元数据大小和保持翻译简单的重要性。伙伴压缩只需要0.4%的元数据，而且由于伙伴内存分割区域在物理上是连续的，所以地址进入它是基于偏移的和直接的。</span></p><p>&nbsp;</p><h2 id='降低buddy-compression的开销'><span>降低Buddy Compression的开销</span></h2><p><span>在伙伴压缩的设计中，主要的开销来自于在意外的</span><strong><span>低压缩的情况下访问较慢的伙伴内存</span></strong><span>。</span></p><h3 id='分析目标压缩比率'><strong><span>分析目标压缩比率</span></strong></h3><p><span>选择合适的目标压缩率非常重要，因为激进的压缩率会导致更多内存条目超出分配的设备内存，并需要伙伴内存访问。</span></p><p><span>为了选择目标压缩比，我们对一个具有代表性的数据集使用一个简单的分析传递。对于HPC工作负载，分析过程使用一个更小的数据集运行，比如SpecACCEL的</span><code>train</code><span>数据集。对于DL工作负载，一个简短的分析过程以较小的批处理大小运行，这可以嵌入到PyTorch或TensorFlow等训练平台中。</span></p><h3 id='理解压缩模式'><span>理解压缩模式</span></h3><p><span>程序员对内存进行注释的粒度也很重要——最好的注释的粒度取决于空间可压缩性模式。幼稚伙伴压缩考虑了整个程序的一个单一的、保守的目标压缩比。图7显示了这个粒度过于粗糙。该朴素机制实现了HPC工作负载的总体压缩比仅为1.57×，DL工作负载为1.18×，HPC的伙伴内存互连访问率为8%，DL为32%。</span></p><p><span>为了研究适当的伙伴压缩注释粒度，图8显示了每个工作负载的可压缩性的空间图（在虚拟地址空间中）。每个子图都是一个空间热图，显示由基准分配的内存的可压缩性。</span><strong><span>较冷的颜色（蓝色）表示高压缩性，而较热的颜色（红色）表示低压缩性</span></strong><span>。该图的结构是，每行有64 128个B个内存条目。图8显示了可压缩性的空间局部性在不同的基准测试中存在显著差异。虽然大多数HPC基准测试具有类似可压缩性的大同质区域，但在DL工作负载中分布更加随机。FF HPGMG显示了特定的可压缩性模式，这可以与它对数据结构使用异构结构的数组相关联。尽管DL工作负载没有显示在HPC工作负载中可以看到的同质性水平，但图表中仍然包含一些以红色或蓝色为主的区域。基于这些图的见解，我们建议进一步优化伙伴压缩的设计。</span></p><p><img src="D:\homepage\ISCA\buddy_memf6.png" referrerpolicy="no-referrer"></p><p>&nbsp;</p><h3 id='预分配压缩目标'><span>预分配压缩目标</span></h3><p><span>图8显示，大多数基准测试都具有具有</span><strong><span>相似可压缩性的大型同质区域。我们发现这些区域的边界大部分与GPU的malloc（）边界重叠</span></strong><span>。一个针对压缩区域的特殊分配API允许我们捕获这种行为，并消除压缩红色区域的无用努力。</span></p><p>&nbsp;</p><h3 id='启发式伙伴压缩阈值'><span>启发式伙伴压缩阈值</span></h3><p><span>大多数基准测试的可压缩性具有高度同质的分配，这使得每个分配的目标比率决策变得简单。然而，对于像AlexNet和ResNet50这样的基准测试，内存分配具有混合的可压缩性，这意味着我们必须在压缩比和伙伴内存访问的频率之间进行权衡。为了指导我们的每个分配启发式，我们定义了一个伙伴阈值元启发式，它限制了伙伴内存访问的预期分数。更高的伙伴阈值可以实现更高的压缩比，但代价是更多的伙伴内存访问和更低的性能。</span></p><p>&nbsp;</p><h3 id='零分配的特殊情况'><span>零分配的特殊情况</span></h3><p><span>空间图显示了在整个基准测试中基本保持为零的记忆区域。为了获得这种分配的容量扩展机会，我们增加了一个16×的积极目标压缩比，其中我们在设备内存中每个128B中只保留8B。唯一的更改是在TLB中对页面大小的额外编码。</span></p></div></div>
+</body>
+</html>
