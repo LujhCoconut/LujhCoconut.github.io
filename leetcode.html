@@ -219,6 +219,87 @@ mjx-container { break-inside: avoid; }
 .md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
 
 
+.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; outline: 0px; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: auto hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 10px; z-index: 3; overflow-y: hidden; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; inset: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+span.cm-underlined { text-decoration: underline; }
+span.cm-strikethrough { text-decoration: line-through; }
+.cm-tw-syntaxerror { color: rgb(255, 255, 255); background-color: rgb(153, 0, 0); }
+.cm-tw-deleted { text-decoration: line-through; }
+.cm-tw-header5 { font-weight: 700; }
+.cm-tw-listitem:first-child { padding-left: 10px; }
+.cm-tw-box { border-style: solid; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-color: inherit; border-top-width: 0px !important; }
+.cm-tw-underline { text-decoration: underline; }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+
 :root {
     --side-bar-bg-color: #fafafa;
     --control-text-color: #777;
@@ -609,261 +690,9 @@ header, .context-menu, .megamenu-content, footer{
 
 
 
-</style>
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-<script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
-<script>
-    hljs.initHighlightingOnLoad();
-</script>
-<style type="text/css">
-		#category a{
-			text-decoration: none; 
-			color: black;
-		}
-		/* #category {line-height: 2em;} */
-		.newh{
-			padding-top: 0.5em;
-			padding-bottom: 0.5em;
-		}
-		.newh:hover{
-			background: #E6F0FE;
-		}
-    @media (max-width: 1200px) {
-        .book-body {
-            /* padding-left: 200px; */
-            padding-right: 0px;
-        }
-    }
-
-    @media (max-width: 1200px) {
-        .book-body {
-            /* padding-left: 200px; */
-            padding-right: 0px;
-        }
-    }
-
-    @media (max-width: 1200px) {
-        .book-body {
-            /* padding-left: 300px; */
-            padding-left: 0px;
-        }
-    }
-
-    @media (max-width: 700px) {
-        .book-body {
-            padding-left: 0px;
-        }
-    }
-
-    @media (min-width: 600px) {
-        #category {
-            /* 绝对定位 */
-            position: fixed;
-            /* 目录显示的位置 */
-						float: left;
-						margin-right: 2em;
-            /* right: 0px; */
-            top: 0;
-            /* 目录栏的高度,这里设置为60%主要是为了不挡住返回顶部和折叠按钮 */
-            height: 93%;
-            /* 设置边框这样和正文对比比较明显 */
-            border: 0 solid #eaeaea;
-            /* 开启垂直滚动条 */
-            overflow-y: scroll;
-						width:25%;
-						display:block;
-						/* z-index: 99;; */
-						background: white;
-						
-        }
-
-        /* 正文的样式 */
-        #write {
-            width:100%;
-            display: block;
-						/* float:right; */
-        }
-        img{
-        	display: block;
-        }
-				
-        code,tt{
-            color:#c7254e;
-            background-color:#f9f2f4;
-        }
-				
-        /* 返回顶部按钮样式 */
-        #topButton {
-            position: fixed;
-            float: right;
-            right: 10px;
-            top: 95%;
-						z-index: 99;
-        }
-
-        /* 展开或者折叠 */
-        #foldOrUnfold {
-            position: fixed;
-            float: right;
-            right: 10px;
-            top: 89%;
-						z-index: 99;
-        }
-    }
-
-    @media (-webkit-max-device-pixel-ratio: 1) {
-        ::-webkit-scrollbar-track-piece {
-            background-color: #FFF
-        }
-
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: #c2c2c2;
-            background-clip: padding-box;
-            min-height: 28px
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: #A0A0A0
-        }
-    }
-		@media (max-width: 400px) {
-			#category {
-					/* 绝对定位 */
-					position: fixed;
-					/* 目录显示的位置 */
-					float: left;
-					/* right: 0px; */
-					top: 0;
-					width: 45%;
-					/* 目录栏的高度,这里设置为60%主要是为了不挡住返回顶部和折叠按钮 */
-					height: 90%;
-					/* 设置边框这样和正文对比比较明显 */
-					border: 2px solid #eaeaea;
-					/* 开启垂直滚动条 */
-					overflow-y: scroll;
-					z-index: 99;
-					display: none;
-					background: white;
-					font-size: 20px;
-					/* line-height: 2em; */
-			}
-			
-			/* 正文的样式 */
-			#book_body {
-					width: 100%;
-					display: block;
-			}
-			img{
-				display: block;
-			}
-			code,tt{
-					color:#c7254e;
-					background-color:#f9f2f4;
-			}
-
-			/* 返回顶部按钮样式 */
-			#topButton {
-					position: fixed;
-					float: right;
-					right: 2%;
-					top: 95%;
-					z-index:99;
-			}
-
-			/* 目录展开或者折叠 */
-			#foldOrUnfold {
-					position: fixed;
-					float: left;
-					right: 4%;
-					top: 90%;
-					z-index:99;
-			}
-	}
-</style>
-<!--侧栏目录生成代码-->
-<script>
-    $(document).ready(function () {
-        $("h1,h2,h3,h4,h5,h6").each(function (i, item) {
-            //获取标签的名字,h1,还是h2
-            var tag = $(item).get(0).localName;
-            //为该标签设置id属性
-            $(item).attr("id", "wow" + i);
-            //添加一个页内超链接,并设置class选择器
-            $("#category").append('<div class="newh"><a class="new' + tag + '" href="#wow' + i + '">' + $(item).text() +
-                '</a></div>');
-            //为每一个标题超链接的class属性设置左边距
-            $(".newh1").css("margin-left", "0em");
-            $(".newh2").css("margin-left", "1em");
-            $(".newh3").css("margin-left", "2em");
-            $(".newh4").css("margin-left", "3em");
-            $(".newh5").css("margin-left", "4em");
-            $(".newh6").css("margin-left", "5em");
-						$(".newh1").css("font-size", "1.5em");
-						$(".newh2").css("font-size", "1.2em");
-						$(".newh3").css("font-size", "1em");
-						$(".newh4").css("font-size", "0.9em");
-						$(".newh5").css("font-size", "0.8em");
-						$(".newh1").css("font-weight", "bold");
-						$(".newh2").css("font-weight", "bold");
-        });
-        //设置class选择器为.book-body的html内容
-        $(".book-body").html($(".book-body").nextAll())
-				$(".newh").on("click",function(){
-					console.log($(this).children("a"));
-					$(this).children("a")[0].click();
-				});
-    });
-</script>
-<script>
-    // 展开或者折叠目录功能
-    function showOrCloseCategory() {
-        var id = document.getElementById("category");
-        var write = document.getElementById("write");
-				//console.log(id.style.display);
-        //如果展开了
-        if (id.style.display == 'block') {
-            //console.log("开始展开");
-            id.style.display = 'none';
-						write.style.float = "";
-						write.style.left = "0em";
-        }
-        //如果被折叠了
-        else if (id.style.display == 'none') {
-            //console.log("开始折叠");
-            id.style.display = 'block';
-						write.style.float = "right";
-						write.style.left = "1em";
-        }
-    }
-    // 返回顶部功能
-    function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }
-</script>
-<!--返回顶部-->
-<button onclick="topFunction()" id="topButton">TOP↑</button>
-<button onclick="showOrCloseCategory()" id="foldOrUnfold">目录</button>
-
-<!--文章主体部分-->
-<div class="book-body" id="book_body"> </div>
-<!--目录栏-->
-<div class="book-summary" id="category" style="display:none"></div>
-<title>LeetCode</title>
-
-
+</style><title>leetcode</title>
 </head>
-<script src="../../autoload.js"></script>
-<p><a class="resume-link" href="../index.html">返回主页</a><br/><a class="resume-link" href="../index.html">返回上一页</a></p>
 <body class='typora-export os-windows'><div class='typora-export-content'>
-    <div id='write'  class=''><h1 id='asplos23--deepum'><span>[ASPLOS&#39;23]  DeepUM</span></h1><hr /><p><strong><span>Title:</span></strong><span> DeepUM: Tensor Migration and Prefetching in Unified Memory</span></p><p><strong><span>Keywords:</span></strong><span> deep learning, neural networks, CUDA, unified memory, data prefetching, runtime system, device driver</span></p><p><strong><span>Major Contribution:</span></strong></p><ul><li><p><span>DeepUM利用CUDA UM允许GPU内存超额订阅。它使用相关预取来自动预取数据。它是全自动的，对用户都是透明的。</span></p></li><li><p><span>提出了一种专门预取DNN中页面的相关预取技术。使用两个相关表记录了DNN训练阶段的内核执行历史和页面访问模式。</span></p></li><li><p><span>提出了一种专门预取DNN中预取页面的相关预取技术。这两个相关表记录了DNN训练阶段的内核执行历史和页面访问模式。</span></p></li><li><p><span>DeepUM可以以更大的批处理大小运行模型，而以前的方法无法运行。</span></p></li></ul><blockquote><p><span>个人评价：利用相关性用两种相关表对GPU执行内核和预取UM块进行“链式反应”式预取</span></p></blockquote><hr /><h2 id='本文简介'><span>本文简介</span></h2><p><span>由于深度神经网络（DNN）随着范围和深度的增大其性能会更好。因此现在的DNN的范围和深度再不断扩大，从而需要巨大的 GPU 内存和计算能力。本文提出了一个名为 DeepUM 的框架，该框架利用 CUDA 统一内存（UM）来实现 DNN 的 GPU 内存超量订阅。虽然 UM 允许使用Page Fault机制进行内存超量订购，但页面迁移会带来巨大的开销。基于DNN训练负载会出现大量重复固定的内核执行模式核内存访问模式，DeepUM 使用一种新的相关预取技术来隐藏页面迁移开销。DeepUM是全自动的，对用户透明。本文还提出了两种优化技术，以最大限度地减少 GPU 故障处理时间。本文使用来自 MLPerf、PyTorch 示例和 Hugging Face 的九个大规模 DNN 评估了 DeepUM 的性能，并将其与六种最先进的 GPU 内存交换方法进行了比较。评估结果表明，DeepUM 对 GPU 内存超量订阅非常有效，可以处理其他方法无法处理的大型模型。</span></p><p>&nbsp;</p><hr /><h2 id='背景知识和相关概念'><span>背景知识和相关概念</span></h2><p><span>DNN需要的参数量非常庞大，因此通常需要大量的GPU进行训练。对于普通用户来说，可以对已经经过训练的DNN模型在小系统上进行微调。但是在现在，以GPT-3为例，参数量就有1750亿，这就使得即使预先训练完在小系统上微调也是很困难的。即使是NVIDIA H100 80GB GPU无法容纳1750亿参数超过300GB的存储空间占用。为了解决这个问题，有一系列的研究工作被提出，大方向主要有数据压缩、混合精度训练、data recomputation和内存交换技术。DeepUM这篇文章主要是关注内存交换。</span></p><blockquote><p><span>关于混合精度训练的详细介绍，可以参考这篇文章 </span><a href='https://zhuanlan.zhihu.com/p/490464586'><span>混合精度训练 mixed precision training - 知乎 (zhihu.com)</span></a><span>、</span></p></blockquote><p>&nbsp;</p><hr /><h3 id='cuda-unified-memory'><span>CUDA Unified Memory</span></h3><p><span>在今天典型的PC上，CPU与GPU的内存是物理上独立的，通过PCI-E总线进行连接通信。实际上，在CUDA 6.0之前，程序员必须在编程期间很清楚这一点，并且反应在代码中。必须在CPU和GPU两端都进行内存分配，并不断地进行手动copy，来保证两端的内存一致。</span></p><p><span>Unified memory在程序员的视角中，维护了一个统一的内存池，在CPU与GPU中共享。使用了单一指针进行托管内存，由系统来自动地进行内存迁移。</span></p><p><img src="CUDA UM.png" style="zoom: 80%;" /></p><p><span>CUDA UM其主要优势在</span></p><ul><li><p><span>简化了代码编写和内存模型</span></p><ul><li><p><span>可以在CPU端和GPU端共用一个指针，不用单独各自分配空间。方便管理，减少了代码量。</span></p></li><li><p><span>语言结合更紧密，减少与兼容语言的语法差异。</span></p></li><li><p><span>更方便的代码迁移。</span></p></li></ul></li></ul><p>&nbsp;</p><p><span>当然Unified Memory的说法在不同论文中可能不同，例如OpenCL中将其称之为Shared Virtual Memory。</span></p><p>&nbsp;</p><hr /><p><span>GPU内存交换技术主要分成两种。一种是基于CUDA UM的页面预取，另一种是non-UM GPU内存的换入换出。</span></p><p><span>但事实上，很少有工作会去关注UM，其实与Shared Virtual Memory这个说法类似，它有点像传统意义的Virtual Memory。因此在地址翻译和page fault处理的开销是比较大的。每个GPU请求都需要进行一次地址翻译，这个开销可想而知。除此之外，page fault处理时会引起CPU-GPU协同进行I/O来进行数据迁移。</span></p><p>&nbsp;</p><p><span>相比于Non-UM,UM还是在一些场景有巨大作用的：</span></p><ul><li><p><span>GPU内核的内存需求大于实际GPU内存容量，从而能够有效应对大规模DNN的内存需求</span></p></li><li><p><span>UM作为一种Virtual Memory，相比于Non-UM能够更好地解决内存碎片问题，更有可能服务于大规模DNN</span></p></li></ul><hr /><h3 id='gpgpu'><span>GPGPU</span></h3><p><span>GPGPU通用图形处理器技术，一个从GPU衍生出的概念。</span></p><p><span>GPGPU并不比GPU更厉害，只是去掉GPU的图形显示部分，将其余部分全部投入通用计算，并成为AI加速卡（一种并行计算硬件）的核心，允许程序员在比CPU更短的时间内处理大量的计算。</span></p><p>&nbsp;</p><hr /><h2 id='gpu内存层次结构和cuda编程模型'><span>GPU内存层次结构和CUDA编程模型</span></h2><p><span>有许多高效管理GPU并将计算任务卸载到GPU的编程模型被提出，如CUDA , OpenACC , OpenCL等。其中CUDA是由NVIDIA开发的GPU并行编程模型，是本文主要关注的Model。</span></p><p><span>程序员必须定义一个类似函数的CUDA内核来将计算卸载到GPU。然后，在GPU上执行CUDA内核，由𝑁个不同的CUDA线程并行执行𝑁次。每个CUDA线程都有一个唯一的线程ID，用于决定控制流和计算要访问的内存地址。</span></p><p><span>CUDA线程分组为一个线程块，线程块分组为一个网格grid。程序员在网格grid启动CUDA内核时指定了网格的配置。</span></p><p><img src="NVIDIA GPU H.png" alt="NVIDIA GPU H.png" style="zoom:50%;" /></p><p><span>图1显示了NVIDIA GPU的最新微体系结构的内存层次结构。一个GPU由几十个流式多处理器（SMs）组成。网格中的每个线程块都被映射到GPU中的一个SM。一个SM包含几百个CUDA核。一个线程块中的一个线程被映射到一个CUDA核心，而一个SM可以同时处理多个线程块。</span></p><p><span>每个SM都有不同类型的内存单元，如寄存器、L1缓存、共享内存（scratchpad memory）和constant memory（read-only memory）。寄存器对每个线程都是私有的，其他内存单元在SM中共享。在SM之外，有一个跨所有SM共享的L2缓存。全局内存是一个芯片外的DRAM，通常只有几GB到几十GB。与传统存储体系结构一样，更靠近CUDA核心（SMs）的内存单元具有较低的延迟和较小的容量。尽管GPU提供了数十GB的全局内存，但DNN的工作负载严重缺乏足够的全局内存。</span></p><p><span>由于</span><strong><span>GPU线程不能直接访问主存</span></strong><span>，除非程序员将主存空间映射到GPU内存空间，因此程序员必须手动在GPU全局内存和CPU主存之间移动数据。此外，访问映射到GPU内存空间的主内存会影响性能，因为它在每次内存访问上导致PCIe传输。为此，NVIDIA提出了统一内存（UM）。</span></p><p>&nbsp;</p><h3 id='重识cuda-unified-memory'><strong><span>重识CUDA Unified Memory</span></strong></h3><p><span>它提供了一个单一的内存地址空间，可以被同一系统中的CPU和GPU同时访问。</span></p><p><span>当GPU访问的页面不在GPU内存中时，GPU会发出页面故障中断信号，NVIDIA设备驱动程序会将故障页面从系统的任何地方迁移到GPU。从而使得GPU拥有虚拟内存机制，进而允许UM使GPU内存超额订阅，而无需程序员的任何干预。</span></p><p><span>尽管UM很强大，但它的缺点是GPU页面故障处理代价高昂。GPU中的每个流多处理器（SM）都存在一个TLB。当GPU中出现page fault时，相应SM的TLB将被锁定，在SM的所有故障都得到解决之前，无法处理任何新的转换。</span></p><p><span>此外，page fault需要在CPU和GPU之间进行昂贵的迁移页面和页面驱逐的I/O操作。因此，强烈建议插入CUDA预取API函数（例如，（cudaMemPrefetchAsync())或CUDA USER-HINT API函数（例如，（cudaMemPrefetchAsync()）），以减少PAGE FAULT。</span></p><p>&nbsp;</p><h3 id='nvidia-page-fault-handler'><span>NVIDIA Page Fault Handler</span></h3><p><span>当NVIDIA GPU引发page fault中断信号时，NVIDIA驱动程序捕获中断信号并处理它。故障缓冲区是NVIDIA GPU中的一个循环队列。它存储错误的访问信息。GPU可以同时产生多个故障，在故障缓冲区中同一页面可以有多个故障条目。UM块是一组最多512个连续的页面和NVIDIA驱动程序的管理单元。在同一UM块中的所有页面都由NVIDIA驱动程序一起处理。</span></p><blockquote><p><span>UM块的最大大小是4KB×512=2MB</span></p></blockquote><p><span>每个UM块对象都包含UM块中所有页面的信息，例如哪个处理器具有这些页面，以及这些页面是否被映射为具有读保护或写保护。如果UM块包含故障页面，我们将UM块成为故障UM块。</span></p><p><img src="NVIDIA Page Fault.png" style="zoom:67%;" /></p><p><span>图3显示了page fault处理的示意图。首先，NVIDIA驱动程序从GPU（1）中的故障缓冲区获取有故障访问的页面地址和访问类型。然后，NVIDIA驱动程序预处理故障（2）。它会删除重复的地址，并根据它们的UM块对它们进行分组。接下来，NVIDIA驱动程序检查每个故障UM块的可用GPU内存空间(3)。如果没有GPU内存空间可用于出现故障的UM块，它会将一些页面从GPU驱逐到CPU(4)。然后，它在GPU中填充故障页面（即，它将GPU内存空间分配给出现故障的页面）(5)，它会将页面转移到GPU上(6)。当传输完成时，UM块的故障页面将被映射到GPU（7）。重复此过程，直到处理所有出现故障的UM块（8）。最后，NVIDIA驱动程序向GPU发送一个回放信号，故障处理程序完成（9）。</span></p><p>&nbsp;</p><hr /><h2 id='deepum-overview'><span>DeepUM Overview</span></h2><p><span>图4显示了DeepUM的整体结构。它由DeepUM运行时和DeepUM驱动程序组成。该驱动程序是一个Linux内核模块。DeepUM的目标是最流行的深度学习框架之一，并且PyTorch运行在DeepUM运行时之上。</span></p><p><span>DeepUM运行时 (DeepUM Runtime)。DeepUM运行时为CUDA内存分配API函数提供了wrapper函数，</span><strong><span>以将所有GPU内存分配请求切换到UM空间分配请求</span></strong><span>。通过在UM空间中分配所有的GPU内存对象，它可以轻松地完成GPU内存的超额订阅。此外，DeepUM运行时还为CUDA内核启动命令和其他CUDA库函数提供了wrapper函数，例如cuDNN和cuBLAS中的函数。请注意，CUDA库函数也可以启动CUDA内核。</span></p><p><img src="DeepUM Overview.png" referrerpolicy="no-referrer"></p><p><span>DeepUM运行时管理一个称为执行ID表(Exectution ID Table)的表。该表包含内核启动历史记录，并包含每个内核的名称和参数的哈希值。当一个新的内核启动命令进入DeepUM运行时时，它将计算内核名称和参数的哈希值。然后，它</span><strong><span>查找执行ID表，以查找具有相同哈希值的命令。如果它找到了一个匹配的命令，那么它就会给内核提供相同的执行ID。否则，它将为内核分配一个新的执行ID，并将该信息保存在表中</span></strong><span>。最后，DeepUM运行时在排队使用内核启动命令之前，将一个CUDA回调函数排队到CUDA运行时。回调函数通过Linux ioctl命令将以下内核启动命令的执行ID传递给DeepUM驱动程序。DeepUM驱动程序使用传递的执行ID进行相关预取。</span></p><p><span>DeepUM驱动程序。DeepUM驱动程序处理GPU页面故障，并预取页面到GPU。我们观察到，在DNN的训练阶段，内核内的内存访问模式是固定和重复的。因此，记忆重复的模式和利用这些信息进行预取是可取的。由DeepUM驱动程序管理的相关表记录了DNN训练阶段内核执行的历史及其页面访问。DeepUM驱动程序通过预测下一步将执行哪个内核来根据相关表中的信息预获取页面。这篇文章会在第4.2节中描述DeepUM驱动程序所使用的相关预取机制。</span></p><p><span>在DeepUM驱动程序中有四个内核线程：故障处理线程、相关器线程、预取线程和迁移线程。故障处理线程使用在NVIDIA驱动程序中实现的功能来处理GPU页面故障，例如访问故障缓冲区和向GPU发送回放信号。NVIDIA GPU有一个硬件故障缓冲区，它可以积累有故障访问的信息。DeepUM 驱动程序会拦截向英伟达驱动程序发送的页面故障中断信号，故障处理线程会读取故障缓冲区。故障处理线程将故障访问信息传递给其他三个线程。</span></p><p><span>故障队列</span><em><span>fault queue</span></em><span>是一个单生产者/单消费者的队列，它存储了出现故障的页面的UM块地址。它持有驱动程序中要处理的最高优先级项，以使GPU尽快重放故障访问。</span></p><p><span>相关器线程</span><em><span>correlator thread</span></em><span>管理关联表。它根据故障处理线程中的故障信息来更新相关表。在后续再详细讨论相关性表的结构，以及相关器线程如何更新它们。</span></p><p><span>预取线程</span><em><span>prefetching thread</span></em><span>查找相关表，并计算用故障块地址预取的UM块地址。然后，它将预取命令排队到预取队列，即单生产者/单消费者队列。预取命令由要预取的UM块地址和预测要使用相应UM块的执行ID组成</span></p><p><span>最后，迁移线程在CPU和GPU之间迁移UM块。故障队列的优先级高于预取队列。它首先处理由故障处理线程管理的故障队列中的命令。当故障队列为空时，它处理来自由预取线程管理的预取队列的命令。</span></p><p>&nbsp;</p><p>&nbsp;</p><hr /><h2 id='gpu页面的关联预取'><strong><span>GPU页面的关联预取</span></strong></h2><p>&nbsp;</p><h3 id='pair-based-correlation-prefetching'><strong><span>Pair-based correlation prefetching</span></strong></h3><p><span>Pair-based相关预取在相关表中记录过去的丢失地址序列.。当cache line miss时，它查找相关表并预取与未命中地址相关的所有地址。图5显示了cache line的pair-based相关预取的示例。</span></p><p><img src="pair-based.png" referrerpolicy="no-referrer"></p><blockquote><p><span>Correlation table中的每一</span><strong><span>行</span></strong><span>都是N路组相联，以减少映射到同一行的UM块之间的地址冲突。本例为便于说明，假设了1路组相联。</span></p></blockquote><p><span>对于每一个Set都有NumLevels个后继Miss addresses层级。对于每一个层级，都有NumSuccs个以MRU(最近最常使用)顺序从左到右排列的表项。Last和SecondLast是两个指针，分别指向当前和上一次miss的地址。</span></p><p><span>图（a）为例，a表项中第一层级包含b，这是因为b miss发生在a miss之后。而在第二层包含c,因为c miss在b miss之后。如图（b）所示，当a再次miss时，Last指针指向a表项，SecondLast指针指向c表项。同时，b表项和c表项同步更新。a miss在c miss之后，因此b表项的第二层包含a。同理，c表项的第一层包含a。</span></p><p><span>此时由于重新访问a，并且a表项有后继表项记录（b和c），因此b,c将被预取。</span></p><p>&nbsp;</p><p>&nbsp;</p><h3 id='deepum中的相关预取'><span> </span><strong><span>DeepUM中的相关预取</span></strong></h3><p><span>DeepUM中的相关性预取旨在通过预取CUDA内核预期要访问的页面来减少page fault。与原始的相关预取不同，DeepUM使用了两种类型的相关表：</span><em><span>Execution ID correlation table</span></em><span>和</span><em><span>UM block</span></em><span>。这两种类型的表都有一个级别（𝑁𝑢𝑚𝐿𝑒𝑣𝑒𝑙𝑠= 1），因为预取线程确实有链接。此外，由于DNN工作负载的特性，没有理由维护多个级别。请注意，DeepUM的相关性预取在UM块级别工作，而不是在高速缓存行或页面级别工作。</span></p><p>&nbsp;</p><h4 id='execution-id-correlation-table'><span>Execution ID correlation table</span></h4><p><span>执行ID相关表（简称为执行表）记录了CUDA内核的执行ID的执行历史记录，并且只有一个表存在。执行id来自于DeepUM运行时。</span></p><p><img src="execuation ID tablepng.png" style="zoom:67%;" /></p><p><span>执行表中的每个条目都包含相关的执行id集。每个集合由四个执行id组成。前三个id表示在最后一个内核之前执行的内核（更新表时当前执行内核）。因此，最后一个ID表示在发生预取时要执行的下一个内核。例如，执行ID 0的条目的记录为（7、9、92、75)。执行ID 0的条目中的此记录意味着执行ID为7、9和92的内核已被执行，而执行ID为0的内核当前正在执行。它预测接下来要执行的内核的执行ID为75。</span></p><p><span>每个条目所包含的记录的数量是可变的，也就是说，一个内核的后继内核的数量是可变的。因此，每个条目都可以保存后继内核的执行id的所有历史记录。DeepUM选择这个方案来尽可能准确地预测下一个要执行的内核。尽管预测下一个要访问的UM块的不正确结果并不是那么昂贵，但预测下一个要执行的内核的不准确结果也是昂贵的。</span></p><p>&nbsp;</p><h4 id='um-block-correlation-table'><strong><span>UM block correlation table</span></strong></h4><p><span>NVIDIA驱动程序通过将页面分组为多个UM块来管理CUDA UM空间中的页面。最多有512个相邻的页面被分组到一个UM块中。UM块相关表（简称块表）在UM块级别记录历史记录，而不是记录故障页面地址的历史记录。选择这种粒度有两个原因。一是对于大规模的dnn，有太多的页面地址需要管理。另一个原因是，DeepUM 的页面管理粒度与英伟达驱动程序相同，因此效率更高。请注意，NVIDIA驱动程序以UM块的粒度来管理页面。</span></p><p><img src="UM Block.png" style="zoom:67%;" /></p><p><span>每个执行ID都有一个块表，并在相应的CUDA内核中记录UM块访问的历史记录。它类似于在原始相关性预取中使用的表。但是，块表包含指向预取的最后一个UM块的结束UM块（the last UM block prefetched）的地址，以及在相应的内核执行中指向第一个出现故障的UM块的开始UM块。这两个指针用于实现链接。开始UM块和结束UM块都在当前执行的内核的转换期间被捕获。End UM块是页面所在的UM块，在执行ID转换之前最后出现故障。启动UM块是在执行ID转换后发生的第一个故障页面所在的UM块。</span></p><p><span>考虑图7中的块表，假设DeepUM正在为执行ID为0的内核预取UM块b。还假设执行ID为1的内核将在执行ID为0的内核之后立即执行。b的后继UM块是e和q。由于块q与执行ID为0的结束UM块相同，因此预取线程停止对执行ID为0的内核的预取。然后开始预取块k（用于执行ID1的块表的开始UM块）</span></p><p><span>这个过程被称为链接（chaining）。它是在页面故障发生后不断计算UM块地址的过程。当一个新的页面故障中断信号出现，或者预取线程无法预测下一个要执行的内核时，链接将结束。当预取线程进入下一个𝑁内核的所有预取命令时，链接会暂停。预取线程在当前执行的内核完成后重新开始</span></p><blockquote><p><span>整个预取过程就像链式反应一样，当前执行内核会一直预取直到遇到end指针指向的UM块，中间的后继链式查找过程可以通过块的后继链在一起；除了链式反应进行到end指针指向的UM块这种情况，还有可能出现后继块根本指不到end指针指向的UM块。简单举例，假设a的后继是b,c而b的后继是c,a，c的后继是a,b，end指针指向的是e。那么在这种情况下，a,b,c都取完，链式反应就进行不下去了。这两种情况都会使得当前执行内核预取任务终止进而转而执行下一执行内核进行执行。</span></p></blockquote><p>&nbsp;</p><p>&nbsp;</p><h3 id='页面驱逐和预驱逐'><span>页面驱逐和预驱逐</span></h3><p><span>当驱动程序无法为迁移出现故障的页面分配GPU内存空间时，就会发生页面驱逐。图8显示了发生页面驱逐的场景。当没有GPU内存空间来处理故障页面时，就会发生页面驱逐。页面驱逐需要大量的时间，这意味着</span><strong><span>页面驱逐逻辑位于页面故障处理的关键路径</span></strong><span>上。因此，当GPU上没有更多的空间时，故障处理时间就会增加。</span></p><p><img src="page_pre_evict.png" style="zoom:67%;" /></p><p><span>为了最小化故障处理时间，DeepUM驱动程序</span><strong><span>会在没有空闲的GPU内存空间时预测页面</span></strong><span>。Kim等人[32]也提出了类似的想法。主要的区别是，DeepUM</span><strong><span>使用了不同的策略来选择受害者页面</span></strong><span>。Kim等人使用的策略与在NVIDIA驱动程序中实现的策略相同。它会驱逐最近很少迁移到GPU的页面。DeepUM驱动程序会驱逐满足以下两个条件的页面：</span></p><blockquote><p><span>Hyojong Kim, Jaewoong Sim, Prasun Gera, Ramyad Hadidi, and Hyesoon Kim. </span><em><span>Batch-Aware Unified Memory Management in GPUs for Irregular Workloads</span></em><span>. Association for Computing Machinery, New York, NY, USA, 1357–1370. https: //doi.org/10.1145/3373376.3378529</span></p></blockquote><ul><li><p><span>最近最少迁移。</span></p></li></ul><ul><li><p><span>预计不会被当前正在执行的内核和预计要执行的下𝑁个内核所访问。</span></p></li></ul><p><span>由于NVIDIA驱动程序跟踪GPU侧的空闲空间，因此DeepUM从NVIDIA驱动程序中获取可用的空间信息。它从执行ID相关表中获取下一个正在执行的内核信息。</span></p><p>&nbsp;</p><p>&nbsp;</p><h4 id='使非活动的-pytorch-块的-um-块无效'><span>使非活动的 PyTorch 块的 UM 块无效</span></h4><ul><li><p><span>Pytorch的实现</span>
-    <span>PyTorch 对 CPU 和 GPU 有不同的内存分配器。PyTorch 的 GPU 内存分配器管理设备内存池，以最小化内存分配/释放时间并减少内存碎片。GPU 内存分配器管理二种类型的内存池：大型和小型。</span></p></li></ul><p><span>在 PyTorch 中，一个内存对象被称为块（block）。在这篇论文中，我们称它为 PT 块，以便与 UM 块区分。大型池由大于 1MB 的 PT 块组成，小型池由小于或等于 1MB 的 PT 块组成。</span></p><p><span>当一个内存分配请求进来，且请求的大小大于 1MB，内存分配器从大型池中找到一个 PT 块。否则，它从小型池中找到一个 PT 块。当池中的多个 PT 块与请求的大小匹配时，分配器返回最小的可用 PT 块。此外，当 PT 块的大小远大于请求的大小时，PT 块会被分割。选择上GPU运行的 PT 块从内存池中移除，并标记为活动。然而，当内存池中没有可用的 PT 块时，GPU 内存分配器通过向 CUDA 运行时请求设备内存空间来分配新的 PT 块。</span></p><p><span>在 DNN 模型使用 PT 块并将其返回给 GPU 内存分配器后，分配器将 PT 块插入到适当的内存池并标记为非活动。只有当池中没有剩余的可用内存空间时，非活动的 PT 块（即内存池中的 PT 块）才会被释放以产生新的内存空间。</span></p><p><span>Pytorch实现的问题</span>
-    <span>问题是当我们使用 PyTorch 内存分配器和 UM 时。当 GPU 内存中的非活动 PT 块被驱逐到 CPU 内存时，会有不必要的大量数据流量。此外，它们占用了 CPU 内存空间。当非活动的 PT 块被标记为活动并再次被 DNN 模型使用时，问题会变得更糟。因为 PT 块中的页面已经被驱逐到 CPU 内存，所以</span></p><p><span>本文的解决方法</span>
-    <span>为了解决这个问题，我们在 PyTorch 内存分配器中添加了几行代码，当 PT 块被标记为非活动时通知 DeepUM 驱动程序。如果一个受害页面属于非活动的 PT 块，DeepUM 驱动程序简单地使 GPU 内存中对应的 UM 块无效。</span></p><p>&nbsp;</p></div></div>
-    </body>
-    </html>
+<div id='write'  class=''><h1 id='leetcode刷题笔记'><span>LeetCode刷题笔记</span></h1><h2 id='1两数之和'><span>1.两数之和</span></h2><p><a href='https://leetcode.cn/problems/two-sum/description/'><span>1. 两数之和 - 力扣（LeetCode）</span></a></p><p><span>解法：哈希表</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c++"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.51562px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">Solution</span> {</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">public</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">vector</span><span class="cm-operator">&lt;</span><span class="cm-variable-3">int</span><span class="cm-operator">&gt;</span> <span class="cm-variable">twoSum</span>(<span class="cm-variable">vector</span><span class="cm-operator">&lt;</span><span class="cm-variable-3">int</span><span class="cm-operator">&gt;&amp;</span> <span class="cm-variable">nums</span>, <span class="cm-variable-3">int</span> <span class="cm-variable">target</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">unordered_map</span><span class="cm-operator">&lt;</span><span class="cm-variable-3">int</span>,<span class="cm-variable-3">int</span><span class="cm-operator">&gt;</span> <span class="cm-variable">heap</span>; <span class="cm-comment">//定义哈希表，值映射下标</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">for</span>(<span class="cm-variable-3">int</span> <span class="cm-variable">i</span><span class="cm-operator">=</span><span class="cm-number">0</span>;<span class="cm-variable">i</span><span class="cm-operator">&lt;</span><span class="cm-variable">nums</span>.<span class="cm-variable">size</span>();<span class="cm-variable">i</span><span class="cm-operator">++</span>){</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">r</span> <span class="cm-operator">=</span> <span class="cm-variable">target</span> <span class="cm-operator">-</span><span class="cm-variable">nums</span>[<span class="cm-variable">i</span>]; <span class="cm-comment">// 期望在哈希表里搜索的值</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span>(<span class="cm-variable">heap</span>.<span class="cm-variable">count</span>(<span class="cm-variable">r</span>))<span class="cm-keyword">return</span> {<span class="cm-variable">heap</span>[<span class="cm-variable">r</span>],<span class="cm-variable">i</span>}; <span class="cm-comment">//有值即找到目标 返回该值对应的下标和当前下标</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">heap</span>[<span class="cm-variable">nums</span>[<span class="cm-variable">i</span>]] <span class="cm-operator">=</span> <span class="cm-variable">i</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">return</span> {};</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 276px;"></div><div class="CodeMirror-gutters" style="display: none; height: 276px;"></div></div></div></pre><p>&nbsp;</p><h2 id='2两数相加'><span>2.两数相加</span></h2><p><a href='https://leetcode.cn/problems/add-two-numbers/description/'><span>2. 两数相加 - 力扣（LeetCode）</span></a></p><p><span>解法：哑结点处理 + 小学数学进位</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c++" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.51562px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">/**</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-comment">* Definition for singly-linked list.</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-comment">* struct ListNode {</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-comment">* &nbsp; &nbsp; int val;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-comment">* &nbsp; &nbsp; ListNode *next;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-comment">* &nbsp; &nbsp; ListNode() : val(0), next(nullptr) {}</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-comment">* &nbsp; &nbsp; ListNode(int x) : val(x), next(nullptr) {}</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-comment">* &nbsp; &nbsp; ListNode(int x, ListNode *next) : val(x), next(next) {}</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-comment">* };</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-comment">*/</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">Solution</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">public</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">ListNode</span><span class="cm-operator">*</span> <span class="cm-variable">addTwoNumbers</span>(<span class="cm-variable">ListNode</span><span class="cm-operator">*</span> <span class="cm-variable">l1</span>, <span class="cm-variable">ListNode</span><span class="cm-operator">*</span> <span class="cm-variable">l2</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">auto</span> <span class="cm-variable">dummy</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">ListNode</span>(<span class="cm-operator">-</span><span class="cm-number">1</span>) , <span class="cm-variable">cur</span> <span class="cm-operator">=</span> <span class="cm-variable">dummy</span>; <span class="cm-comment">//避免特判头结点是否为空等等复杂情况</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">t</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>; <span class="cm-comment">//用于判断是否进位的变量 存储每次个位数和进位数之和 &nbsp;</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">while</span>(<span class="cm-variable">l1</span> <span class="cm-operator">||</span> <span class="cm-variable">l2</span> <span class="cm-operator">||</span> <span class="cm-variable">t</span>){ </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span>(<span class="cm-variable">l1</span>) <span class="cm-variable">t</span> <span class="cm-operator">+=</span> <span class="cm-variable">l1</span><span class="cm-operator">-&gt;</span><span class="cm-variable">val</span> , <span class="cm-variable">l1</span><span class="cm-operator">=</span><span class="cm-variable">l1</span><span class="cm-operator">-&gt;</span><span class="cm-variable">next</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span>(<span class="cm-variable">l2</span>) <span class="cm-variable">t</span> <span class="cm-operator">+=</span> <span class="cm-variable">l2</span><span class="cm-operator">-&gt;</span><span class="cm-variable">val</span> , <span class="cm-variable">l2</span><span class="cm-operator">=</span><span class="cm-variable">l2</span><span class="cm-operator">-&gt;</span><span class="cm-variable">next</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">cur</span><span class="cm-operator">-&gt;</span><span class="cm-variable">next</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">ListNode</span>(<span class="cm-variable">t</span><span class="cm-operator">%</span><span class="cm-number">10</span>); <span class="cm-comment">//当前为是余数</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">cur</span> <span class="cm-operator">=</span> <span class="cm-variable">cur</span><span class="cm-operator">-&gt;</span><span class="cm-variable">next</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">t</span> &nbsp;<span class="cm-operator">/=</span> <span class="cm-number">10</span>; <span class="cm-comment">//用于进位 只有0，1两种情况</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">return</span> <span class="cm-variable">dummy</span><span class="cm-operator">-&gt;</span><span class="cm-variable">next</span>;<span class="cm-comment">//哑结点之后才是头结点</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 576px;"></div><div class="CodeMirror-gutters" style="display: none; height: 576px;"></div></div></div></pre><p>&nbsp;</p><h2 id='3无重复字符的最长子串'><span>3.无重复字符的最长子串</span></h2><p><a href='https://leetcode.cn/problems/longest-substring-without-repeating-characters/'><span>3. 无重复字符的最长子串</span></a></p><p><span>解法：双指针</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c++" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.51562px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">Solution</span> {</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">public</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">lengthOfLongestSubstring</span>(<span class="cm-variable">string</span> <span class="cm-variable">s</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">unordered_map</span><span class="cm-operator">&lt;</span><span class="cm-variable-3">char</span>,<span class="cm-variable-3">int</span><span class="cm-operator">&gt;</span> <span class="cm-variable">hash</span>; <span class="cm-comment">//定义一个数组标记每个元素的访问次数，出现2次则以为则重复</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">for</span>(<span class="cm-keyword">auto</span> <span class="cm-variable">c</span> : <span class="cm-variable">s</span>)<span class="cm-variable">hash</span>[<span class="cm-variable">c</span>]<span class="cm-operator">=</span><span class="cm-number">0</span>;<span class="cm-comment">//初始默认全为0次</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">len</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">for</span>(<span class="cm-variable-3">int</span> <span class="cm-variable">i</span><span class="cm-operator">=</span><span class="cm-number">0</span>,<span class="cm-variable">j</span><span class="cm-operator">=</span><span class="cm-number">0</span>;<span class="cm-variable">j</span><span class="cm-operator">&lt;</span><span class="cm-variable">s</span>.<span class="cm-variable">size</span>();<span class="cm-variable">j</span><span class="cm-operator">++</span>){</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">hash</span>[<span class="cm-variable">s</span>[<span class="cm-variable">j</span>]]<span class="cm-operator">++</span>;<span class="cm-comment">//右指针向后移动，标记访问</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span>(<span class="cm-variable">hash</span>[<span class="cm-variable">s</span>[<span class="cm-variable">j</span>]] <span class="cm-operator">==</span> <span class="cm-number">2</span>)<span class="cm-comment">//次数出现2，则j对应的元素重复出现</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">len</span> <span class="cm-operator">=</span> <span class="cm-variable">max</span>(<span class="cm-variable">len</span>,<span class="cm-variable">j</span><span class="cm-operator">-</span><span class="cm-variable">i</span>);<span class="cm-comment">//更新最大长度为j-i</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">while</span>(<span class="cm-variable">i</span><span class="cm-operator">&lt;</span><span class="cm-variable">j</span>){<span class="cm-comment">//移动左指针直到迈过重复元素，同时清理重复元素之前的访问次数</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">hash</span>[<span class="cm-variable">s</span>[<span class="cm-variable">i</span>]]<span class="cm-operator">--</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">i</span><span class="cm-operator">++</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span>(<span class="cm-variable">hash</span>[<span class="cm-variable">s</span>[<span class="cm-variable">j</span>]]<span class="cm-operator">==</span><span class="cm-number">1</span>)<span class="cm-keyword">break</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  }<span class="cm-keyword">else</span> <span class="cm-variable">len</span> <span class="cm-operator">=</span> <span class="cm-variable">max</span>(<span class="cm-variable">len</span>,<span class="cm-variable">j</span><span class="cm-operator">-</span><span class="cm-variable">i</span><span class="cm-operator">+</span><span class="cm-number">1</span>);<span class="cm-comment">//没重复时，依然更新最大长度为j-i+1</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">return</span> <span class="cm-variable">len</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 484px;"></div><div class="CodeMirror-gutters" style="display: none; height: 484px;"></div></div></div></pre><p><span>更优美的写法,原理与上面几乎完全相同。区别在于第一种是右指针会区分停下来和不停下来计算不重复序列长度，第二种则是直接将左指针移动到不重复的位置开始。</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c++"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.51562px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">Solution</span> {</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">public</span>:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">lengthOfLongestSubstring</span>(<span class="cm-variable">string</span> <span class="cm-variable">s</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; <span class="cm-variable">unordered_map</span><span class="cm-operator">&lt;</span><span class="cm-variable-3">char</span>,<span class="cm-variable-3">int</span><span class="cm-operator">&gt;</span> <span class="cm-variable">heap</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; <span class="cm-variable-3">int</span> <span class="cm-variable">res</span><span class="cm-operator">=</span><span class="cm-number">0</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; <span class="cm-keyword">for</span>(<span class="cm-variable-3">int</span> <span class="cm-variable">i</span><span class="cm-operator">=</span><span class="cm-number">0</span>,<span class="cm-variable">j</span><span class="cm-operator">=</span><span class="cm-number">0</span>;<span class="cm-variable">j</span><span class="cm-operator">&lt;</span><span class="cm-variable">s</span>.<span class="cm-variable">size</span>();<span class="cm-variable">j</span><span class="cm-operator">++</span>){</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">heap</span>[<span class="cm-variable">s</span>[<span class="cm-variable">j</span>]]<span class="cm-operator">++</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">while</span>(<span class="cm-variable">heap</span>[<span class="cm-variable">s</span>[<span class="cm-variable">j</span>]]<span class="cm-operator">&gt;</span><span class="cm-number">1</span>)<span class="cm-variable">heap</span>[<span class="cm-variable">s</span>[<span class="cm-variable">i</span><span class="cm-operator">++</span>]]<span class="cm-operator">--</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">res</span> <span class="cm-operator">=</span> <span class="cm-variable">max</span>(<span class="cm-variable">res</span>,<span class="cm-variable">j</span><span class="cm-operator">-</span><span class="cm-variable">i</span><span class="cm-operator">+</span><span class="cm-number">1</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; <span class="cm-keyword">return</span> <span class="cm-variable">res</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 299px;"></div><div class="CodeMirror-gutters" style="display: none; height: 299px;"></div></div></div></pre><p>&nbsp;</p></div></div>
+</body>
+</html>
