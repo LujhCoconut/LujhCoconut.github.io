@@ -254,3 +254,574 @@ MultiMemoryControllerParams::create()
 ```
 
 > 实现似乎过于简单了,gem5最新版本中的HeteroMemCtrl复杂得多
+
+
+
+## 【自己实现】HBM+DDR混合内存代码
+
+```c++
+/*
+ * Copyright (c) 2010-2020 ARM Limited
+ * All rights reserved
+ *
+ * The license below extends only to copyright in the software and shall
+ * not be construed as granting a license to any other intellectual
+ * property including but not limited to intellectual property relating
+ * to a hardware implementation of the functionality of the software
+ * licensed hereunder.  You may use the software subject to the license
+ * terms below provided that you ensure that this notice is replicated
+ * unmodified and in its entirety in all distributions of the software,
+ * modified or unmodified, in source code or in binary form.
+ *
+ * Copyright (c) 2013 Amin Farmahini-Farahani
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met: redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer;
+ * redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution;
+ * neither the name of the copyright holders nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+#include "mem/hetero_mem_ctrl.hh"
+
+#include "base/trace.hh"
+#include "debug/DRAM.hh"
+#include "debug/Drain.hh"
+#include "debug/MemCtrl.hh"
+#include "debug/NVM.hh"
+#include "debug/QOS.hh"
+#include "debug/HeteroMemCtrl.hh"
+#include "mem/dram_interface.hh"
+#include "mem/mem_interface.hh"
+#include "mem/nvm_interface.hh"
+#include "sim/system.hh"
+
+namespace gem5
+{
+
+namespace memory
+{
+/**
+ * 异构内存初始化 接收p对象的所有参数
+ * 本实例中HeteroMemCtrl继承MemCtrl，自带一个dram成员类
+ * dram指DDR hbm指HBM 都是DRAMInterface* 类型
+*/
+HeteroMemCtrl::HeteroMemCtrl(const HeteroMemCtrlParams &p) :
+    MemCtrl(p),
+    hbm(p.hbm)
+{
+    DPRINTF(HeteroMemCtrl, "Setting up controller\n");
+    readQueue.resize(p.qos_priorities);
+    writeQueue.resize(p.qos_priorities);
+
+    fatal_if(dynamic_cast<DRAMInterface*>(dram) == nullptr,
+            "HeteroMemCtrl's dram interface must be of type DRAMInterface.\n");
+    fatal_if(dynamic_cast<DRAMInterface*>(hbm) == nullptr,
+            "HeteroMemCtrl's hbm interface must be of type DRAMInterface.\n");
+
+    // hook up interfaces to the controller
+    dram->setCtrl(this, commandWindow);
+    hbm->setCtrl(this, commandWindow);
+
+    readBufferSize = dram->readBufferSize + hbm->readBufferSize;
+    writeBufferSize = dram->writeBufferSize + hbm->writeBufferSize;
+
+    writeHighThreshold = writeBufferSize * p.write_high_thresh_perc / 100.0;
+    writeLowThreshold = writeBufferSize * p.write_low_thresh_perc / 100.0;
+
+    // perform a basic check of the write thresholds
+    if (p.write_low_thresh_perc >= p.write_high_thresh_perc)
+        fatal("Write buffer low threshold %d must be smaller than the "
+              "high threshold %d\n", p.write_low_thresh_perc,
+              p.write_high_thresh_perc);
+}
+
+/**
+ * recvAtomic函数确定一个内存访问请求由哪种内存类型来处理，
+ * 并调用相应的内存控制器的recvAtomicLogic函数来处理请求
+ * 本例中：用于判断数据包是来自DRAM还是HBM，并据此确定处理请求延迟的时间
+*/
+Tick
+HeteroMemCtrl::recvAtomic(PacketPtr pkt)
+{
+    Tick latency = 0;
+
+    if (dram->getAddrRange().contains(pkt->getAddr())) {
+        latency = MemCtrl::recvAtomicLogic(pkt, dram);
+    } else if (hbm->getAddrRange().contains(pkt->getAddr())) {
+        latency = MemCtrl::recvAtomicLogic(pkt, hbm);
+    } else {
+        panic("Can't handle address range for packet %s\n", pkt->print());
+    }
+
+    return latency;
+}
+
+
+/**
+ * 用于处理内存控制器接收到的定时请求（timing request）
+ * 计算一个请求和当前请求之间的平均间隔
+ * 根据请求来自DRAM或者HBM确定内存突发传输大小 并根据请求大小 转换成一定数量的数据包
+*/
+bool
+HeteroMemCtrl::recvTimingReq(PacketPtr pkt)
+{
+    // This is where we enter from the outside world
+    DPRINTF(HeteroMemCtrl, "recvTimingReq: request %s addr %#x size %d\n",
+            pkt->cmdString(), pkt->getAddr(), pkt->getSize());
+
+    panic_if(pkt->cacheResponding(), "Should not see packets where cache "
+             "is responding");
+
+    panic_if(!(pkt->isRead() || pkt->isWrite()),
+             "Should only see read and writes at memory controller\n");
+
+    // 计算上一个请求到达和当前请求之间的平均间隔时间，用于统计平均请求间隔
+    if (prevArrival != 0) {
+        stats.totGap += curTick() - prevArrival;
+    }
+    prevArrival = curTick();
+
+    // 判断请求访问的地址范围属于DRAM还是HBM，并设置相应的标志位。
+    bool is_dram;
+    if (dram->getAddrRange().contains(pkt->getAddr())) {
+        is_dram = true;
+    } else if (hbm->getAddrRange().contains(pkt->getAddr())) {
+        is_dram = false;
+    } else {
+        panic("Can't handle address range for packet %s\n",
+              pkt->print());
+    }
+
+    // 根据请求的大小和内存控制器的突发大小，计算出请求需要转换成多少个内存传输包。
+    unsigned size = pkt->getSize();
+    uint32_t burst_size = is_dram ? dram->bytesPerBurst() :
+                                    hbm->bytesPerBurst();
+    unsigned offset = pkt->getAddr() & (burst_size - 1);
+    unsigned int pkt_count = divCeil(offset + size, burst_size);
+
+    /**
+     * Notes： divCeil是一个函数调用，它的作用是进行整数除法，并将结果向上取整到最接近的整数。通常用于计算除法结果的上取整。
+     * 在内存控制器的实现中，这种计算方式常常用于确定请求需要转换成多少个内存传输包
+     * 以便适应内存系统的传输单位大小（例如，内存控制器的突发大小）。
+    */
+
+    // 调用qosSchedule函数执行QoS调度，并为请求分配一个QoS优先级值。
+    qosSchedule( { &readQueue, &writeQueue }, burst_size, pkt);
+
+    /* 检查本地缓冲区是否已满 */
+    // 如果是写请求
+    if (pkt->isWrite()) {
+        assert(size != 0);
+        /* 如果写请求队列已满，则设置retryWrReq为真，表示需要重试该端口；否则将请求添加到写请求队列中，并增加相关的统计信息。 */
+        if (writeQueueFull(pkt_count)) {
+            DPRINTF(HeteroMemCtrl, "Write queue full, not accepting\n");
+            retryWrReq = true;
+            stats.numWrRetry++;
+            return false;
+        } else {
+            addToWriteQueue(pkt, pkt_count, is_dram ? dram : hbm);
+            // 如果我们还没有计划将请求从队列中取出，就立即执行
+            if (!nextReqEvent.scheduled()) {
+                DPRINTF(HeteroMemCtrl, "Request scheduled immediately\n");
+                schedule(nextReqEvent, curTick());
+            }
+            stats.writeReqs++;
+            stats.bytesWrittenSys += size;
+        }
+    }
+    // 如果是读请求 
+    else {
+        assert(pkt->isRead());
+        assert(size != 0);
+        /* 检查读请求队列是否已满，如果已满，则设置retryRdReq为真，表示需要重试该端口；否则将请求添加到读请求队列中，并增加相关的统计信息。 */
+        if (readQueueFull(pkt_count)) {
+            DPRINTF(HeteroMemCtrl, "Read queue full, not accepting\n");
+            retryRdReq = true;
+            stats.numRdRetry++;
+            return false;
+        } else {
+            if (!addToReadQueue(pkt, pkt_count, is_dram ? dram : hbm)) {
+                // 如果我们还没有计划将请求从队列中取出，就立即执行
+                if (!nextReqEvent.scheduled()) {
+                    DPRINTF(HeteroMemCtrl, "Request scheduled immediately\n");
+                    schedule(nextReqEvent, curTick());
+                }
+            }
+            stats.readReqs++;
+            stats.bytesReadSys += size;
+        }
+    }
+    /* 根据请求的类型（读或写）返回相应的布尔值，表示请求是否成功处理 */
+    return true;
+}
+
+/**
+ * processRespondEvent：用于处理内存控制器接收到的响应事件
+ * @param mem_intr 指向内存接口的指针，用于标识是DRAM还是HBM的响应事件
+ * @param queue 表示要处理的请求队列，是一个MemPacketQueue类型的引用
+ * @param resp_event 一个EventFunctionWrapper类型的引用，表示要执行的响应事件
+ * @param retry_rd_req 一个布尔引用，表示是否需要重试读请求
+*/
+void
+HeteroMemCtrl::processRespondEvent(MemInterface* mem_intr,
+                        MemPacketQueue& queue,
+                        EventFunctionWrapper& resp_event,
+                        bool& retry_rd_req)
+{
+    DPRINTF(HeteroMemCtrl,
+            "processRespondEvent(): Some req has reached its readyTime\n");
+    /* 根据当前请求队列中队首请求的内存类型（DRAM或HBM），选择对应的内存控制器（dram或hbm）来处理响应事件 */
+    if (queue.front()->isDram()) {
+        MemCtrl::processRespondEvent(dram, queue, resp_event, retry_rd_req);
+    } else {
+        MemCtrl::processRespondEvent(hbm, queue, resp_event, retry_rd_req);
+    }
+}
+
+/**
+ * chooseNext:用于在内存控制器中进行请求的调度（arbitration）
+*/
+MemPacketQueue::iterator
+HeteroMemCtrl::chooseNext(MemPacketQueue& queue, Tick extra_col_delay,
+                    MemInterface* mem_int)
+{
+    /* 定义一个迭代器ret，初始化为队列的末尾位置，用于记录选择的下一个请求。 */
+    MemPacketQueue::iterator ret = queue.end();
+    // 检查请求队列是否为空，如果不为空则进行调度
+    if (!queue.empty()) {
+        // 如果队列中只有一个请求，则不需要进行调度，直接选择这个请求。
+        if (queue.size() == 1) {
+            // available rank corresponds to state refresh idle
+            // 获取队列中第一个请求，并判断其是否准备好发送给内存模块。
+            MemPacket* mem_pkt = *(queue.begin());
+            // 检查请求是否准备好发送给内存模块。根据请求所属的内存类型（DRAM或HBM），调用packetReady函数进行判断。
+            if (packetReady(mem_pkt, mem_pkt->isDram()? dram : hbm)) {
+                // 如果请求准备好发送给内存模块，则将其选择为下一个处理的请求
+                ret = queue.begin();
+                DPRINTF(HeteroMemCtrl, "Single request, going to a free rank\n");
+            } else {
+                DPRINTF(HeteroMemCtrl, "Single request, going to a busy rank\n");
+            }
+        } 
+        // 如果队列中有多个请求，并且调度策略是先来先服务（FCFS），则按照先来先服务的原则选择下一个请求
+        else if (memSchedPolicy == enums::fcfs) {
+            // check if there is a packet going to a free rank
+            // 遍历请求队列中的所有请求，查找可以立即发送给内存模块的请求
+            for (auto i = queue.begin(); i != queue.end(); ++i) {
+                MemPacket* mem_pkt = *i;
+                if (packetReady(mem_pkt, mem_pkt->isDram()? dram : hbm)) {
+                    ret = i;
+                    break;
+                }
+            }
+        } 
+        // 如果调度策略是FR-FCFS，则调用chooseNextFRFCFS函数进行选择
+        else if (memSchedPolicy == enums::frfcfs) {
+            Tick col_allowed_at;
+            std::tie(ret, col_allowed_at)
+                    = chooseNextFRFCFS(queue, extra_col_delay, mem_int);
+        }
+        // 如果没有选择任何调度策略，则发生错误
+        else {
+            panic("No scheduling policy chosen\n");
+        }
+    }
+    return ret;
+}
+
+
+/**
+ * chooseNextFRFCFS:用于在FR-FCFS调度策略下选择下一个处理的请求
+*/
+std::pair<MemPacketQueue::iterator, Tick>
+HeteroMemCtrl::chooseNextFRFCFS(MemPacketQueue& queue, Tick extra_col_delay,
+                          MemInterface* mem_intr)
+{
+    /* 定义了两个迭代器 分别用于记录选择的DRAM和HBM请求 */
+    auto selected_pkt_it = queue.end();
+    auto hbm_pkt_it = queue.end();
+    /* 定义了两个变量 分别用于记录DRAM请求和HBM请求可发出的时间 初始值均为最大时钟周期 */
+    Tick col_allowed_at = MaxTick;
+    Tick hbm_col_allowed_at = MaxTick;
+
+    /* 选择DRAM队列中下一个处理的请求，并将选择的请求和其可发出的时间赋值给selected_pkt_it，selected_pkt_it */
+    std::tie(selected_pkt_it, col_allowed_at) =
+            MemCtrl::chooseNextFRFCFS(queue, extra_col_delay, dram);
+    /* 选择HBM队列中下一个处理的请求，并将选择的请求和其可发出的时间赋值给hbm_pkt_it，hbm_col_allowed_at */
+    std::tie(hbm_pkt_it, hbm_col_allowed_at) =
+            MemCtrl::chooseNextFRFCFS(queue, extra_col_delay, hbm);
+
+
+    /**
+     * 比较DRAM请求和HBM请求的可发出时间，如果HBM请求可发出的时间早于DRAM请求，
+     * 则选择HBM请求作为下一个处理的请求，并更新相应的可发出时间。
+    */
+    if (col_allowed_at > hbm_col_allowed_at) {
+        selected_pkt_it = hbm_pkt_it;
+        col_allowed_at = hbm_col_allowed_at;
+    }
+    // 返回一个std::pair，包含选中的请求迭代器和其可发出的时间。
+    return std::make_pair(selected_pkt_it, col_allowed_at);
+}
+
+/**
+ * doBurstAccess：用于执行内存访问的突发操作
+*/
+Tick
+HeteroMemCtrl::doBurstAccess(MemPacket* mem_pkt, MemInterface* mem_intr)
+{
+    // mem_intr will be dram by default in HeteroMemCtrl
+
+    // 定义一个名为cmd_at的变量，用于记录命令的执行时间
+    Tick cmd_at;
+    // 判断mem_pkt所属的内存类型是DRAM还是HBM
+    if (mem_pkt->isDram()) {
+        // 调用MemCtrl::doBurstAccess函数执行DRAM的突发访问操作，并将命令的执行时间赋值给cmd_at变量。
+        cmd_at = MemCtrl::doBurstAccess(mem_pkt, mem_intr);
+        // 更新HBM内存接口的相关时间参数，确保DRAM和HBM的时序同步。
+        hbm->addRankToRankDelay(cmd_at);
+        hbm->nextBurstAt = dram->nextBurstAt;
+        hbm->nextReqTime = dram->nextReqTime;
+
+    } else {
+        // 调用MemCtrl::doBurstAccess函数执行HBM的突发访问操作，并将命令的执行时间赋值给cmd_at变量。
+        cmd_at = MemCtrl::doBurstAccess(mem_pkt, hbm);
+        // 更新DRAM内存接口的相关时间参数，确保DRAM和HBM的时序同步。
+        dram->addRankToRankDelay(cmd_at);
+        dram->nextBurstAt = hbm->nextBurstAt;
+        dram->nextReqTime = hbm->nextReqTime;
+    }
+    // 返回命令的执行时间
+    return cmd_at;
+}
+
+/**
+ * memBusy: 用于判断内存控制器是否处于繁忙状态
+ * @param mem_intr mem_intr参数始终指向DRAM接口
+*/
+bool
+HeteroMemCtrl::memBusy(MemInterface* mem_intr) {
+
+    // mem_intr in case of HeteroMemCtrl will always be dram
+
+    // check ranks for refresh/wakeup - uses busStateNext, so done after
+    // turnaround decisions
+    // Default to busy status and update based on interface specifics
+    // 表示默认情况下HBM接口为繁忙状态
+    bool dram_busy, hbm_busy = true;
+    // 检查DRAM接口是否处于繁忙状态，并将结果赋值给dram_busy变量
+    dram_busy = mem_intr->isBusy(false, false);
+    // 计算HBM接口的读请求队列是否为空
+    // 以及所有写请求是否都在HBM接口的写请求队列中。
+    bool read_queue_empty = totalReadQueueSize == 0;
+    bool all_writes_hbm = hbm->numWritesQueued == totalWriteQueueSize;
+    // 据读请求队列是否为空和所有写请求是否都在写请求队列中来检查HBM接口是否处于繁忙状态
+    hbm_busy = hbm->isBusy(read_queue_empty, all_writes_hbm);
+
+    // Default state of unused interface is 'true'
+    // Simply AND the busy signals to determine if system is busy
+    // 如果DRAM接口和HBM接口都处于繁忙状态，则返回true，
+    // 表示内存控制器处于繁忙状态；否则返回false，表示内存控制器不处于繁忙状态。
+    if (dram_busy && hbm_busy) {
+        // if all ranks are refreshing wait for them to finish
+        // and stall this state machine without taking any further
+        // action, and do not schedule a new nextReqEvent
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Notes:通常情况下，程序执行时，读取内存应当是确定的，
+ * 即每次读取都应该得到相同的结果。
+ * 然而，在一些情况下，由于多种因素的影响，
+ * 可能导致读取到的值是不确定的，即可能会出现不同的结果。
+*/
+void
+HeteroMemCtrl::nonDetermReads(MemInterface* mem_intr)
+{
+    // mem_intr by default points to dram in case
+    // of HeteroMemCtrl, therefore, calling nonDetermReads
+    // from MemCtrl using hbm interace
+    MemCtrl::nonDetermReads(hbm);
+}
+
+/**
+ * 
+*/
+bool
+HeteroMemCtrl::hbmWriteBlock(MemInterface* mem_intr)
+{
+    // mem_intr by default points to dram in case
+    // of HeteroMemCtrl, therefore, calling hbmWriteBlock
+    // from MemCtrl using hbm interface
+    return MemCtrl::hbmWriteBlock(hbm);
+}
+
+
+Tick
+HeteroMemCtrl::minReadToWriteDataGap()
+{
+    return std::min(dram->minReadToWriteDataGap(),
+                    hbm->minReadToWriteDataGap());
+}
+
+Tick
+HeteroMemCtrl::minWriteToReadDataGap()
+{
+    return std::min(dram->minWriteToReadDataGap(),
+                    hbm->minWriteToReadDataGap());
+}
+
+/**
+ * burstAlign:用于将地址addr对齐到内存接口的突发访问边界
+*/
+Addr
+HeteroMemCtrl::burstAlign(Addr addr, MemInterface* mem_intr) const
+{
+    // mem_intr will point to dram interface in HeteroMemCtrl
+    // 检查地址addr是否在DRAM接口的地址范围内。
+    // 如果地址在DRAM接口的地址范围内，则将地址与内存接口的突发访问边界进行按位与操作，
+    // 并将结果返回。这样可以 << 将地址对齐到DRAM接口的突发访问边界。>>
+    if (mem_intr->getAddrRange().contains(addr)) {
+        return (addr & ~(Addr(mem_intr->bytesPerBurst() - 1)));
+    } else {
+        assert(hbm->getAddrRange().contains(addr));
+        return (addr & ~(Addr(hbm->bytesPerBurst() - 1)));
+    }
+}
+
+/**
+ * 用于检查内存包（MemPacket）的大小是否符合内存接口的突发访问大小限制
+*/
+bool
+HeteroMemCtrl::pktSizeCheck(MemPacket* mem_pkt, MemInterface* mem_intr) const
+{
+    // 内存包的大小是否小于等于DRAM或者接口的突发访问大小
+    if (mem_pkt->isDram()) {
+        return (mem_pkt->size <= mem_intr->bytesPerBurst());
+    } else {
+        return (mem_pkt->size <= hbm->bytesPerBurst());
+    }
+}
+
+/**
+ * recvFunctional：用于在功能仿真模式下处理接收到的数据包
+*/
+void
+HeteroMemCtrl::recvFunctional(PacketPtr pkt)
+{
+    bool found;
+    // 定义一个布尔变量found，用于标记是否在内存接口中找到了可以处理该数据包的地址范围。
+    found = MemCtrl::recvFunctionalLogic(pkt, dram);
+    // 函数尝试在DRAM接口中处理接收到的数据包。如果找到了可以处理该数据包的地址范围，则将found设置为true；否则将found保持为false。
+    if (!found) {
+        // 再尝试在HBM里找
+        found = MemCtrl::recvFunctionalLogic(pkt, hbm);
+    }
+
+    if (!found) {
+        panic("Can't handle address range for packet %s\n", pkt->print());
+    }
+}
+
+/**
+ * allIntfDrained：用于检查DRAM和HBM接口是否都处于排空状态 ？？
+*/
+bool
+HeteroMemCtrl::allIntfDrained() const
+{
+    // ensure dram is in power down and refresh IDLE states
+    // 检查DRAM接口中的所有存储介质是否都处于排空状态，并将结果存储在dram_drained变量中。
+    bool dram_drained = dram->allRanksDrained();
+    // No outstanding hbm writes
+    // All other queues verified as needed with calling logic
+    bool hbm_drained = hbm->allRanksDrained();
+    // DRAM接口和HBM接口的排空状态进行逻辑与操作，如果两者都处于排空状态，则返回true，否则返回false
+    return (dram_drained && hbm_drained);
+}
+
+/**
+ * drain： 用于执行内存控制器的排空操作
+*/
+DrainState
+HeteroMemCtrl::drain()
+{
+    // 检查内存控制器是否已排空。如果有任何内部队列中还有未处理的请求或者DRAM和HBM接口未排空
+    if (!(!totalWriteQueueSize && !totalReadQueueSize && respQueue.empty() &&
+          allIntfDrained())) {
+
+        DPRINTF(Drain, "Memory controller not drained, write: %d, read: %d,"
+                " resp: %d\n", totalWriteQueueSize, totalReadQueueSize,
+                respQueue.size());
+
+        // the only queue that is not drained automatically over time
+        // is the write queue, thus kick things into action if needed
+        // 如果写队列为空且没有下一个请求事件被调度，则立即调度下一个请求事件，以确保写队列中的请求被处理
+        if (!totalWriteQueueSize && !nextReqEvent.scheduled()) {
+            schedule(nextReqEvent, curTick());
+        }
+
+        dram->drainRanks();
+        hbm->drainRanks(); // nvm里没有这个
+
+        return DrainState::Draining;
+    } else {
+        return DrainState::Drained;
+    }
+}
+
+
+void
+HeteroMemCtrl::drainResume()
+{
+    if (!isTimingMode && system()->isTimingMode()) {
+        // if we switched to timing mode, kick things into action,
+        // and behave as if we restored from a checkpoint
+        startup();
+        dram->startup();
+        hbm->startup();
+    } else if (isTimingMode && !system()->isTimingMode()) {
+        // if we switch from timing mode, stop the refresh events to
+        // not cause issues with KVM
+        dram->suspend();
+        hbm->suspend();
+    }
+
+    // update the mode
+    isTimingMode = system()->isTimingMode();
+}
+
+AddrRangeList
+HeteroMemCtrl::getAddrRanges()
+{
+    AddrRangeList ranges;
+    ranges.push_back(dram->getAddrRange());
+    ranges.push_back(hbm->getAddrRange());
+    return ranges;
+}
+
+} // namespace memory
+} // namespace gem5
+
+```
