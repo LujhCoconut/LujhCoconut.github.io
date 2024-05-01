@@ -825,3 +825,174 @@ HeteroMemCtrl::getAddrRanges()
 } // namespace gem5
 
 ```
+
+
+
+## 【ChatGPT】利用已有控制器设置混合内存
+
+```c++
+#include "base/types.hh"
+#include "mem/HBMCtrl.hh"
+#include "mem/MemCtrl.hh"
+#include "mem/abstract_mem.hh"
+
+class HybridMemCtrl : public AbstractMemory {
+public:
+    HybridMemCtrl(HBMCtrl* hbmCtrl, MemCtrl* dramCtrl) 
+        : hbmCtrl(hbmCtrl), dramCtrl(dramCtrl) {}
+
+    virtual bool inAddrMap(Addr addr) const override {
+        // 假设HBM和DRAM的地址空间不重叠，可以简单地将地址映射到对应的内存控制器
+        return hbmCtrl->inAddrMap(addr) || dramCtrl->inAddrMap(addr);
+    }
+
+    virtual Tick recvAtomic(PacketPtr pkt) override {
+        if (inAddrMap(pkt->getAddr())) {
+            if (hbmCtrl->inAddrMap(pkt->getAddr())) {
+                return hbmCtrl->recvAtomic(pkt);
+            } else {
+                return dramCtrl->recvAtomic(pkt);
+            }
+        } else {
+            panic("Address out of range");
+        }
+    }
+
+    virtual void recvFunctional(PacketPtr pkt) override {
+        if (inAddrMap(pkt->getAddr())) {
+            if (hbmCtrl->inAddrMap(pkt->getAddr())) {
+                hbmCtrl->recvFunctional(pkt);
+            } else {
+                dramCtrl->recvFunctional(pkt);
+            }
+        } else {
+            panic("Address out of range");
+        }
+    }
+
+    // 这里还可以根据需要实现其他函数，如recvTiming等
+
+private:
+    HBMCtrl* hbmCtrl;
+    MemCtrl* dramCtrl;
+};
+
+```
+
+```python
+# hybrid_mem_ctrl.py
+# This file defines the HybridMemCtrl class
+
+from m5.objects import MemCtrl, HBMCtrl, MemInterface
+
+class HybridMemCtrl(MemCtrl):
+    type = "HybridMemCtrl"
+    cxx_header = "mem/hybrid_mem_ctrl.hh"
+    cxx_class = "HybridMemCtrl"
+
+    # Parameters for HBM and DRAM memory interfaces
+    hbm = Param.HBMCtrl("HBM memory interface to use")
+    dram = Param.MemCtrl("DRAM memory interface to use")
+
+```
+
+```c++
+// HybridMemCtrl.hh
+#ifndef __HYBRID_MEM_CTRL_HH__
+#define __HYBRID_MEM_CTRL_HH__
+
+#include "base/types.hh"
+#include "mem/HBMCtrl.hh"
+#include "mem/MemCtrl.hh"
+#include "mem/abstract_mem.hh"
+
+class HybridMemCtrl : public AbstractMemory {
+public:
+    HybridMemCtrl(HBMCtrl* hbmCtrl, MemCtrl* dramCtrl);
+
+    virtual bool inAddrMap(Addr addr) const override;
+
+    virtual Tick recvAtomic(PacketPtr pkt) override;
+
+    virtual void recvFunctional(PacketPtr pkt) override;
+
+    // 这里还可以根据需要添加其他函数声明
+
+private:
+    HBMCtrl* hbmCtrl;
+    MemCtrl* dramCtrl;
+};
+
+#endif // __HYBRID_MEM_CTRL_HH__
+```
+
+【修改】
+
+python文件
+
+```python
+# hybrid_mem_ctrl.py
+# This file defines the HybridMemCtrl class
+
+from m5.objects import MemCtrl, HBMCtrl, MemInterface
+
+class HybridMemCtrl(MemCtrl):
+    type = "HybridMemCtrl"
+    cxx_header = "mem/hybrid_mem_ctrl.hh"
+    cxx_class = "HybridMemCtrl"
+
+    # Parameters for HBM and DRAM memory interfaces
+    hbmCtrl = Param.HBMCtrl("HBM memory interface to use")
+    dramCtrl = Param.MemCtrl("DRAM memory interface to use")
+```
+
+hh文件
+
+```c++
+#include "base/types.hh"
+#include "mem/HBMCtrl.hh"
+#include "mem/MemCtrl.hh"
+#include "mem/abstract_mem.hh"
+
+class HybridMemCtrl : public AbstractMemory {
+public:
+    HybridMemCtrl(HBMCtrl* hbmCtrl, MemCtrl* dramCtrl) 
+        : hbmCtrl(hbmCtrl), dramCtrl(dramCtrl) {}
+
+    virtual bool inAddrMap(Addr addr) const override {
+        // 假设HBM和DRAM的地址空间不重叠，可以简单地将地址映射到对应的内存控制器
+        return hbmCtrl->inAddrMap(addr) || dramCtrl->inAddrMap(addr);
+    }
+
+    virtual Tick recvAtomic(PacketPtr pkt) override {
+        if (inAddrMap(pkt->getAddr())) {
+            if (hbmCtrl->inAddrMap(pkt->getAddr())) {
+                return hbmCtrl->recvAtomic(pkt);
+            } else {
+                return dramCtrl->recvAtomic(pkt);
+            }
+        } else {
+            panic("Address out of range");
+        }
+    }
+
+    virtual void recvFunctional(PacketPtr pkt) override {
+        if (inAddrMap(pkt->getAddr())) {
+            if (hbmCtrl->inAddrMap(pkt->getAddr())) {
+                hbmCtrl->recvFunctional(pkt);
+            } else {
+                dramCtrl->recvFunctional(pkt);
+            }
+        } else {
+            panic("Address out of range");
+        }
+    }
+
+    // 这里还可以根据需要实现其他函数，如recvTiming等
+
+private:
+    HBMCtrl* hbmCtrl;
+    MemCtrl* dramCtrl;
+};
+```
+
