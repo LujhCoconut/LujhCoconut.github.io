@@ -1646,6 +1646,8 @@ ProcessParams::create() const
 
 ## **packet**
 
+不包含所有的代码
+
 ### getAddrRange
 
 ```C++
@@ -1660,16 +1662,31 @@ Packet::getAddrRange() const
 
 ### trySatisfyFunctional
 
+用于尝试通过功能访问（functional access）满足对数据包的操作。该函数的主要功能是检查数据包与传入的数据范围是否有交集，并根据数据包的类型（读或写）来处理数据。
+
+`Printable *obj`：一个可打印的对象，用于打印请求的状态。
+
+`Addr addr`：起始地址。
+
+`bool is_secure`：安全标志，表示是否是安全访问。
+
+`int size`：数据的大小。
+
+`uint8_t *_data`：指向数据的指针。
+
 ```c++
 bool
 Packet::trySatisfyFunctional(Printable *obj, Addr addr, bool is_secure, int size,
                         uint8_t *_data)
 {
+    // 当前数据包的起始和结束地址
     const Addr func_start = getAddr();
     const Addr func_end   = getAddr() + getSize() - 1;
+    // 传入的数据范围的起始和结束地址
     const Addr val_start  = addr;
     const Addr val_end    = val_start + size - 1;
  
+    // 如果安全标志不匹配或者地址范围没有交集，则返回 false。
     if (is_secure != _isSecure || func_start > val_end ||
         val_start > func_end) {
         // no intersection
@@ -1677,6 +1694,7 @@ Packet::trySatisfyFunctional(Printable *obj, Addr addr, bool is_secure, int size
     }
  
     // check print first since it doesn't require data
+    // 如果请求是打印类型，不需要数据，仅进行打印操作
     if (isPrint()) {
         assert(!_data);
         safe_cast<PrintReqState*>(senderState)->printObj(obj);
@@ -1685,17 +1703,23 @@ Packet::trySatisfyFunctional(Printable *obj, Addr addr, bool is_secure, int size
  
     // we allow the caller to pass NULL to signify the other packet
     // has no data
+    // 如果传入的数据指针为空，则返回 false
     if (!_data) {
         return false;
     }
- 
+ 	// 计算重叠区域
+    // val_offset 和 func_offset：分别表示重叠区域在传入数据和当前数据包中的偏移
     const Addr val_offset = func_start > val_start ?
         func_start - val_start : 0;
     const Addr func_offset = func_start < val_start ?
         val_start - func_start : 0;
+    // overlap_size：重叠区域的大小
     const Addr overlap_size = std::min(val_end, func_end)+1 -
         std::max(val_start, func_start);
  
+    // 处理读操作
+    // 如果是读操作，将数据从传入的数据范围复制到当前数据包中，并更新有效字节的跟踪
+    // 最后返回是否所有字节都有效
     if (isRead()) {
         std::memcpy(getPtr<uint8_t>() + func_offset,
                _data + val_offset,
@@ -1703,6 +1727,7 @@ Packet::trySatisfyFunctional(Printable *obj, Addr addr, bool is_secure, int size
  
         // initialise the tracking of valid bytes if we have not
         // used it already
+        // 它确保在第一次使用该数组时，将其大小调整为数据包的大小，并将所有元素初始化为 false
         if (bytesValid.empty())
             bytesValid.resize(getSize(), false);
  
@@ -1712,19 +1737,29 @@ Packet::trySatisfyFunctional(Printable *obj, Addr addr, bool is_secure, int size
         int i = 0;
  
         // check up to func_offset
+        // 检查 func_offset 之前的字节
+        // 这个循环从索引 0 开始，一直到 func_offset，检查在此之前的所有字节是否都已经有效。
+        // all_bytes_valid 初始化为 true，表示假设所有字节都是有效的。
+        // 在循环中，如果 bytesValid[i] 为 false，则 all_bytes_valid 也会变为 false。
+        // 这个操作保证了只要有一个字节无效，all_bytes_valid 就会变成 false 并保持不变。
         for (; all_bytes_valid && i < func_offset; ++i)
             all_bytes_valid &= bytesValid[i];
  
         // update the valid bytes
+        // 更新有效字节
+        // 这个循环从 func_offset 开始，一直到 func_offset + overlap_size，将重叠区域中的字节标记为有效。
+        // 这意味着这些字节已经成功读取，并被标记为有效
         for (i = func_offset; i < func_offset + overlap_size; ++i)
             bytesValid[i] = true;
  
         // check the bit after the update we just made
+        // 检查更新之后的字节
+        // 这个循环从 func_offset + overlap_size 开始，一直到数据包的末尾，检查在更新之后的所有字节是否都有效
         for (; all_bytes_valid && i < getSize(); ++i)
             all_bytes_valid &= bytesValid[i];
  
         return all_bytes_valid;
-    } else if (isWrite()) {
+    } else if (isWrite()) {// 处理写操作：如果是写操作，将数据从当前数据包复制到传入的数据范围
         std::memcpy(_data + val_offset,
                getConstPtr<uint8_t>() + func_offset,
                overlap_size);
@@ -1737,9 +1772,431 @@ Packet::trySatisfyFunctional(Printable *obj, Addr addr, bool is_secure, int size
 }
 ```
 
+>
+>
+>```c++
+>void* memcpy(void* dest, const void* src, std::size_t count);
+>```
+>
+>`void* dest`：目标地址的指针，表示数据将被复制到的内存地址。
+>
+>`const void* src`：源地址的指针，表示数据将从这里开始复制。
+>
+>`std::size_t count`：要复制的字节数。
+>
+>返回目标地址 `dest` 的指针。
 
 
 
+### copyResponderFlags
+
+```c++
+void
+Packet::copyResponderFlags(const PacketPtr pkt)
+{
+    // 断言当前数据包是一个请求包。这意味着这个方法只能在请求包上调用。
+    assert(isRequest());
+    // If we have already found a responder, no other cache should
+    // commit to responding
+    // 这个断言检查两个条件：要么传入的 pkt 没有响应，要么当前数据包没有响应。两个都响应会导致冲突
+    assert(!pkt->cacheResponding() || !cacheResponding());
+    // pkt->flags & RESPONDER_FLAGS：使用按位与运算符 & 提取 pkt 中的响应者标志
+    flags.set(pkt->flags & RESPONDER_FLAGS);
+}
+ 
+```
+
+```c++
+ // Flags that are used to create reponse packets
+        RESPONDER_FLAGS        = 0x00000009,
+```
+
+```c++
+        // Snoop co-ordination flag to indicate that a cache is
+        // responding to a snoop. See setCacheResponding below.
+        CACHE_RESPONDING       = 0x00000008,
+```
+
+**嗅探协调**： 嗅探（snoop）是多处理器系统中缓存一致性协议的一部分。在这种协议中，处理器或缓存会嗅探（检查）总线上传输的消息，以确定它们是否需要响应或采取行动。
+
+`CACHE_RESPONDING` 标志用于指示缓存是否正在响应嗅探请求。如果某个缓存设置了这个标志，意味着它对当前嗅探请求做出了响应。
+
+```c++
+assert(!pkt->cacheResponding() || !cacheResponding());
+```
+
+断言确保在执行 `copyResponderFlags` 方法时，不能有多个缓存同时对嗅探请求响应。这是为了避免缓存一致性协议中的冲突
+
+
+
+### pushSenderState
+
+用于管理 `Packet` 对象的 `SenderState` 栈。`SenderState` 是与数据包相关联的一些状态信息，通常用于跟踪数据包在系统中的路径和状态变化。
+
+```c++
+void
+Packet::pushSenderState(Packet::SenderState *sender_state)
+{
+    // 这确保了在后续操作中不会出现空指针解引用的错误
+    assert(sender_state != NULL);
+    // 这一行代码将当前的 senderState 保存到新 sender_state 的 predecessor 成员中
+    // predecessor 是一个指针，指向上一个 SenderState 对象，这样可以形成一个链表结构，追踪数据包经过的所有状态。
+    sender_state->predecessor = senderState;
+    // 更新 senderState
+    senderState = sender_state;
+}
+```
+
+在 `Packet` 类中，`SenderState` 通常用于**保存和恢复与数据包相关联的状态信息**。当数据包在系统中传递时，它可能经过多个组件，每个组件可能会修改数据包的状态。在这种情况下，使用 `pushSenderState` 方法可以将当前状态保存起来，以便在处理完成后恢复。
+
+
+
+### popSenderState
+
+用于从 `Packet` 对象的状态栈中弹出一个 `SenderState` 对象，并返回该对象。这个方法与 `pushSenderState` 方法相对应，用于恢复之前保存的状态。
+
+```c++
+Packet::SenderState *
+Packet::popSenderState()
+{
+    // 使用 assert 检查 senderState 指针是否不为 NULL。如果 senderState 为 NULL，程序将在调试模式下中断。
+	// 这确保了在后续操作中不会出现空指针解引用的错误
+    assert(senderState != NULL);
+    // 将当前的 senderState 保存到局部变量 sender_state 中,这样可以暂存当前的状态，准备返回给调用者。
+    SenderState *sender_state = senderState;
+    // 将 senderState 更新为当前 sender_state 的 predecessor，即前一个状态
+    // 这相当于从状态栈中弹出一个状态，恢复到之前的状态
+    senderState = sender_state->predecessor;
+    // 将弹出的 sender_state 的 predecessor 设置为 NULL
+    // 这样做是为了断开与之前状态的链接，防止不必要的引用保持。
+    sender_state->predecessor = NULL;
+    return sender_state;
+}
+```
+
+这个方法与 `pushSenderState` 方法一起使用，可以有效管理 `Packet` 对象的状态栈，保存和恢复数据包的状态信息。
+
+
+
+### getUintX
+
+于从数据包中获取指定大小的无符号整数，并根据指定的字节序（大小端序）进行转换
+
+```c++
+uint64_t
+Packet::getUintX(ByteOrder endian) const
+{
+    auto [val, success] =
+        gem5::getUintX(getConstPtr<void>(), getSize(), endian);
+    panic_if(!success, "%i isn't a supported word size.\n", getSize());
+    return val;
+}
+```
+
+* 调用 `gem5::getUintX` 函数来从数据包中获取无符号整数。
+
+* `getConstPtr<void>()` 返回数据包的常量指针，指向数据包的内存起始地址。
+
+* `getSize()` 返回数据包的大小。
+
+* `endian` 是一个枚举值，表示字节序（大端或小端）。
+
+这个方法依赖于 `gem5` 库中的 `getUintX` 函数，它的作用是**根据指定的字节序从给定地址的内存中提取指定大小的无符号整数**。具体实现可能会根据不同的字节序处理数据的排列顺序
+
+**例子：**
+
+假设 `getConstPtr<void>()` 返回指向内存地址 `0x1000` 的常量指针，`getSize()` 返回 `4`，`endian` 是 `ByteOrder::little_endian`（小端序）。
+
+调用 `getUintX` 方法将从地址 `0x1000` 开始的 4 个字节解析为一个小端序的无符号整数，并将其作为 `uint64_t` 类型返回。
+
+* 字节序（Byte Order）是指在存储或传输多字节数据时，字节的排列顺序。主要有两种常见的字节序，即大端序（Big Endian）和小端序（Little Endian），它们区别在于字节的高位（Most Significant Byte，MSB）和低位（Least Significant Byte，LSB）的存储顺序。
+
+* 在大端序中，数据的高位字节（MSB）存储在低地址，低位字节（LSB）存储在高地址。这意味着在内存中，数据的各个字节按照从高地址到低地址的顺序排列。例如，一个 32 位整数 `0x12345678` 在内存中的存储顺序如下（地址从低到高）：
+
+  * ```
+    地址:   0x1000  0x1001  0x1002  0x1003
+    数据:   0x12    0x34    0x56    0x78
+    ```
+
+* 在小端序中，数据的低位字节（LSB）存储在低地址，高位字节（MSB）存储在高地址。因此，数据的各个字节按照从低地址到高地址的顺序排列。以同样的 32 位整数 `0x12345678` 为例，在小端序中的存储顺序如下：
+
+  * ```
+    地址:   0x1000  0x1001  0x1002  0x1003
+    数据:   0x78    0x56    0x34    0x12
+    ```
+
+* x86 架构使用小端序，而 PowerPC 和大多数 RISC 架构使用大端序。在网络上传输数据，可以使用网络字节序（通常是大端序），例如使用 `htonl`（主机到网络长整型）和 `ntohl`（网络到主机长整型）等函数
+
+
+
+### setUintX
+
+```c++
+void
+Packet::setUintX(uint64_t w, ByteOrder endian)
+{
+    bool success = gem5::setUintX(w, getPtr<void>(), getSize(), endian);
+    panic_if(!success, "%i isn't a supported word size.\n", getSize());
+}
+```
+
+
+
+### print
+
+用于将 `Packet` 对象的信息输出到给定的输出流 `o` 中，以便调试或日志记录目的
+
+```c++
+void
+Packet::print(std::ostream &o, const int verbosity,
+              const std::string &prefix) const
+{
+    ccprintf(o, "%s%s [%x:%x]%s%s%s%s%s%s", prefix, cmdString(),
+             getAddr(), getAddr() + getSize() - 1,
+             req->isSecure() ? " (s)" : "",
+             req->isInstFetch() ? " IF" : "",
+             req->isUncacheable() ? " UC" : "",
+             isExpressSnoop() ? " ES" : "",
+             req->isToPOC() ? " PoC" : "",
+             req->isToPOU() ? " PoU" : "");
+}
+```
+
+- - `o`：一个 `std::ostream` 的引用，表示输出流，用于将信息输出到指定的输出设备（如控制台、文件）。
+  - `verbosity`：一个整数，用于指定输出详细程度的级别，但在这段代码中并没有直接使用。
+  - `prefix`：一个 `std::string` 的引用，表示输出信息的前缀，用于标识或区分不同的输出信息。
+
+
+
+### print()
+
+```c++
+std::string
+Packet::print() const {
+    std::ostringstream str;
+    print(str);
+    // 调用 std::ostringstream 的 str() 方法，将流中的数据作为 std::string 返回
+    return str.str();
+}
+```
+
+* 创建了一个 `std::ostringstream` 对象 `str`，它是一个输出字符串流。`std::ostringstream` 类提供了一个内存缓冲区，可以将各种数据类型的数据以字符串的形式输出到其中。
+
+* 调用 `Packet` 类中的另一个 `print` 方法，传递 `str` 作为输出流。这里利用了函数重载的特性，将字符串输出的操作委托给了前面解释过的 `print(std::ostream &o)` 方法
+
+
+
+### matchBlockAddr
+
+用于检查当前数据包是否匹配给定的块地址和安全性标志
+
+```c++
+bool
+Packet::matchBlockAddr(const Addr addr, const bool is_secure,
+                       const int blk_size) const
+{
+    return (getBlockAddr(blk_size) == addr) && (isSecure() == is_secure);
+}
+```
+
+```c++
+    Addr getBlockAddr(unsigned int blk_size) const
+    {
+        return getAddr() & ~(Addr(blk_size - 1));
+    }
+```
+
+* `getAddr()`：调用 `Packet` 类中的 `getAddr` 方法，获取**当前数据包的地址**。
+
+  `blk_size - 1`：计算块大小减一。
+
+  `Addr(blk_size - 1)`：将块大小减一转换为 `Addr` 类型，这里假设 `Addr` 是一个整数类型，通常用于表示地址。
+
+  `~(Addr(blk_size - 1))`：对 `Addr(blk_size - 1)` 取反，即**按位取反操作，得到一个掩码，该掩码用于将地址的低位块地址部分清零**。
+
+  `getAddr() & ~(Addr(blk_size - 1))`：使用按位与操作，将 `getAddr()` 的地址值与上述掩码进行按位与操作，从而得到块地址。
+
+* 假设 `pkt` 的地址是 `0x12345678`，并且 `blockSize` 是 `64`，那么根据上述计算：
+
+  - `blk_size - 1` 将是 `63`。
+  - `~(Addr(63))` 按位取反后的结果将是一个掩码，例如 `0xFFFFFFFFFFFFFFC0`。
+  - `getAddr() & ~(Addr(63))` 将是 `0x12345678 & 0xFFFFFFFFFFFFFFC0`，结果将是 `0x12345600`，**这就是计算得到的块地址**。
+
+
+
+### matchBlockAddr
+
+这段代码是 `Packet` 类中的 `matchBlockAddr` 方法的重载版本，接受一个 `PacketPtr` 类型的参数 `pkt` 和一个 `int` 类型的参数 `blk_size`。它用于检查当前数据包是否与另一个数据包 `pkt` 的块地址和安全性匹配。
+
+`pkt`：一个 `PacketPtr`，即指向 `Packet` 对象的智能指针。
+
+`blk_size`：一个 `int`，表示块大小
+
+```c++
+bool
+Packet::matchBlockAddr(const PacketPtr pkt, const int blk_size) const
+{
+    return matchBlockAddr(pkt->getBlockAddr(blk_size), pkt->isSecure(),
+                          blk_size);
+}
+```
+
+`pkt->getBlockAddr(blk_size)`：调用 `pkt` 指向的 `Packet` 对象的 `getBlockAddr` 方法，获取 `pkt` 的块地址。
+
+`pkt->isSecure()`：调用 `pkt` 指向的 `Packet` 对象的 `isSecure` 方法，获取 `pkt` 的安全性。
+
+`matchBlockAddr(addr, is_secure, blk_size)`：调用当前对象的另一个 `matchBlockAddr` 方法，传递 `pkt` 的块地址、安全性和给定的块大小作为参数。
+
+> 这段代码允许比较当前 `Packet` 对象与另一个 `Packet` 对象 `pkt` 的块地址和安全性。这在处理器缓存管理或其他涉及地址对齐和安全性匹配的系统级操作中非常有用。
+
+
+
+### matchAddr
+
+用于比较当前数据包的地址和安全性标志是否与给定的地址和安全性标志匹配
+
+```c++
+bool
+Packet::matchAddr(const Addr addr, const bool is_secure) const
+{
+    return (getAddr() == addr) && (isSecure() == is_secure);
+}
+```
+
+这段代码通常用于数据包处理的逻辑中，特别是在需要确定数据包的目标地址和访问权限时非常有用。例如，在处理器或网络设备的数据包路由和权限控制中，可以使用这种方法来验证数据包是否符合预期的目标地址和访问权限。
+
+
+
+### matchAddr
+
+这段代码是 `Packet` 类中的 `matchAddr` 方法的一个重载版本，接受一个 `PacketPtr` 类型的指针参数，并使用其指向的 `Packet` 对象的地址和安全性标志来调用另一个 `matchAddr` 方法进行比较。
+
+```c++
+bool
+Packet::matchAddr(const PacketPtr pkt) const
+{
+    return matchAddr(pkt->getAddr(), pkt->isSecure());
+}
+```
+
+这段代码允许比较当前 `Packet` 对象与另一个 `Packet` 对象 `pkt` 的地址和安全性标志。这在处理器缓存管理、网络数据包路由或其他需要比较地址和安全性的场景中非常有用.
+
+
+
+### PrintReqState::PrintReqState
+
+段代码定义了 `Packet::PrintReqState` 类的构造函数
+
+`PrintReqState` 是 `Packet` 类的一个嵌套类或成员类。这种结构在软件设计中常见，允许将相关的功能和数据组织在一起，提高代码的模块化和可维护性
+
+```c++
+Packet::PrintReqState::PrintReqState(std::ostream &_os, int _verbosity)
+    : curPrefixPtr(new std::string("")), os(_os), verbosity(_verbosity)
+{
+    // 通过传递空字符串 "" 和 curPrefixPtr（指向空字符串的指针）来创建一个 LabelStackEntry 对象
+        // 并加入labelStack
+    labelStack.push_back(LabelStackEntry("", curPrefixPtr));
+}
+```
+
+* `curPrefixPtr(new std::string(""))`：
+
+  * `curPrefixPtr` 是一个指向 `std::string` 的指针。
+
+  - 通过 `new std::string("")` 创建了一个空的 `std::string` 对象，并将其地址赋给 `curPrefixPtr`。
+
+  - 这意味着 `curPrefixPtr` 指向了一个新分配的空字符串对象。
+
+*	`os(_os)`：
+  - `os` 是一个引用类型的成员变量，初始化为传入的 `_os`（即外部传入的 `std::ostream` 对象）。
+
+* `verbosity(_verbosity)`：
+  * `verbosity` 是一个 `int` 类型的成员变量，初始化为传入的 `_verbosity`。
+
+```c++
+Packet::PrintReqState::
+LabelStackEntry::LabelStackEntry(const std::string &_label,
+                                 std::string *_prefix)
+    : label(_label), prefix(_prefix), labelPrinted(false)
+{
+}
+```
+
+
+
+### PrintReqState::pushLabel
+
+`lbl`：一个 `const std::string&` 类型的引用，表示要推入的标签。
+
+`prefix`：一个 `const std::string&` 类型的引用，表示要添加到当前前缀字符串末尾的前缀内容。
+
+```c++
+void
+Packet::PrintReqState::pushLabel(const std::string &lbl,
+                                 const std::string &prefix)
+{
+    // 将标签推入 labelStack
+    labelStack.push_back(LabelStackEntry(lbl, curPrefixPtr));
+    // 更新当前前缀字符串指针
+    curPrefixPtr = new std::string(*curPrefixPtr);
+    *curPrefixPtr += prefix;
+}
+```
+
+### PrintReqState::popLabel
+
+```c++
+void
+Packet::PrintReqState::popLabel()
+{
+    delete curPrefixPtr;
+    curPrefixPtr = labelStack.back().prefix;
+    labelStack.pop_back();
+    assert(!labelStack.empty());
+}
+```
+
+### PrintReqState::printLabels
+
+```c++
+void
+Packet::PrintReqState::printLabels()
+{
+    if (!labelStack.back().labelPrinted) {
+        LabelStack::iterator i = labelStack.begin();
+        LabelStack::iterator end = labelStack.end();
+        while (i != end) {
+            if (!i->labelPrinted) {
+                ccprintf(os, "%s%s\n", *(i->prefix), i->label);
+                i->labelPrinted = true;
+            }
+            i++;
+        }
+    }
+}
+```
+
+
+
+### makeHtmTransactionalReqResponse
+
+```c++
+void
+Packet::makeHtmTransactionalReqResponse(
+    const HtmCacheFailure htm_return_code)
+{
+    assert(needsResponse());
+    assert(isRequest());
+ 
+    cmd = cmd.responseCommand();
+ 
+    setHtmTransactionFailedInCache(htm_return_code);
+ 
+    // responses are never express, even if the snoop that
+    // triggered them was
+    flags.clear(EXPRESS_SNOOP);
+}
+```
 
 
 
@@ -1868,3 +2325,1518 @@ BaseXBar::calcPacketTiming(PacketPtr pkt, Tick header_delay)
 }
 ```
 
+
+
+## MemCtrl
+
+这段代码是 `MemCtrl` 类的构造函数实现
+
+```c++
+MemCtrl::MemCtrl(const MemCtrlParams &p) :
+    qos::MemCtrl(p),
+    port(name() + ".port", *this), isTimingMode(false),
+    retryRdReq(false), retryWrReq(false),
+    nextReqEvent([this] {processNextReqEvent(dram, respQueue,
+                         respondEvent, nextReqEvent, retryWrReq);}, name()),
+    respondEvent([this] {processRespondEvent(dram, respQueue,
+                         respondEvent, retryRdReq); }, name()),
+    dram(p.dram),
+    readBufferSize(dram->readBufferSize),
+    writeBufferSize(dram->writeBufferSize),
+    writeHighThreshold(writeBufferSize * p.write_high_thresh_perc / 100.0),
+    writeLowThreshold(writeBufferSize * p.write_low_thresh_perc / 100.0),
+    minWritesPerSwitch(p.min_writes_per_switch),
+    minReadsPerSwitch(p.min_reads_per_switch),
+    memSchedPolicy(p.mem_sched_policy),
+    frontendLatency(p.static_frontend_latency),
+    backendLatency(p.static_backend_latency),
+    commandWindow(p.command_window),
+    prevArrival(0),
+    stats(*this)
+{
+    DPRINTF(MemCtrl, "Setting up controller\n");
+ 
+    readQueue.resize(p.qos_priorities);
+    writeQueue.resize(p.qos_priorities);
+ 
+    dram->setCtrl(this, commandWindow);
+ 
+    // perform a basic check of the write thresholds
+    if (p.write_low_thresh_perc >= p.write_high_thresh_perc)
+        fatal("Write buffer low threshold %d must be smaller than the "
+              "high threshold %d\n", p.write_low_thresh_perc,
+              p.write_high_thresh_perc);
+    if (p.disable_sanity_check) {
+        port.disableSanityCheck();
+    }
+}
+```
+
+
+
+### init
+
+确保 `MemCtrl` 对象的端口（`port`）已经连接，并在连接后执行相应的操作
+
+sendRangeChange()用于获取所有者负责的非重叠地址范围列表
+
+```c++
+void
+MemCtrl::init()
+{
+   if (!port.isConnected()) {
+        fatal("MemCtrl %s is unconnected!\n", name());
+    } else {
+        port.sendRangeChange();
+    }
+}
+```
+
+
+
+### startup
+
+该方法的目的是在内存控制器启动时执行一些初始化操作，主要是针对内存操作模式进行设置和调整。
+
+如果系统处于时序模式，将内存操作的下一个预计时间设置为当前模拟时钟周期加上一个命令偏移量，以确保在计算下一个请求的时间时不会出现负值，并在模拟开始时添加一个微小的延迟
+
+```c++
+void
+MemCtrl::startup()
+{
+    // 记住内存系统的操作模式
+    isTimingMode = system()->isTimingMode();
+ 
+    if (isTimingMode) {
+        // 将总线忙时的时间向前移动足够远，这样在计算下一个请求的时间时不会出现负值
+        // 这将在模拟开始时增加一个微不足道的泡沫
+        dram->nextBurstAt = curTick() + dram->commandOffset();
+    }
+}
+```
+
+
+
+### recvAtomic
+
+用于接收处理来自其他组件（可能是处理器或其他设备）发送的原子操作数据包。它首先检查数据包的地址是否在内存控制器管理的DRAM地址范围内，然后调用 `recvAtomicLogic()` 方法继续处理数据包。
+
+```c++
+Tick
+MemCtrl::recvAtomic(PacketPtr pkt)
+{
+    if (!dram->getAddrRange().contains(pkt->getAddr())) {
+        panic("Can't handle address range for packet %s\n", pkt->print());
+    }
+ 
+    return recvAtomicLogic(pkt, dram);
+}
+```
+
+
+
+### recvAtomicLogic
+
+用于实际处理接收到的原子操作数据包,它执行实际的内存访问操作，并根据数据包是否包含数据返回相应的访问延迟时间.
+
+```c++
+Tick
+MemCtrl::recvAtomicLogic(PacketPtr pkt, MemInterface* mem_intr)
+{
+    DPRINTF(MemCtrl, "recvAtomic: %s 0x%x\n",
+                     pkt->cmdString(), pkt->getAddr());
+	// 参见之前关于嗅探和缓存一致性的相关内容 
+    panic_if(pkt->cacheResponding(), "Should not see packets where cache "
+             "is responding");
+ 
+    // do the actual memory access and turn the packet into a response
+    // 调用 mem_intr（内存接口对象）的 access(pkt) 方法，执行实际的内存访问操作。
+	// 这一步将数据包转化为响应，处理具体的读写操作。
+    mem_intr->access(pkt);
+ 	// 检查数据包是否包含数据
+    if (pkt->hasData()) {
+        // 如果数据包包含数据，则返回内存接口的访问延迟时间
+        // mem_intr->accessLatency() 返回一个模拟访问延迟的值
+        // 这个值不需要非常精确，只需足够维持模拟进行，模仿关闭页面的情况。此外，这个延迟不能为0。
+        // this value is not supposed to be accurate, just enough to
+        // keep things going, mimic a closed page
+        // also this latency can't be 0
+        return mem_intr->accessLatency();
+    }
+ 	// 数据包不包含数据，返回0表示没有延迟
+    return 0;
+}
+```
+
+
+
+**关于` mem_intr->access(pkt);`，下面给出相关的函数**
+
+负责处理各种类型的内存访问请求
+
+```c++
+void
+AbstractMemory::access(PacketPtr pkt)
+{
+    // 检查缓存响应
+    if (pkt->cacheResponding()) {
+        DPRINTF(MemoryAccess, "Cache responding to %#llx: not responding\n",
+                pkt->getAddr());
+        return;
+    }
+ 	// 处理 CleanEvict 和 WritebackClean 命令
+    if (pkt->cmd == MemCmd::CleanEvict || pkt->cmd == MemCmd::WritebackClean) {
+        DPRINTF(MemoryAccess, "CleanEvict  on 0x%x: not responding\n",
+                pkt->getAddr());
+      return;
+    }
+ 	// 确保数据包的地址范围是内存范围的子集，如果不是，则触发断言失败
+    assert(pkt->getAddrRange().isSubset(range));
+ 	// 获取主机地址
+    uint8_t *host_addr = toHostAddr(pkt->getAddr());
+ 	// 检查数据包的命令类型是否为 SwapReq。处理 Swap 请求
+    if (pkt->cmd == MemCmd::SwapReq) {
+        // 处理 Swap 请求，如果是原子操作，则执行原子操作
+        if (pkt->isAtomicOp()) {
+            if (pmemAddr) {// 存在物理内存地址（pmemAddr）
+                pkt->setData(host_addr);// 调用 pkt->setData(host_addr) 将数据设置为内存中的当前值
+                // 执行原子操作（(*(pkt->getAtomicOp()))(host_addr)），直接操作内存地址。
+                (*(pkt->getAtomicOp()))(host_addr);
+            }
+        } else {。
+            // 创建一个 std::vector<uint8_t> 来保存要写入的值。
+            std::vector<uint8_t> overwrite_val(pkt->getSize());
+            // 定义条件值变量（condition_val64 和 condition_val32）
+            uint64_t condition_val64;
+            uint32_t condition_val32;
+ 			// 检查是否存在物理内存地址，如果没有，则触发致命错误（panic_if）。
+            panic_if(!pmemAddr, "Swap only works if there is real memory " \
+                     "(i.e. null=False)");
+ 			// 初始化 overwrite_mem 为 true，表示默认情况下覆盖内存。
+            bool overwrite_mem = true;
+            // keep a copy of our possible write value, and copy what is at the
+            // memory address into the packet
+            // 将数据包的数据写入 overwrite_val。
+            pkt->writeData(&overwrite_val[0]);
+            // 将数据包的数据设置为内存中的当前值
+            pkt->setData(host_addr);
+ 			// 如果请求是条件交换（isCondSwap）
+            if (pkt->req->isCondSwap()) {
+                // 根据数据包的大小（pkt->getSize()）确定条件值的类型和大小。
+                // 获取条件值（condition_val64 或 condition_val32）。
+                // 比较条件值和内存地址的当前值，如果相等，则 overwrite_mem 保持 true，否则设为 false。
+                // 如果数据包大小既不是 64 位也不是 32 位，则触发致命错误。
+                if (pkt->getSize() == sizeof(uint64_t)) {
+                    condition_val64 = pkt->req->getExtraData();
+                    overwrite_mem = !std::memcmp(&condition_val64, host_addr,
+                                                 sizeof(uint64_t));
+                } else if (pkt->getSize() == sizeof(uint32_t)) {
+                    condition_val32 = (uint32_t)pkt->req->getExtraData();
+                    overwrite_mem = !std::memcmp(&condition_val32, host_addr,
+                                                 sizeof(uint32_t));
+                } else
+                    panic("Invalid size for conditional read/write\n");
+            }
+ 			// 如果 overwrite_mem 为 true，则执行内存覆盖，将 overwrite_val 中的数据写入内存地址。
+            if (overwrite_mem)
+                std::memcpy(host_addr, &overwrite_val[0], pkt->getSize());
+ 
+            assert(!pkt->req->isInstFetch());
+            TRACE_PACKET("Read/Write");
+            if (collectStats) {
+                stats.numOther[pkt->req->requestorId()]++;
+            }
+        }
+    } else if (pkt->isRead()) {// 处理读取请求,如果是读取请求，执行读取操作，并记录统计数据
+        assert(!pkt->isWrite());
+        if (pkt->isLLSC()) {
+            assert(!pkt->fromCache());
+            // if the packet is not coming from a cache then we have
+            // to do the LL/SC tracking here
+            trackLoadLocked(pkt);
+        }
+        if (pmemAddr) {
+            pkt->setData(host_addr);
+        }
+        TRACE_PACKET(pkt->req->isInstFetch() ? "IFetch" : "Read");
+        if (collectStats) {
+            stats.numReads[pkt->req->requestorId()]++;
+            stats.bytesRead[pkt->req->requestorId()] += pkt->getSize();
+            if (pkt->req->isInstFetch()) {
+                stats.bytesInstRead[pkt->req->requestorId()] += pkt->getSize();
+            }
+        }
+    } else if (pkt->isInvalidate() || pkt->isClean()) {// 无效和清除请求，不执行任何操作。
+        assert(!pkt->isWrite());
+        // in a fastmem system invalidating and/or cleaning packets
+        // can be seen due to cache maintenance requests
+ 
+        // no need to do anything
+    } else if (pkt->isWrite()) {// 处理写入请求,如果是写入请求，并且写入操作被允许，执行写入操作，并记录统计数据。
+        if (writeOK(pkt)) {
+            if (pmemAddr) {
+                pkt->writeData(host_addr);
+                DPRINTF(MemoryAccess, "%s write due to %s\n",
+                        __func__, pkt->print());
+            }
+            assert(!pkt->req->isInstFetch());
+            TRACE_PACKET("Write");
+            if (collectStats) {
+                stats.numWrites[pkt->req->requestorId()]++;
+                stats.bytesWritten[pkt->req->requestorId()] += pkt->getSize();
+            }
+        }
+    } else {// 如果数据包的类型不在预期范围内，触发致命错误
+        panic("Unexpected packet %s", pkt->print());
+    }
+ 	// 生成响应
+    if (pkt->needsResponse()) {
+        pkt->makeResponse();
+    }
+}
+```
+
+
+
+### recvAtomicBackdoor
+
+处理一个原子请求，并且尝试获取该请求的后门访问（backdoor access）。后门访问通常用于快速路径访问，绕过正常的缓存和控制机制，以更直接地访问内存内容。
+
+```c++
+Tick
+MemCtrl::recvAtomicBackdoor(PacketPtr pkt, MemBackdoorPtr &backdoor)
+{
+    // 调用 recvAtomic 处理原子请求,返回一个 Tick 类型的值，表示处理请求所需的延迟
+    Tick latency = recvAtomic(pkt);
+    // 尝试获取一个后门访问对象，并将其存储在 backdoor 引用中。后门访问允许更直接和快速的内存访问。
+    dram->getBackdoor(backdoor);
+    // 函数返回在 recvAtomic 调用中计算的延迟值
+    return latency;
+}
+```
+
+* 后门访问（Backdoor Access）是一种绕过正常的内存访问路径，通过直接访问内存数据来提高访问速度和效率的技术。在计算机系统中，正常的内存访问路径通常会经过多个缓存层次和控制逻辑，而后门访问则直接与内存硬件进行交互，从而减少延迟和开销。
+
+  **提高访问速度**：
+
+  - 通过绕过缓存和控制逻辑，后门访问可以直接读取或写入内存，提高数据访问速度。这对于需要快速访问大数据块的操作特别有用。
+
+  **调试和测试**：
+
+  - 后门访问常用于调试和测试内存系统。在不干扰正常系统运行的情况下，可以直接检查和修改内存内容，帮助开发人员快速定位和解决问题。
+
+  **特殊操作**：
+
+  - 一些特殊操作需要直接访问内存，例如快速的数据传输、DMA（直接内存访问）操作等。后门访问提供了一个有效的途径来执行这些操作。
+
+* 后门访问通常通过提供一个特殊的接口或方法来实现，该接口允许直接读取或写入内存。具体实现方式可能因系统和硬件架构而异。以下是一些常见的实现方式：
+
+  1. **内存映射**：
+     - 内存映射（Memory Mapping）是一种常见的后门访问方式。在这种方式中，特定的内存区域被映射到用户空间进程或硬件设备，允许直接访问内存数据。
+  2. **专用接口**：
+     - 有些系统提供专用的API或接口，允许开发人员通过这些接口直接与内存硬件交互。例如，在一些高性能计算系统中，提供了直接访问内存的API以提高数据传输效率。
+  3. **硬件支持**：
+     - 一些硬件设备提供了后门访问的支持。例如，某些内存控制器或存储器设备内置了后门访问功能，可以直接从外部访问内存数据。
+
+
+
+### readQueueFull
+
+用于检查读队列是否已满。它接收一个参数 `neededEntries`，表示需要的条目数，并返回一个布尔值，表示读队列是否已满
+
+```c++
+bool
+MemCtrl::readQueueFull(unsigned int neededEntries) const
+{
+    // 输出当前读队列的限制、当前队列大小以及需要的条目数
+    DPRINTF(MemCtrl,
+            "Read queue limit %d, current size %d, entries needed %d\n",
+            readBufferSize, totalReadQueueSize + respQueue.size(),
+            neededEntries);
+ 	// 计算新的读队列大小
+    auto rdsize_new = totalReadQueueSize + respQueue.size() + neededEntries;
+    return rdsize_new > readBufferSize;
+}
+```
+
+`totalReadQueueSize` 表示当前读队列中的条目数。
+
+`respQueue.size()` 返回响应队列的大小。
+
+`neededEntries` 表示需要添加的条目数。
+
+`rdsize_new` 是计算后的总大小，即当前读队列的大小加上响应队列的大小，再加上需要的条目数。
+
+
+
+### writeQueueFull
+
+用于检查写队列是否已满
+
+```c++
+bool
+MemCtrl::writeQueueFull(unsigned int neededEntries) const
+{
+    DPRINTF(MemCtrl,
+            "Write queue limit %d, current size %d, entries needed %d\n",
+            writeBufferSize, totalWriteQueueSize, neededEntries);
+ 
+    auto wrsize_new = (totalWriteQueueSize + neededEntries);
+    return  wrsize_new > writeBufferSize;
+}
+```
+
+
+
+### addToReadQueue
+
+实现了向读队列添加请求的功能，涉及到处理内存访问请求、分配内存数据包以及将请求添加到读队列中的逻辑
+
+```c++
+bool
+MemCtrl::addToReadQueue(PacketPtr pkt,
+                unsigned int pkt_count, MemInterface* mem_intr)
+{
+    // only add to the read queue here. whenever the request is
+    // eventually done, set the readyTime, and call schedule()
+    assert(!pkt->isWrite());
+ 	// 包计数不为0
+    assert(pkt_count != 0);
+ 
+    // if the request size is larger than burst size, the pkt is split into
+    // multiple packets
+    // Note if the pkt starting address is not aligened to burst size, the
+    // address of first packet is kept unaliged. Subsequent packets
+    // are aligned to burst size boundaries. This is to ensure we accurately
+    // check read packets against packets in write queue.
+    // 初始化基地址、当前地址、服务于写队列的包计数、分割包的帮助器以及突发大小。
+    const Addr base_addr = pkt->getAddr();
+    Addr addr = base_addr;
+    unsigned pktsServicedByWrQ = 0;
+    BurstHelper* burst_helper = NULL;
+ 
+    uint32_t burst_size = mem_intr->bytesPerBurst();
+ 	// 遍历所有分割后的数据包，计算每个包的大小，并更新统计信息
+    for (int cnt = 0; cnt < pkt_count; ++cnt) {
+        unsigned size = std::min((addr | (burst_size - 1)) + 1,
+                        base_addr + pkt->getSize()) - addr;
+        stats.readPktSize[ceilLog2(size)]++;
+        stats.readBursts++;
+        stats.requestorReadAccesses[pkt->requestorId()]++;
+ 
+        // First check write buffer to see if the data is already at
+        // the controller
+        // foundInWrQ：一个布尔变量，表示当前读请求是否在写队列中找到对应的数据。
+        // burst_addr：突发对齐的地址，用于检查写队列中的数据包。burstAlign 函数将地址对齐到突发边界。
+        bool foundInWrQ = false;
+        Addr burst_addr = burstAlign(addr, mem_intr);
+        // if the burst address is not present then there is no need
+        // looking any further
+        // 检查当前请求是否已经在写队列中，如果在则更新相应的统计信息，并标记为已找到
+        // isInWriteQueue 是一个集合，包含了所有写队列中突发对齐的地址。这里检查当前的 burst_addr 是否在集合中
+        if (isInWriteQueue.find(burst_addr) != isInWriteQueue.end()) {
+            // 遍历写队列
+            for (const auto& vec : writeQueue) {
+                // 如果 burst_addr 在集合中，表示写队列中可能有覆盖当前读请求的数据包。继续检查具体的写队列：
+                // 遍历 writeQueue 中的每一个数据包 p，检查当前读请求是否被写队列中的数据包覆盖
+                for (const auto& p : vec) {
+                    // check if the read is subsumed in the write queue
+                    // packet we are looking at
+                    // 如果 p->addr <= addr 且 (addr + size) <= (p->addr + p->size)，
+                    // 表示当前读请求的地址范围完全被写队列中的数据包覆盖。
+                    if (p->addr <= addr &&
+                       ((addr + size) <= (p->addr + p->size))) {
+ 						// 更新状态和统计信息
+                        foundInWrQ = true;
+                        stats.servicedByWrQ++;
+                        pktsServicedByWrQ++;
+                        DPRINTF(MemCtrl,
+                                "Read to addr %#x with size %d serviced by "
+                                "write queue\n",
+                                addr, size);
+                        stats.bytesReadWrQ += burst_size;
+                        break;
+                    }
+                }
+            }
+        }
+ 
+        // If not found in the write q, make a memory packet and
+        // push it onto the read queue
+        // 将请求添加到读队列
+        // 如果在写队列中未找到对应的请求，将请求分割成多个包，并将这些包添加到读队列中。同时更新相应的统计信息和日志。
+        if (!foundInWrQ) {
+ 			// 处理分片请求
+            // pkt_count > 1：如果请求分成了多个数据包。burst_helper == NULL：如果尚未创建分片辅助类。
+            // Make the burst helper for split packets
+            if (pkt_count > 1 && burst_helper == NULL) {
+                DPRINTF(MemCtrl, "Read to addr %#x translates to %d "
+                        "memory requests\n", pkt->getAddr(), pkt_count);
+                // 创建一个新的 BurstHelper 对象来管理分片请求
+                burst_helper = new BurstHelper(pkt_count);
+            }
+ 			// 根据原始数据包 pkt 和地址信息创建一个新的内存数据包 mem_pkt
+            MemPacket* mem_pkt;
+            mem_pkt = mem_intr->decodePacket(pkt, addr, size, true,
+                                                    mem_intr->pseudoChannel);
+ 
+            // Increment read entries of the rank (dram)
+            // Increment count to trigger issue of non-deterministic read (nvm)
+            // 设置内存数据包的rank信息
+            mem_intr->setupRank(mem_pkt->rank, true);
+            // Default readyTime to Max; will be reset once read is issued
+            // 设置内存数据包的就绪时间
+            mem_pkt->readyTime = MaxTick;
+            // 将分片辅助类与内存数据包关联
+            mem_pkt->burstHelper = burst_helper;
+ 			// 确保读队列不会超出限制
+            assert(!readQueueFull(1));
+            // 更新读队列长度的统计信息
+            stats.rdQLenPdf[totalReadQueueSize + respQueue.size()]++;
+ 
+            DPRINTF(MemCtrl, "Adding to read queue\n");
+ 			// 将内存数据包加入到适当的读队列中。
+            readQueue[mem_pkt->qosValue()].push_back(mem_pkt);
+ 		
+            // log packet 记录读请求的日志。
+            logRequest(MemCtrl::READ, pkt->requestorId(),
+                       pkt->qosValue(), mem_pkt->addr, 1);
+ 			// 增加读队列的大小计数
+            mem_intr->readQueueSize++;
+ 
+            // Update stats更新平均读队列长度的统计信息。
+            stats.avgRdQLen = totalReadQueueSize + respQueue.size();
+        }
+ 
+        // Starting address of next memory pkt (aligned to burst boundary)
+        // 计算下一个要处理的地址，保证其在突发边界上对齐
+        addr = (addr | (burst_size - 1)) + 1;
+    }
+ 
+    // If all packets are serviced by write queue, we send the repsonse back
+    // 如果所有包都已由写队列处理，直接发送响应。如果有部分包被写队列处理，更新 burst_helper 中的信息并返回
+    if (pktsServicedByWrQ == pkt_count) {
+        accessAndRespond(pkt, frontendLatency, mem_intr);
+        return true;
+    }
+ 
+    // Update how many split packets are serviced by write queue
+    if (burst_helper != NULL)
+        burst_helper->burstsServiced = pktsServicedByWrQ;
+ 
+    // not all/any packets serviced by the write queue
+    return false;
+}
+```
+
+* 检查写队列的部分用于确定当前的读请求是否可以通过写队列来满足。如果写队列中已经有对应的数据，那么读请求可以直接从写队列中读取数据，而不需要访问内存
+
+
+
+### addToWriteQueue
+
+将写请求添加到写队列
+
+```c++
+void
+MemCtrl::addToWriteQueue(PacketPtr pkt, unsigned int pkt_count,
+                                MemInterface* mem_intr)
+{
+    // only add to the write queue here. whenever the request is
+    // eventually done, set the readyTime, and call schedule()
+    assert(pkt->isWrite());
+ 
+    // if the request size is larger than burst size, the pkt is split into
+    // multiple packets
+    // 处理分片请求
+    const Addr base_addr = pkt->getAddr();// 获取写请求的基础地址
+    Addr addr = base_addr;// 当前处理的地址，从基础地址开始
+    uint32_t burst_size = mem_intr->bytesPerBurst(); // 获取内存接口的每个突发传输的大小。
+ 	// 根据请求的大小和内存接口的突发大小将写请求分成多个数据包,并记录统计信息
+    for (int cnt = 0; cnt < pkt_count; ++cnt) {
+        unsigned size = std::min((addr | (burst_size - 1)) + 1,
+                        base_addr + pkt->getSize()) - addr;
+        stats.writePktSize[ceilLog2(size)]++;
+        stats.writeBursts++;
+        stats.requestorWriteAccesses[pkt->requestorId()]++;
+ 
+        // see if we can merge with an existing item in the write
+        // queue and keep track of whether we have merged or not
+        // 检查写队列中的合并
+        // 当前处理的地址是否已经存在于写队列中。如果存在，则尝试与现有的写请求合并
+        bool merged = isInWriteQueue.find(burstAlign(addr, mem_intr)) !=
+            isInWriteQueue.end();
+ 		
+        // if the item was not merged we need to create a new write
+        // and enqueue it
+        // 处理未合并的写请求，如果未在写队列中找到当前处理的地址（!merged），则
+        if (!merged) {
+            // 使用 mem_intr 解码并创建一个新的内存数据包 mem_pkt
+            MemPacket* mem_pkt;
+            mem_pkt = mem_intr->decodePacket(pkt, addr, size, false,
+                                                    mem_intr->pseudoChannel);
+            // Default readyTime to Max if nvm interface;
+            //will be reset once read is issued
+            // 如果是非易失性内存接口，将 mem_pkt 的就绪时间设置为 MaxTick
+            mem_pkt->readyTime = MaxTick;
+ 			// 设置内存数据包的rank
+            mem_intr->setupRank(mem_pkt->rank, false);
+ 			// 确保写队列的大小未超过设定的限制
+            assert(totalWriteQueueSize < writeBufferSize);
+            stats.wrQLenPdf[totalWriteQueueSize]++;
+ 
+            DPRINTF(MemCtrl, "Adding to write queue\n");
+ 			// 将内存数据包 mem_pkt 添加到写队列 writeQueue 中，并将对应的地址插入到 isInWriteQueue
+            // mem_pkt->qosValue() 返回当前内存数据包 mem_pkt 的服务质量值（Quality of Service, QoS），
+            // 这个值决定了数据包应该被放入哪个优先级的队列
+            writeQueue[mem_pkt->qosValue()].push_back(mem_pkt);
+            isInWriteQueue.insert(burstAlign(addr, mem_intr));
+ 
+            // log packet 记录写请求日志
+            logRequest(MemCtrl::WRITE, pkt->requestorId(),
+                       pkt->qosValue(), mem_pkt->addr, 1);
+ 
+            mem_intr->writeQueueSize++;
+ 
+            assert(totalWriteQueueSize == isInWriteQueue.size());
+ 
+            // Update stats 更新写队列的统计信息
+            stats.avgWrQLen = totalWriteQueueSize;
+ 
+        } else {
+            DPRINTF(MemCtrl,
+                    "Merging write burst with existing queue entry\n");
+ 
+            // keep track of the fact that this burst effectively
+            // disappeared as it was merged with an existing one
+            stats.mergedWrBursts++;
+        }
+ 
+        // Starting address of next memory pkt (aligned to burst_size boundary)
+        // 计算并更新下一个处理的地址，以保证其在突发边界上对齐
+        addr = (addr | (burst_size - 1)) + 1;
+    }
+ 
+    // we do not wait for the writes to be send to the actual memory,
+    // but instead take responsibility for the consistency here and
+    // snoop the write queue for any upcoming reads
+    // @todo, if a pkt size is larger than burst size, we might need a
+    // different front end latency
+    // 在处理完所有分片请求后，访问内存并响应请求。
+    // 这里的 accessAndRespond 函数可能会将写请求发送到实际的内存，并处理相应的响应逻辑。
+    accessAndRespond(pkt, frontendLatency, mem_intr);
+}
+```
+
+
+
+```c++
+ unsigned size = std::min((addr | (burst_size - 1)) + 1,
+                        base_addr + pkt->getSize()) - addr;
+```
+
+* `(addr | (burst_size - 1))`进行按位或操作，这将 `addr` 向上舍入到最接近的 `burst_size` 的倍数，确保下一个地址处于突发边界上
+
+* 将结果加一，确保我们计算的是从当前地址开始的完整突发的大小
+* `base_addr + pkt->getSize()`：计算写请求的结束地址
+* 取上述两个值的最小值，确保我们不超过写请求的实际大小
+
+
+
+**服务质量（QoS）的重要性**：
+
+- QoS 是用来区分和管理不同请求在系统中的优先级和重要性的指标。不同的请求可能具有不同的响应时间要求或者处理优先级。
+- 在内存控制器（`MemCtrl`）中，不同的请求者（requestor）可能会因为其角色或者应用场景而具有不同的 QoS 值。
+
+**分级管理**：
+
+- 通过使用 QoS 值来分级管理写请求，系统可以更精细地控制对内存访问的调度和响应。高优先级的请求可以更快地得到服务，而低优先级的请求则可以在系统负载较轻时处理。
+- 将 `writeQueue` 设计为二维结构，可以根据 QoS 值的不同将请求分配到不同的队列中。这样做的好处是可以在不同的队列中独立管理和调度请求，以满足不同 QoS 级别的需求。
+
+**队列管理和调度**：
+
+- 每个 `writeQueue[qos]` 都是一个单独的队列，用于存储特定 QoS 值的写请求。当内存控制器需要处理写请求时，可以根据 QoS 值快速定位到合适的队列，并进行相应的操作。
+- 这种设计可以有效地管理系统中不同优先级的写请求，同时避免不同请求之间的干扰和竞争，提高系统整体的资源利用率和性能。
+
+
+
+**存储系统**：
+
+- 在存储系统中，QoS 常用于管理对存储资源的访问。例如，通过为不同应用程序或者用户组分配不同的带宽或者响应时间，以确保关键应用的数据访问性能。
+
+**内存控制器和缓存系统**：
+
+- 内存控制器和缓存系统中常根据 QoS 策略管理和调度内存访问。例如，将请求分为不同的优先级队列，以便在高负载时保证关键数据的及时访问。
+
+
+
+
+
+### PrintQs
+
+实现了打印内存控制器中读队列（readQueue）、响应队列（respQueue）和写队列（writeQueue）的功能。这通常用于调试和跟踪内存控制器中当前正在处理的请求。
+
+```c++
+void
+MemCtrl::printQs() const
+{
+#if TRACING_ON
+    DPRINTF(MemCtrl, "===READ QUEUE===\n\n");
+    for (const auto& queue : readQueue) {
+        for (const auto& packet : queue) {
+            DPRINTF(MemCtrl, "Read %#x\n", packet->addr);
+        }
+    }
+ 
+    DPRINTF(MemCtrl, "\n===RESP QUEUE===\n\n");
+    for (const auto& packet : respQueue) {
+        DPRINTF(MemCtrl, "Response %#x\n", packet->addr);
+    }
+ 
+    DPRINTF(MemCtrl, "\n===WRITE QUEUE===\n\n");
+    for (const auto& queue : writeQueue) {
+        for (const auto& packet : queue) {
+            DPRINTF(MemCtrl, "Write %#x\n", packet->addr);
+        }
+    }
+#endif // TRACING_ON
+}
+```
+
+
+
+### recvTimingReq
+
+实现了内存控制器处理来自外部的定时请求（recvTimingReq）
+
+```c++
+bool
+MemCtrl::recvTimingReq(PacketPtr pkt)
+{
+    // This is where we enter from the outside world
+    // 日志输出和断言检查
+    DPRINTF(MemCtrl, "recvTimingReq: request %s addr %#x size %d\n",
+            pkt->cmdString(), pkt->getAddr(), pkt->getSize());
+ 	// 参见之前嗅探和缓存一致性的相关部分 Ctrl+F直接搜索即可
+    panic_if(pkt->cacheResponding(), "Should not see packets where cache "
+             "is responding");
+ 	// only rd or wr
+    panic_if(!(pkt->isRead() || pkt->isWrite()),
+             "Should only see read and writes at memory controller\n");
+ 	
+    // Calc avg gap between requests
+    // 计算请求之间的平均间隔
+    if (prevArrival != 0) {
+        // 计算并更新前一个请求到达时间与当前请求到达时间之间的间隔，用于性能统计
+        stats.totGap += curTick() - prevArrival;
+    }
+    prevArrival = curTick();
+ 	// 确保请求的地址在内存控制器管理的地址范围内，否则触发 panic
+    panic_if(!(dram->getAddrRange().contains(pkt->getAddr())),
+             "Can't handle address range for packet %s\n", pkt->print());
+ 
+    // Find out how many memory packets a pkt translates to
+    // If the burst size is equal or larger than the pkt size, then a pkt
+    // translates to only one memory packet. Otherwise, a pkt translates to
+    // multiple memory packets
+    // 确定请求转换为多少个内存包
+    // 根据内存的 burst size 确定该请求转换为多少个内存包。
+    // 如果请求大小大于等于 burst size，则一个请求转换为一个内存包；否则，多个请求会跨多个内存包
+    unsigned size = pkt->getSize();
+    uint32_t burst_size = dram->bytesPerBurst();
+ 
+    unsigned offset = pkt->getAddr() & (burst_size - 1);
+    unsigned int pkt_count = divCeil(offset + size, burst_size);
+ 
+    // run the QoS scheduler and assign a QoS priority value to the packet
+    // 运行 QoS 调度器，为请求分配一个 QoS 优先级值，以决定其进入读或写队列的位置。
+    qosSchedule( { &readQueue, &writeQueue }, burst_size, pkt);
+ 
+    // check local buffers and do not accept if full
+    /* ---------检查本地缓冲区状态------------*/
+    // 写请求处理，如果写队列未满，则将请求添加到写队列，并记录统计信息。如果写队列已满，则标记需要重试，并返回 false
+    if (pkt->isWrite()) {
+        assert(size != 0);
+        if (writeQueueFull(pkt_count)) {
+            DPRINTF(MemCtrl, "Write queue full, not accepting\n");
+            // remember that we have to retry this port
+            retryWrReq = true;
+            stats.numWrRetry++;
+            return false;
+        } else {
+            addToWriteQueue(pkt, pkt_count, dram);
+            // If we are not already scheduled to get a request out of the
+            // queue, do so now
+            if (!nextReqEvent.scheduled()) {
+                DPRINTF(MemCtrl, "Request scheduled immediately\n");
+                schedule(nextReqEvent, curTick());
+            }
+            stats.writeReqs++;
+            stats.bytesWrittenSys += size;
+        }
+    } else {// 读请求处理，如果读队列已满，则标记需要重试，并返回 false
+        assert(pkt->isRead());
+        assert(size != 0);
+        if (readQueueFull(pkt_count)) {
+            DPRINTF(MemCtrl, "Read queue full, not accepting\n");
+            // remember that we have to retry this port
+            retryRdReq = true;
+            stats.numRdRetry++;
+            return false;
+        } else {
+            if (!addToReadQueue(pkt, pkt_count, dram)) {
+                // If we are not already scheduled to get a request out of the
+                // queue, do so now
+                if (!nextReqEvent.scheduled()) {
+                    DPRINTF(MemCtrl, "Request scheduled immediately\n");
+                    schedule(nextReqEvent, curTick());
+                }
+            }
+            stats.readReqs++;
+            stats.bytesReadSys += size;
+        }
+    }
+ 
+    return true;
+}
+```
+
+
+
+### processRespondEvent
+
+用于处理响应事件的函数，主要功能是处理到达其就绪时间的请求
+
+```c++
+void
+MemCtrl::processRespondEvent(MemInterface* mem_intr,
+                        MemPacketQueue& queue,
+                        EventFunctionWrapper& resp_event,
+                        bool& retry_rd_req)
+{
+ 	// 记录日志，指示有请求已经达到了其就绪时间
+    DPRINTF(MemCtrl,
+            "processRespondEvent(): Some req has reached its readyTime\n");
+ 	// 取出队列中的请求包
+    MemPacket* mem_pkt = queue.front();
+ 	/*---------------处理响应事件-----------------*/
+    // media specific checks and functions when read response is complete
+    // DRAM only
+    // 调用介质接口 mem_intr 的 respondEvent 函数处理响应事件，针对特定介质（如DRAM）进行必要的操作
+    mem_intr->respondEvent(mem_pkt->rank);
+ 	// 处理分裂数据包
+    // 如果 mem_pkt 是分裂数据包，则根据 burstHelper 的存在与否进行不同的处理。
+    // 如果是分裂数据包，将会增加已服务的子数据包计数，并在所有子数据包都已服务时，响应请求
+    if (mem_pkt->burstHelper) {
+        // it is a split packet
+        mem_pkt->burstHelper->burstsServiced++;
+        if (mem_pkt->burstHelper->burstsServiced ==
+            mem_pkt->burstHelper->burstCount) {
+            // we have now serviced all children packets of a system packet
+            // so we can now respond to the requestor
+            // @todo we probably want to have a different front end and back
+            // end latency for split packets
+            accessAndRespond(mem_pkt->pkt, frontendLatency + backendLatency,
+                             mem_intr);
+            delete mem_pkt->burstHelper;
+            mem_pkt->burstHelper = NULL;
+        }
+    } else {
+        // it is not a split packet
+        // 调用 accessAndRespond 函数处理并响应请求包
+        accessAndRespond(mem_pkt->pkt, frontendLatency + backendLatency,
+                         mem_intr);
+    }
+ 	// 将已处理的请求包从队列中移除
+    queue.pop_front();
+ 	// 如果队列不为空，则根据队首请求包的就绪时间 readyTime 调度下一个响应事件 resp_event
+    if (!queue.empty()) {
+        assert(queue.front()->readyTime >= curTick());
+        assert(!resp_event.scheduled());
+        schedule(resp_event, queue.front()->readyTime);
+    } else {
+        // if there is nothing left in any queue, signal a drain
+        // 如果所有队列都为空且系统处于排空状态，发出信号表示排空完成；
+        if (drainState() == DrainState::Draining &&
+            !totalWriteQueueSize && !totalReadQueueSize &&
+            allIntfDrained()) {
+ 
+            DPRINTF(Drain, "Controller done draining\n");
+            signalDrainDone();
+        } else {// 否则，检查刷新状态并可能启动刷新事件循环
+            // check the refresh state and kick the refresh event loop
+            // into action again if banks already closed and just waiting
+            // for read to complete
+            // DRAM only
+            mem_intr->checkRefreshState(mem_pkt->rank);
+        }
+    }
+ 	// 释放已处理请求包 mem_pkt 的内存空间
+    delete mem_pkt;
+ 
+    // We have made a location in the queue available at this point,
+    // so if there is a read that was forced to wait, retry now
+    // 重试等待的读请求,如果之前有等待的读请求被阻塞，现在重试发送该请求
+    if (retry_rd_req) {
+        retry_rd_req = false;
+        port.sendRetryReq();
+    }
+}
+```
+
+这段代码的主要目的是在请求包达到就绪时间后，处理其响应和后续的调度逻辑，并根据需要执行额外的刷新或重试操作.
+
+
+
+### chooseNext
+
+用于在内存控制器中选择下一个要处理的请求包（MemPacket）
+
+`MemPacketQueue::iterator` 是一个迭代器类型，用于访问 `MemPacketQueue` 中的元素。
+
+`queue` 是一个 `MemPacketQueue` 类型的引用，表示待处理的请求队列。
+
+`extra_col_delay` 是一个时钟周期延迟，用于额外的冲突延迟。
+
+`mem_intr` 是一个 `MemInterface` 类型的指针，表示内存接口。
+
+```c++
+MemPacketQueue::iterator
+MemCtrl::chooseNext(MemPacketQueue& queue, Tick extra_col_delay,
+                                                MemInterface* mem_intr)
+{
+    // This method does the arbitration between requests.
+ 	// 初始化迭代器 ret，默认为 queue 的末尾位置，表示暂时没有找到合适的请求包
+    MemPacketQueue::iterator ret = queue.end();
+ 	// 检查队列是否为空,如果队列不为空才进行调度处理
+    if (!queue.empty()) {
+        if (queue.size() == 1) {
+            // 如果队列中只有一个请求包，首先检查其伪通道是否与当前内存接口的伪通道匹配。
+            // 然后检查请求包是否就绪，如果就绪则将其迭代器赋给 ret，表示选择该请求包
+            // available rank corresponds to state refresh idle
+            MemPacket* mem_pkt = *(queue.begin());
+            if (mem_pkt->pseudoChannel != mem_intr->pseudoChannel) {
+                return ret;
+            }
+            if (packetReady(mem_pkt, mem_intr)) {
+                ret = queue.begin();
+                DPRINTF(MemCtrl, "Single request, going to a free rank\n");
+            } else {
+                DPRINTF(MemCtrl, "Single request, going to a busy rank\n");
+            }
+        }/*-----------按照调度策略处理-----------*/ 
+        else if (memSchedPolicy == enums::fcfs) {
+            // check if there is a packet going to a free rank
+            // 如果采用先到先服务（FCFS）策略，遍历队列中的每个请求包.
+            // 检查伪通道匹配以及请求包是否就绪，找到第一个就绪的请求包并将其迭代器赋给 ret
+            for (auto i = queue.begin(); i != queue.end(); ++i) {
+                MemPacket* mem_pkt = *i;
+                if (mem_pkt->pseudoChannel != mem_intr->pseudoChannel) {
+                    continue;
+                }
+                if (packetReady(mem_pkt, mem_intr)) {
+                    ret = i;
+                    break;
+                }
+            }
+        }
+        // 如果采用（FR-FCFS）策略，则调用 chooseNextFRFCFS 函数来选择下一个请求包
+        // 并返回其迭代器和允许的冲突时间 
+        else if (memSchedPolicy == enums::frfcfs) {
+            Tick col_allowed_at;
+            std::tie(ret, col_allowed_at)
+                    = chooseNextFRFCFS(queue, extra_col_delay, mem_intr);
+        } else {// 异常处理
+            panic("No scheduling policy chosen\n");
+        }
+    }
+    // 返回选定的请求包迭代器 ret，表示选择的下一个要处理的请求包在队列中的位置
+    return ret;
+}
+```
+
+
+
+### chooseNextFRFCFS
+
+用于实现 FR-FCFS（First-Ready, First-Come, First-Serve）调度策略的具体函数,这个函数的主要目的是根据 FR-FCFS 调度策略选择下一个要处理的请求包，并返回其迭代器和允许的列命令时间.
+
+返回类型是 `std::pair<MemPacketQueue::iterator, Tick>`，表示选择的下一个请求包迭代器和允许的列命令时间。
+
+`queue` 是一个 `MemPacketQueue` 类型的引用，表示待处理的请求队列。
+
+`extra_col_delay` 是一个额外的列命令延迟。
+
+`mem_intr` 是一个 `MemInterface` 类型的指针，表示内存接口。
+
+```C++
+std::pair<MemPacketQueue::iterator, Tick>
+MemCtrl::chooseNextFRFCFS(MemPacketQueue& queue, Tick extra_col_delay,
+                                MemInterface* mem_intr)
+{
+    // 示初始没有选择的请求包
+    auto selected_pkt_it = queue.end();
+    // 表示初始列命令可以允许的最大时间
+    Tick col_allowed_at = MaxTick;
+ 
+    // time we need to issue a column command to be seamless
+    // 计算最小列命令时间
+    //  mem_intr->nextBurstAt 和当前时钟周期 curTick() 加上 extra_col_delay 的最大值。这个时间用来确保列命令的无缝执行
+    const Tick min_col_at = std::max(mem_intr->nextBurstAt + extra_col_delay,
+                                    curTick());
+ 	// 调用 mem_intr 对象的 chooseNextFRFCFS 方法，根据 FR-FCFS 策略从 queue 中选择下一个请求包，
+    // 并返回选中的请求包迭代器和允许的列命令时间
+    std::tie(selected_pkt_it, col_allowed_at) =
+                 mem_intr->chooseNextFRFCFS(queue, min_col_at);
+ 
+    if (selected_pkt_it == queue.end()) {
+        DPRINTF(MemCtrl, "%s no available packets found\n", __func__);
+    }
+ 
+    return std::make_pair(selected_pkt_it, col_allowed_at);
+}
+```
+
+FR-FCFS（First-Ready First-Come, First-Serve）策略是内存调度中常见的一种策略，特别适用于多通道内存或多rank内存系统。下面是对FR-FCFS策略的详细解释：
+
+FR-FCFS策略的设计目的是优化多通道内存或多rank内存系统中的请求处理。它结合了两种主要的调度原则：首先是“首就绪”（First-Ready），即优先选择已准备好进行处理的请求；其次是“先来先服务”（First-Come, First-Serve），即同一就绪状态下，优先处理最早到达的请求。
+
+**就绪状态优先**：
+
+- FR-FCFS首先检查哪些请求已经准备好（ready）。这通常意味着请求已经通过前端的处理，可以立即被发送到内存控制器进行处理。
+- 准备好的标准可以根据具体的系统设计而变化，但通常包括等待排队时间已满、依赖的前置操作已完成等条件。
+
+**先来先服务调度**：
+
+- 在所有准备好的请求中，FR-FCFS选择最早到达的请求进行处理。这种方式确保了请求的处理顺序是公平且有序的。
+
+**适用于多通道或多rank系统**：
+
+- FR-FCFS特别适用于多通道内存或多rank内存系统，这些系统允许同时处理来自多个通道或rank的内存请求。通过选择就绪且最早到达的请求，可以有效地利用并行处理能力，提高系统的整体性能。
+
+
+
+在内存控制器的设计中，`col_allowed_at` 通常表示的是允许发出列命令的时间。这个时间点是根据当前系统的状态和内存控制器的调度策略计算出来的，具体可能涉及以下几个方面的考量：
+
+1. **额外列延迟（extra_col_delay）**：这个延迟是考虑到在某些系统中，可能需要在发出列命令之前预留一定的时间，以确保操作的顺畅性和稳定性。
+2. **内存接口的下一个突发时间（mem_intr->nextBurstAt）**：内存控制器可能会跟踪下一个突发传输的时间点，以便在适当的时候发出内存访问请求。
+3. **当前时钟周期（curTick()）**：这是当前的系统时钟周期，用于确保在正确的时间发出内存命令，以与系统的其他部分同步。
+
+综合这些因素，`col_allowed_at` 可能是一个预测的时间点，表示在这个时间之后，内存控制器可以安全地发出下一个列命令，以执行内存访问操作。
+
+
+
+### accessAndRespond
+
+内存控制器中用于处理内存访问并响应的关键函数
+
+```c++
+void
+MemCtrl::accessAndRespond(PacketPtr pkt, Tick static_latency,
+                                                MemInterface* mem_intr)
+{
+    // 里打印出将要响应的内存地址，用于调试和追踪目的。
+    DPRINTF(MemCtrl, "Responding to Address %#x.. \n", pkt->getAddr());
+ 	// 检查当前的数据包是否需要响应。如果不需要响应，后续操作将直接释放这个数据包
+    bool needsResponse = pkt->needsResponse();
+    // do the actual memory access which also turns the packet into a
+    // response
+    panic_if(!mem_intr->getAddrRange().contains(pkt->getAddr()),
+             "Can't handle address range for packet %s\n", pkt->print());
+    // 调用 mem_intr 的 access 函数执行实际的内存访问操作。这可能包括将数据包发送到内存以获取数据或将数据写入内存
+    mem_intr->access(pkt);
+ 	// 如果数据包需要响应
+    // turn packet around to go back to requestor if response expected
+    if (needsResponse) {
+        // 确保数据包已经被标记为响应状态。然后计算响应时间：
+        // access already turned the packet into a response
+        assert(pkt->isResponse());
+        // response_time consumes the static latency and is charged also
+        // with headerDelay that takes into account the delay provided by
+        // the xbar and also the payloadDelay that takes into account the
+        // number of data beats.
+        Tick response_time = curTick() + static_latency + pkt->headerDelay +
+                             pkt->payloadDelay;
+        // Here we reset the timing of the packet before sending it out.
+        // 重置延迟并排队响应
+        pkt->headerDelay = pkt->payloadDelay = 0;
+ 
+        // queue the packet in the response queue to be sent out after
+        // the static latency has passed
+        // 将数据包加入响应队列 port 中，等待 response_time 后发送响应。
+        port.schedTimingResp(pkt, response_time);
+    } else {
+        // @todo the packet is going to be deleted, and the MemPacket
+        // is still having a pointer to it
+        // 如果数据包不需要响应，或者在响应队列中排队后，将其标记为待删除状态
+        pendingDelete.reset(pkt);
+    }
+ 
+    DPRINTF(MemCtrl, "Done\n");
+ 
+    return;
+}
+```
+
+
+
+### pruneBurstTick
+
+用来清理存储在 `burstTicks` 中的已经过时的时钟周期值的函数
+
+```c++
+void
+MemCtrl::pruneBurstTick()
+{
+    // 使用 auto 关键字初始化一个迭代器 it，指向 burstTicks 容器的起始位置
+    auto it = burstTicks.begin();
+    // 使用 while 循环遍历 burstTicks 容器中的每个元素，条件是迭代器 it 未到达容器末尾。
+    // 在每次循环中，先将当前迭代器 it 的值赋给 current_it，然后迭代器 it 自增一次。
+    while (it != burstTicks.end()) {
+        auto current_it = it++;
+        // 对于每个元素，检查当前模拟时钟周期 curTick() 是否大于 burstTicks 中存储的值 *current_it。
+        // 如果是，表示该时钟周期已经过时。然后，打印一条日志消息说明正在移除过时的时钟周期，
+        // 并使用 erase() 函数从 burstTicks 容器中移除该值
+        if (curTick() > *current_it) {
+            DPRINTF(MemCtrl, "Removing burstTick for %d\n", *current_it);
+            burstTicks.erase(current_it);
+        }
+    }
+}
+```
+
+
+
+
+
+# Chameleon 代码部分
+
+项目结构`"chameleon_ctrl.cc+chameleon.hh"`通过gem5嵌入的pybind11与`“Chameleon.py”`绑定，通过`SConsscrip`t编译将`ChameleonCtrl`对象引入`m5.object`，可以在python文件中进行配置。
+
+
+
+## chameleon_ctrl.cc/hh
+
+### Chameleon构造类和初始化部分
+
+```c++
+ChameleonCtrl::ChameleonCtrl(const ChameleonCtrlParams &params) :
+    ClockedObject(params),
+    _MemSideRequestorId(params.system->getRequestorId(this, "memSide")),
+    stats(this),
+    blockSize(params.system->cacheLineSize()),
+    // hbmSize(8*1024*1024*1024LL), ddrRatio(3),
+    hbmSize(1*1024*1024*1024LL), ddrRatio(16),
+    common_lat(500),
+    blocked(0),
+    memPort(params.name + ".mem_side", this),
+    cpuPort(params.name + ".cpu_side", this)
+{
+    initSegGrps();
+}
+```
+
+`ChameleonCtrlParams`类无需手动实现，只需要写好.cc和.hh以及.py文件，在执行过程中会自动生成
+
+`hbmSize(1*1024*1024*1024LL), ddrRatio(16)`指定HBM容量和对应的DRAM比例，需要和后续python文件中匹配。这是.cc和.hh文件中其它出现的相关的参数的默认值。
+
+
+
+### ChameleonStats构造函数并定义统计信息
+
+```c++
+ChameleonCtrl::ChameleonStats::ChameleonStats(Stats::Group *parent)
+    : Stats::Group(parent),
+
+    ADD_STAT(toPom, UNIT_COUNT, "Number of segments changing from "
+             "cache mode to PoM mode"),
+
+    ADD_STAT(pomAccess, UNIT_COUNT, "Number of accesses in PoM mode"),
+    ADD_STAT(cacheAccess, UNIT_COUNT, "Number of accesses in cache mode"),
+
+    ADD_STAT(segAccess, UNIT_COUNT, "Number of accesses in either mode"
+             ", also the number of segment lookup times")
+
+{
+}
+```
+
+
+
+### initSegGrps
+
+初始化分段组（Segment Groups）
+
+根据给定的块大小和地址范围（这里是从0到1MB）初始化一组段组（Segment Groups）。每个段组包含一个地址和DDR比率，然后将它们添加到 `segGrps` 中，以便后续使用。
+
+```c++
+void
+ChameleonCtrl::initSegGrps()
+{
+    DPRINTF(ChameleonCtrl, "Initializing Segment Groups\n");
+    // for (Addr addr = 0LL; addr < hbmSize; addr += blockSize) {
+    // 循环初始化段组,从地址0开始，每次增加 blockSize（块大小）来遍历地址空间
+    for (Addr addr = 0LL; addr < 1024*1024LL; addr += blockSize) {
+        // 创建了一个 segGrpEntry 对象 tmpEntry，并将其初始化为给定的地址 addr 和 ddrRatio
+        segGrpEntry tmpEntry(addr, ddrRatio);
+        // 将新创建的 tmpEntry 添加到 segGrps 的末尾
+        segGrps.emplace_back(tmpEntry);
+    }
+
+    DPRINTF(ChameleonCtrl, "Segment Groups initialized\n");
+}
+```
+
+```c++
+     /**
+     * A group of segments, including 1 HBM segment and
+     * several ddr segments, set to be 3 ddr segements
+     * in this case. Metadata included.
+     * Each segement is 64 Byte in size.
+     */
+	struct segGrpEntry
+    {
+        // Addr 类型，表示条目的偏移地址
+        // 例如 
+      Addr addr;
+		// 表示DDR段的数量，默认为构造函数指定的值。
+      int ddrNum;
+		// 0->Part of Memory 1->cache
+      bool cacheMode;
+		// 是否已修改但未写回（脏）
+      bool dirty;
+		// 表示条目是否繁忙。当条目正在写回或其他操作时设置为繁忙状态
+      bool busy;
+        // 存储来自CPU的请求数据包，当条目就绪时应清空该队列
+      std::deque<PacketPtr> reqQueue;
+		// 表示remap条件。例如，tags[3] = 1 表示HBM地址现在存储自DDR段1的数据.
+        // 因此访问DDR段1可能会根据其他位重定向到HBM段。
+      std::vector<int> tags;
+		// 表示读取数据应写入的位置。例如，readTypes[1] = 3 表示读取包发送到DDR段1，并且读取的数据应写入DDR段3
+      std::vector<int> readTypes;
+		// 构造函数（相关参数直接默认指定）
+      segGrpEntry(Addr _addr, int _ddrNum=3,
+                  bool _cacheMode=true, bool _dirty=false,
+                  bool _busy=false) :
+        addr(_addr), ddrNum(_ddrNum),
+        cacheMode(_cacheMode), dirty(_dirty),
+        busy(_busy)
+        {
+          // set the default tags
+          // 通过循环为 tags 和 readTypes 设置了默认值。如果ddrNum=3的话。
+            // tags 初始化为 [0, 1, 2, 3]，readTypes 初始化为 [-1, -1, -1, -1]
+          for (int i=0; i<=ddrNum; i++) {
+            tags.emplace_back(i);
+            readTypes.emplace_back(-1);
+          }
+        }
+
+      bool isCache() {
+        return cacheMode;
+      }
+
+      void setCacheMode(bool value) {
+        cacheMode = value;
+        return;
+      }
+
+      bool isDirty() {
+        return dirty;
+      }
+
+      void setDirty(bool value) {
+        dirty = value;
+        return;
+      }
+
+      bool isBusy() {
+        return busy;
+      }
+
+      void setBusy(bool value) {
+        busy = value;
+        return;
+      }
+
+    };
+```
+
+
+
+### getPort
+
+```c++
+Port &
+ChameleonCtrl::getPort(const std::string &if_name, PortID idx)
+{
+    if (if_name == "mem_side") {
+        panic_if(idx != InvalidPortID,
+                 "Mem side of ChameleonCtrl not a vector port");
+        return memPort;
+    } else if (if_name == "cpu_side") {
+        panic_if(idx != InvalidPortID,
+                 "CPU side of ChameleonCtrl not a vector port");
+        return cpuPort;
+    } else {
+        return ClockedObject::getPort(if_name, idx);
+    }
+}
+```
+
+```c++
+    MemSidePort memPort;
+    CPUSidePort cpuPort;
+```
+
+
+
+### CPUSidePort构造函数
+
+```c++
+ChameleonCtrl::CPUSidePort::CPUSidePort(const std::string& name,
+                                    ChameleonCtrl *_owner)
+    : QueuedResponsePort(name, _owner, respQueue),
+      respQueue(*_owner, *this, true),
+      owner(_owner), blocked(false), mustSendRetry(false)
+{ }
+```
+
+`CPUSidePort`继承`QueuedResponsePort`
+
+```c++
+class CPUSidePort : public QueuedResponsePort
+```
+
+```c++
+    class CPUSidePort : public QueuedResponsePort
+    {
+      private:
+
+        /** 用于存储响应的数据包队列. */
+        RespPacketQueue respQueue;
+		/** 拥有该端口的 ChameleonCtrl 对象 */
+        ChameleonCtrl *owner;
+```
+
+初始化为端口当前未阻塞，当前不需要发送重试请求
+
+
+
+### CPUSidePort::setBlcoked
+
+```c++
+void
+ChameleonCtrl::CPUSidePort::setBlocked()
+{
+    assert(!blocked);
+    DPRINTF(ChameleonCtrl, "Port is blocking new requests\n");
+    blocked = true;
+    // @todo should set mustSendRetry to true if there
+    // already is a scheduled retry.
+    // refer to base.cc::146
+}
+```
+
+
+
+### CPUSidePort::clearBlocked
+
+```c++
+void
+ChameleonCtrl::CPUSidePort::clearBlocked()
+{
+    assert(blocked);
+    DPRINTF(ChameleonCtrl, "Port is accepting new requests\n");
+    blocked = false;
+
+    // including sendRetryReq here
+    if (mustSendRetry) {
+        processSendRetry();
+    }
+}
+```
+
+
+
+### CPUSidePort::getAddrRanges
+
+```c++
+AddrRangeList
+ChameleonCtrl::CPUSidePort::getAddrRanges() const
+{
+    DPRINTF(ChameleonCtrl, "Getting AddrRanges\n");
+    return owner->getAddrRanges();
+}
+```
+
+
+
+### CPUSidePort::processSendRetry
+
+```c++
+void
+ChameleonCtrl::CPUSidePort::processSendRetry()
+{
+    // blocketPacket is not needed here.
+    // ChameleonCtrl can work well with only 1 blocketPacket.
+    DPRINTF(ChameleonCtrl, "Sending retry req.\n");
+    // 向之前尝试向该响应端口发送。向该响应端口发送 sendTimingReq 但失败的请求端口发送重试。
+    sendRetryReq();
+    mustSendRetry = false;
+}
+```
+
+
+
+### functionalAccess
+
+传入数据包，得到数据包地址和请求，计算得到:
+
+![](.\CHAMELEON.png)
+
+```c++
+void
+ChameleonCtrl::functionalAccess(PacketPtr pkt)
+{
+    DPRINTF(ChameleonCtrl, "Got functional access\n");
+	// 这个数据包只能是读或者写
+    if (pkt->isRead() || pkt->isWrite()) {
+		// 获得数据包的地址
+        Addr addr = pkt->getAddr();
+		// 根据数据包地址，判断段号，并获取段偏移，根据块大小获取组（group）号
+        int segNum = whichSeg(addr);
+        // getSegAddr(addr) = addr % hbmSize
+        // addr在Seg里的offset
+        Addr segAddr = getSegAddr(addr);
+        // 段组号，就是这个段里面第几个块，值等于 addr % hbmSize / blockSize
+        int grpNum = segAddr / blockSize;
+
+        // Addr address only when used
+        // 对块大小减一再按位取反，和segAddr按位与操作，得到segBlock地址，相关操作可以参见之前块地址计算相关
+        // 本质是将 segAddr 对齐到 blockSize 的整数倍位置
+        Addr segBlockAddr = segAddr & ~(Addr(blockSize - 1));
+		// 如果 segBlockAddr 超过了 segGrps 的最后一个地址，将会添加新的段组边界
+        if (segBlockAddr > segGrps.back().addr) {
+			
+            DPRINTF(ChameleonCtrl, "Adding entry "\
+            "from %#x to %#x\n",\
+            segGrps.back().addr, segBlockAddr);
+
+            for (Addr addr_tmp = segGrps.back().addr;
+                 addr_tmp <= segBlockAddr;
+                 addr_tmp += blockSize) {
+				// 在需要时，将根据段组的边界地址添加新的段组条目。
+                segGrpEntry tmpEntry(addr_tmp, ddrRatio);
+                segGrps.emplace_back(tmpEntry);
+            }
+        }
+		// entryPtr 指向特定组号 grpNum 的段组条目。
+        segGrpEntry* entryPtr = &segGrps[grpNum];
+		// 如果 entryPtr 在缓存模式并且缓存了访问的数据，则会根据规则重新设置地址，并向 memPort 发送功能性请求
+        if (entryPtr->isCache() &&
+            entryPtr->tags[ddrRatio] == segNum) {
+            // in cache mode and caching the data accessed
+
+            // ddrRatio*hbmSize实际上就是DRAM大小，加上segAddr就是在HBM当中了
+            Addr addr_new = ddrRatio*hbmSize + segAddr;
+            pkt->setAddr(addr_new);
+
+            DPRINTF(ChameleonCtrl, "Setting packet address "\
+            "from %#x to %#x\n", addr, addr_new);
+
+            memPort.sendFunctional(pkt);
+
+            pkt->setAddr(addr);
+            return;
+
+        } else {
+            // 发送功能请求数据包，在不影响任何数据块的当前状态或移动数据块的情况下，即时更新内存系统中各处的数据。
+            // 不论是读或写请求，最终都会发送到 memPort 处理
+            memPort.sendFunctional(pkt);
+            return;
+        }
+    }
+    memPort.sendFunctional(pkt);
+    return;
+}
+```
+
+```c++
+    /**
+     * The number of segGrpEntrys should be defined when
+     * initialization of ChanmeleonCtrl.
+     */
+    std::vector<segGrpEntry> segGrps;
+```
+
+
+
+### recvFunctional
+
+处理从 CPU 端口接收到的功能性（functional）访问请求
+
+```c++
+void
+ChameleonCtrl::CPUSidePort::recvFunctional(PacketPtr pkt)
+{
+    DPRINTF(ChameleonCtrl, "Got functional %s\n", pkt->print());
+    return owner->functionalAccess(pkt);
+}
+```
+
+
+
+### tryTiming
+
+用于判断是否可以接受传入的定时请求
+
+```c++
+bool
+ChameleonCtrl::CPUSidePort::tryTiming(PacketPtr pkt)
+{
+    // isExpressSnoop 方法检查该包是否是快速嗅探包（Express Snoop Packet）
+    if (pkt->isExpressSnoop()) {
+        // always let express snoop packets through even if blocked
+        DPRINTF(ChameleonCtrl, "Express snoop packet, let it pass\n");
+        return true;
+    } else if (isBlocked() || mustSendRetry) {
+        DPRINTF(ChameleonCtrl, "Request blocked\n");
+        mustSendRetry = true;
+        return false;
+    }
+    mustSendRetry = false;
+    return true;
+}
+```
+
+* 快速嗅探包是一种特殊的包类型，它需要快速传递，用于缓存一致性协议中的嗅探操作
+
+
+
+### recvTimingReq
+
+用于接收和处理定时请求（Timing Request）
+
+```c++
+bool
+ChameleonCtrl::CPUSidePort::recvTimingReq(PacketPtr pkt)
+{
+    DPRINTF(ChameleonCtrl, "Got request %s\n", pkt->print());
+	// 检查是否可以接受这个定时请求
+    if (tryTiming(pkt)) {
+        // owner->handleRequest(pkt) 调用handleRequest处理请求，见下文
+        bool success = owner->handleRequest(pkt);
+        if (!success) {
+            DPRINTF(ChameleonCtrl, "Request failed when handling request\n");
+            return false;
+        }
+        DPRINTF(ChameleonCtrl, "Request succeeded\n");
+        return true;
+    }
+    return false;
+}
+```
+
+
+
+MemSidePort
