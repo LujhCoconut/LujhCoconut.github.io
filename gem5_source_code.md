@@ -3839,4 +3839,41 @@ ChameleonCtrl::CPUSidePort::recvTimingReq(PacketPtr pkt)
 
 
 
-MemSidePort
+### MemSidePort构造函数
+
+```c++
+ChameleonCtrl::MemSidePort::MemSidePort(const std::string& name,
+                                    ChameleonCtrl* _owner)
+    : QueuedRequestPort(name, _owner, reqQueue, snoopRespQueue),
+      reqQueue(*_owner, *this),
+      snoopRespQueue(*_owner, *this),
+      owner(_owner)
+{ }
+```
+
+
+
+### recvTimingResp
+
+```c++
+bool
+ChameleonCtrl::MemSidePort::recvTimingResp(PacketPtr pkt)
+{
+    DPRINTF(ChameleonCtrl, "Receiving timing response\n");
+    return owner->handleResponse(pkt);
+}
+```
+
+
+
+### recvRangeChange
+
+```c++
+void
+ChameleonCtrl::MemSidePort::recvRangeChange()
+{
+    DPRINTF(ChameleonCtrl, "Receiving range change\n");
+    owner->sendRangeChange();
+}
+```
+
