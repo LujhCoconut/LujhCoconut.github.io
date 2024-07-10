@@ -3415,6 +3415,63 @@ MemCtrl::pruneBurstTick()
 
 
 
+## **关于Segment**
+
+* Each segment is 64 Byte in size. 每个段的大小为 64 字节。
+
+* segGrpEntry: 一组segments 组成为【1 HBM segment + 多个（设置成3）DDR Segment】元数据也包含在其中。
+
+* 参数：
+
+  * `Addr addr`
+
+    * Entry的偏移量
+
+    * 例如：[`addr = 318` ， `HBM 8GB` , `DDR 32GB`] 
+
+      HBM address 就应该是`3*8GiB + 318`    
+
+      DDR Segment 0 address 就应该是`0*8GiB + 318`
+
+      DDR Segment 1 address 就应该是`1*8GiB + 318`
+
+      DDR Segment 2 address 就应该是`2*8GiB + 318`
+
+  * `ddrNum`
+
+    * segGrpEntry: 一组segments 组成为【1 HBM segment + 多个（设置成3）DDR Segment】，默认3
+
+  * `cacheMode`
+
+    * 是Cache【1】还是Flat（POM）【0】
+
+  * `dirty`
+
+    * 无需多言
+
+  * `busy`
+
+    * 当条目正在写回或进行其他操作时，设置其为忙碌状态。 将所有访问的数据包放入reqQueue中，并稍后处理它们。
+
+  * `reqQueue`
+
+    * 保留来自CPU的请求数据包。 当该条目准备好时，应清空所有队列
+
+  * `tags`
+
+    * 指示remap条件
+    * 例如：tags[3]=1  ,  HBM【可能Segment编号是3】 address现在存着的是DDR Segment 1的数据。因此访问DDR Segment 1 的数据根据其他一些bits 【比如 xxx??? 】可能会被重定向到HBM Segment。
+
+  * `readTypes`
+
+    * 指示什么读数据需要被写入
+    * -1 ： 不发送
+    * 例如： readType[1]=3 读数据包的数据是3，并且被写入1 【指的应该是Segment 1  也就是DDR Segment 1】
+
+![](.\segment_cha.png)
+
+
+
 ## chameleon_ctrl.cc/hh
 
 ### Chameleon构造类和初始化部分
@@ -3487,79 +3544,13 @@ ChameleonCtrl::initSegGrps()
 }
 ```
 
-```c++
-     /**
-     * A group of segments, including 1 HBM segment and
-     * several ddr segments, set to be 3 ddr segements
-     * in this case. Metadata included.
-     * Each segement is 64 Byte in size.
-     */
-	struct segGrpEntry
-    {
-        // Addr 类型，表示条目的偏移地址
-        // 例如 
-      Addr addr;
-		// 表示DDR段的数量，默认为构造函数指定的值。
-      int ddrNum;
-		// 0->Part of Memory 1->cache
-      bool cacheMode;
-		// 是否已修改但未写回（脏）
-      bool dirty;
-		// 表示条目是否繁忙。当条目正在写回或其他操作时设置为繁忙状态
-      bool busy;
-        // 存储来自CPU的请求数据包，当条目就绪时应清空该队列
-      std::deque<PacketPtr> reqQueue;
-		// 表示remap条件。例如，tags[3] = 1 表示HBM地址现在存储自DDR段1的数据.
-        // 因此访问DDR段1可能会根据其他位重定向到HBM段。
-      std::vector<int> tags;
-		// 表示读取数据应写入的位置。例如，readTypes[1] = 3 表示读取包发送到DDR段1，并且读取的数据应写入DDR段3
-      std::vector<int> readTypes;
-		// 构造函数（相关参数直接默认指定）
-      segGrpEntry(Addr _addr, int _ddrNum=3,
-                  bool _cacheMode=true, bool _dirty=false,
-                  bool _busy=false) :
-        addr(_addr), ddrNum(_ddrNum),
-        cacheMode(_cacheMode), dirty(_dirty),
-        busy(_busy)
-        {
-          // set the default tags
-          // 通过循环为 tags 和 readTypes 设置了默认值。如果ddrNum=3的话。
-            // tags 初始化为 [0, 1, 2, 3]，readTypes 初始化为 [-1, -1, -1, -1]
-          for (int i=0; i<=ddrNum; i++) {
-            tags.emplace_back(i);
-            readTypes.emplace_back(-1);
-          }
-        }
+这段原理可以看图
 
-      bool isCache() {
-        return cacheMode;
-      }
+<img src=".\segment_cha.png" style="zoom: 67%;" />
 
-      void setCacheMode(bool value) {
-        cacheMode = value;
-        return;
-      }
+也就只能初始化` HBM_Size / Segment Size`大小个`segGrpEntry`
 
-      bool isDirty() {
-        return dirty;
-      }
-
-      void setDirty(bool value) {
-        dirty = value;
-        return;
-      }
-
-      bool isBusy() {
-        return busy;
-      }
-
-      void setBusy(bool value) {
-        busy = value;
-        return;
-      }
-
-    };
-```
+而`Segment Size = Block Size = 64 Bytes`,`segGrps`需要在`Chameleon`刚开始初始化，一个for循环搞定。
 
 
 
@@ -3692,7 +3683,7 @@ ChameleonCtrl::CPUSidePort::processSendRetry()
 
 传入数据包，得到数据包地址和请求，计算得到:
 
-![](.\CHAMELEON.png)
+![](.\seg2.png)
 
 ```c++
 void
@@ -3874,6 +3865,290 @@ ChameleonCtrl::MemSidePort::recvRangeChange()
 {
     DPRINTF(ChameleonCtrl, "Receiving range change\n");
     owner->sendRangeChange();
+}
+```
+
+
+
+### access
+
+**处理数据包**时调用该函数。 如果访问到HBM地址，将一个cache模式的HBM段转换为PoM
+
+所有挂在reqQueue上的数据包绝对不能被预处理。 因此，访问函数将在handleDeferredPacket中被调用。 
+
+如果数据包没有被延迟处理，则返回true。无论地址是否发生变化。
+
+![](.\seg2.png)
+
+```c++
+bool
+ChameleonCtrl::access(PacketPtr pkt)
+{
+    assert(pkt->isRequest());
+	// 获得请求的地址
+    Addr addr = pkt->getAddr();
+
+    int segNum = whichSeg(addr);
+    Addr segAddr = getSegAddr(addr);
+    int grpNum = segAddr / blockSize;
+    // Addr offset = segAddr % blockSize;
+
+    // Addr address only when used
+    Addr segBlockAddr = segAddr & ~(Addr(blockSize - 1));
+	// 请求的块SegBlock地址不在segGrps里的话
+    if (segBlockAddr > segGrps.back().addr) {
+		// 新增segGrpEntry
+        DPRINTF(ChameleonCtrl, "Adding entry "\
+        "from %#x to %#x\n",\
+        segGrps.back().addr, segBlockAddr);
+		// 从segGrps最后一个Entry,一直新增到segBlockAddr
+        for (Addr addr_tmp = segGrps.back().addr;
+                addr_tmp <= segBlockAddr;
+                addr_tmp += blockSize) {
+
+            segGrpEntry tmpEntry(addr_tmp, ddrRatio);
+            segGrps.emplace_back(tmpEntry);
+        }
+    }
+	// 这个时候segGrps里已经有segBlockAddr相关的segGrpEntry.
+    segGrpEntry* entryPtr = &segGrps[grpNum];
+
+    // If busy, simply hang it to the queue
+    // 如果当前entryPtr指向的对象忙，就丢到reqQueue
+    if (entryPtr->isBusy()) {
+        // Remember to handle it when handling response
+        entryPtr->reqQueue.push_back(pkt);
+
+        DPRINTF(ChameleonCtrl, "Entry of address %#x is busy, "\
+        "hang up the packet\n", addr);
+
+        return false;
+    }
+	// 如果对应的segGrp是Part of Memory模式,不需要remap
+    if (!entryPtr->isCache()) {
+        // the entry is in PoM mode, just access the true address
+        // no remap, since HBM is in the larger address.
+
+        /**
+         * @todo swap hot data to HBM segment?
+         *
+         */
+        DPRINTF(ChameleonCtrl, "Address %#x is in PoM mode\n", addr);
+
+        stats.pomAccess++;
+        stats.segAccess++;
+
+        return true;
+    }
+
+    // 如果对应的segGrp是cache模式,
+    DPRINTF(ChameleonCtrl, "Address %#x is in cache mode\n", addr);
+	// e.g. ddrRation=3的话 总共4份HBM_SIZE大小的地址空间 分别编号0,1,2,3
+    // 因此segNum = ddrRatio的时候，也就是访问了HBM的地址空间
+    if (segNum == ddrRatio) {
+        // hbm segment is accessed!
+        stats.toPom++;
+		// 如果脏了的话，就需要把数据刷回
+        if (entryPtr->isDirty()) {
+            // if dirty, write back
+            sendReadPacket(entryPtr, addr, ddrRatio,\
+                           entryPtr->tags[ddrRatio], curTick());
+            entryPtr->reqQueue.push_back(pkt);
+
+            DPRINTF(ChameleonCtrl, "Dirty, write back and turn this segment"\
+            "into PoM mode\n");
+
+            entryPtr->setCacheMode(false);
+            entryPtr->tags[ddrRatio] = ddrRatio;
+            entryPtr->setBusy(true);
+
+            return false;
+        } else {
+            // if not dirty, just turn to PoM mode
+            DPRINTF(ChameleonCtrl, "Not dirty, turn this segment"\
+            "into PoM mode\n");
+
+            entryPtr->setCacheMode(false);
+            entryPtr->tags[ddrRatio] = ddrRatio;
+
+            stats.pomAccess++;
+            stats.segAccess++;
+
+            return true;
+        }
+    } else if (entryPtr->tags[ddrRatio] == segNum) {
+        // HBM is now caching the accessed data
+        if (pkt->isWrite()) {
+            // need to write back later
+            entryPtr->setDirty(true);
+        }
+
+        DPRINTF(ChameleonCtrl, "Address %#x is in cache mode "\
+        "and caching the data in need\n", addr);
+
+        // Remap to the HBM address
+        Addr addr_new = ddrRatio*hbmSize + segAddr;
+        pkt->setAddr(addr_new);
+
+        // use the sender state to store the original address
+        if (pkt->needsResponse()) {
+            pkt->pushSenderState( \
+            new ChameleonCtrlSenderState(addr));
+        }
+
+        stats.cacheAccess++;
+        stats.segAccess++;
+
+        return true;
+
+    } else {
+
+        DPRINTF(ChameleonCtrl, "Address %#x is in cache mode "\
+        "and caching other data\n", addr);
+
+        // HBM is now caching other data. Finish it and
+        // cache the accessed data.
+        if (!entryPtr->isDirty()) {
+            // send read packets to get the data and cache it.
+            // the data read should be written to hbm
+            sendReadPacket(entryPtr, addr, segNum, ddrRatio, curTick());
+
+            entryPtr->tags[ddrRatio] = segNum;
+
+            entryPtr->setBusy(true);
+
+            DPRINTF(ChameleonCtrl, "Not dirty, just cache it\n");
+
+            // add this packet to the dfpkt queue
+            entryPtr->reqQueue.push_back(pkt);
+
+            return false;
+
+        } else {
+            // entry is dirty, write back and cache the new data.
+            // do both at the same time.
+
+            /**
+             * read dirty data from hbm
+             * @warning read to hbm must be ahead of other read
+             * packets
+             */
+            sendReadPacket(entryPtr, segAddr + hbmSize*ddrRatio,\
+                           ddrRatio, entryPtr->tags[ddrRatio],\
+                           curTick());
+
+            // read data and cache it later
+            sendReadPacket(entryPtr, addr, segNum, ddrRatio,\
+                           curTick() + 100);
+
+            entryPtr->tags[ddrRatio] = segNum;
+            entryPtr->setBusy(true);
+
+            DPRINTF(ChameleonCtrl, "Dirty, write back and cache it\n");
+
+            // add this packet to the dfpkt queue
+            entryPtr->reqQueue.push_back(pkt);
+
+            return false;
+        }
+    }
+}
+```
+
+
+
+### sendReadPacket
+
+```c++
+void
+ChameleonCtrl::sendReadPacket(segGrpEntry* entryPtr, Addr srcAddr,
+                              int srcNum, int destNum, Tick sendTime)
+{
+    PacketPtr read_pkt = createReadPacket(srcAddr);
+    // Schedule the sending of a timing request
+    memPort.schedTimingReq(read_pkt, curTick() + 10);
+	// 说明读取的数据应写入什么地方
+    // -1: not sending at all
+    // readTypes[1] = 3   第1（数组下标0开始）个Segment
+    entryPtr->readTypes[srcNum] = destNum;
+}
+```
+
+
+
+### writeBack
+
+处理从内存读取响应数据包的写回操作
+
+```c++
+ /**
+     * Invoked when handling timing response. Receive the read
+     * packet sent by ChameleonCtrl, get the data, and write
+     * back according to entryPtr->readTypes. Should check
+     * the metadata, and deal with the deferred packets if
+     * all writebacks are completed.
+     *
+     * @param pkt The read response packet from memory.
+     * @return true when the migration is finished. (Fetch both data,
+     * send waitingPacket and clearBlocked.)
+     */
+```
+
+
+
+```c++
+bool
+ChameleonCtrl::writeBack(PacketPtr pkt)
+{
+    // 根据pkt 得到read地址
+    Addr addr = pkt->getAddr();
+	// 然后计算得到这个数据包位于哪个segment，在这个segment里的偏移量segAddr，在这个segment里是第几个块
+    int segNum = whichSeg(addr);
+    Addr segAddr = getSegAddr(addr);
+    int grpNum = segAddr / blockSize;
+	// 指向这个快
+    segGrpEntry* entryPtr = &segGrps[grpNum];
+
+    // entry must be busy
+    assert(entryPtr->isBusy());
+
+    Addr destAddr = entryPtr->readTypes[segNum]*hbmSize\
+                    + segAddr;
+
+    /**
+     * @warning may cause panic!
+     * If everything is in this order:
+     * 1. read hbm's data because it is dirty
+     * 2. read data from addr1
+     * 3. write addr1's data to hbm
+     * 4. write hbm's data to addr2
+     *
+     * I think no need to worry about this:
+     * even if hbm is busy, write to hbm will
+     * be strictly later than read from hbm.
+     */
+    uint8_t *data = new uint8_t[blockSize];
+    pkt->writeDataToBlock(data, blockSize);
+    PacketPtr write_pkt = createWbPacket(destAddr, data);
+    memPort.schedTimingReq(write_pkt, curTick());
+
+    // No writeback task, set it back to -1
+    entryPtr->readTypes[segNum] = -1;
+
+    bool  isClear = true;
+    for (int tmpDestNum : entryPtr->readTypes) {
+        if (tmpDestNum != -1)
+            isClear = false;
+    }
+
+    if (isClear) {
+        entryPtr->setBusy(false);
+        entryPtr->setDirty(false);
+        handleDeferredPacket(entryPtr, curTick());
+
+        return true;
+    }
+    return false;
 }
 ```
 
