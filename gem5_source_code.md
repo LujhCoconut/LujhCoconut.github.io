@@ -3417,9 +3417,12 @@ MemCtrl::pruneBurstTick()
 
 ## **关于Segment**
 
-* Each segment is 64 Byte in size. 每个段的大小为 64 字节。
+* Each segment is 64 Byte in size. 每个段的大小为 64 字节。【代码中是这样注释的】
+  * 论文中指出：`The various segment granularities supported by the hardware in Chameleon can be easily detected by the OS during boot time`
+  * CAMEO这个工作的大小是64B 、PoM[25]的大小是2KB
 
 * segGrpEntry: 一组segments 组成为【1 HBM segment + 多个（设置成3）DDR Segment】元数据也包含在其中。
+  * 实际上就是论文中的Segment Group的其中一组。
 
 * 参数：
 
@@ -3683,6 +3686,8 @@ ChameleonCtrl::CPUSidePort::processSendRetry()
 
 传入数据包，得到数据包地址和请求，计算得到:
 
+* 注：一组segments 组成为【1 HBM segment + 多个（设置成3）DDR Segment】 【 Segment size = 64B （e.g,）】
+
 ![](.\seg2.png)
 
 ```c++
@@ -3706,37 +3711,39 @@ ChameleonCtrl::functionalAccess(PacketPtr pkt)
         // 对块大小减一再按位取反，和segAddr按位与操作，得到segBlock地址，相关操作可以参见之前块地址计算相关
         // 本质是将 segAddr 对齐到 blockSize 的整数倍位置
         Addr segBlockAddr = segAddr & ~(Addr(blockSize - 1));
-		// 如果 segBlockAddr 超过了 segGrps 的最后一个地址，将会添加新的段组边界
+		// 如果 segBlockAddr 超过了 segGrps 的最后一个地址，将会添加新的entry
         if (segBlockAddr > segGrps.back().addr) {
 			
             DPRINTF(ChameleonCtrl, "Adding entry "\
             "from %#x to %#x\n",\
             segGrps.back().addr, segBlockAddr);
-
+			
             for (Addr addr_tmp = segGrps.back().addr;
                  addr_tmp <= segBlockAddr;
-                 addr_tmp += blockSize) {
+                 addr_tmp += blockSize) {// 其实应该 +=segment_size 的，只是Chameleon里都是64B
 				// 在需要时，将根据段组的边界地址添加新的段组条目。
                 segGrpEntry tmpEntry(addr_tmp, ddrRatio);
                 segGrps.emplace_back(tmpEntry);
             }
         }
-		// entryPtr 指向特定组号 grpNum 的段组条目。
+		// entryPtr 指向这个segGrp【x】
         segGrpEntry* entryPtr = &segGrps[grpNum];
-		// 如果 entryPtr 在缓存模式并且缓存了访问的数据，则会根据规则重新设置地址，并向 memPort 发送功能性请求
+		// 如果 entryPtr 在缓存模式并且segNum指的是HBM那个segment，则会根据规则重新设置地址，并向 memPort 发送功能性请求
         if (entryPtr->isCache() &&
+            // 也就是Segment【3】存着的是segNum对应的数据，也就是被缓存了，因为Segment【3】是HBM
             entryPtr->tags[ddrRatio] == segNum) {
             // in cache mode and caching the data accessed
 
             // ddrRatio*hbmSize实际上就是DRAM大小，加上segAddr就是在HBM当中了
+            // 也就是说它请求（假设）是Seg1的某个片段，然后发现其实它被cache了，那去cache访问会快一些，所以remap一下
             Addr addr_new = ddrRatio*hbmSize + segAddr;
             pkt->setAddr(addr_new);
 
             DPRINTF(ChameleonCtrl, "Setting packet address "\
             "from %#x to %#x\n", addr, addr_new);
-
+			// 得处理一下这个数据
             memPort.sendFunctional(pkt);
-
+			// 猜测：这个pkt不一定仅仅被这个函数调用，所以得被请求的地址修改回来。
             pkt->setAddr(addr);
             return;
 
@@ -3878,6 +3885,8 @@ ChameleonCtrl::MemSidePort::recvRangeChange()
 
 如果数据包没有被延迟处理，则返回true。无论地址是否发生变化。
 
+* 注：一组segments 组成为【1 HBM segment + 多个（设置成3）DDR Segment】 【 Segment size = 64B （e.g,）】
+
 ![](.\seg2.png)
 
 ```c++
@@ -3910,7 +3919,7 @@ ChameleonCtrl::access(PacketPtr pkt)
             segGrps.emplace_back(tmpEntry);
         }
     }
-	// 这个时候segGrps里已经有segBlockAddr相关的segGrpEntry.
+	// 这个时候segGrps里已经有segBlockAddr相关的segGrpEntry.也就是segGroup
     segGrpEntry* entryPtr = &segGrps[grpNum];
 
     // If busy, simply hang it to the queue
