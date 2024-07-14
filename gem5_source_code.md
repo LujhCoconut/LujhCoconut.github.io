@@ -4124,7 +4124,7 @@ ChameleonCtrl::CPUSidePort::tryTiming(PacketPtr pkt)
 
 ### recvTimingReq 
 
-(与Hybrid2差异从这开始)
+Hybrid2从这里开始的实现复杂一些（当然主要是多了更多的统计输出）
 
 用于接收和处理定时请求（Timing Request）
 
@@ -4147,6 +4147,36 @@ ChameleonCtrl::CPUSidePort::recvTimingReq(PacketPtr pkt)
     return false;
 }
 ```
+
+在`hybird2`的`remap`相关代码中增加了一些部分：
+
+【Hybrid2 Addition 1】增加对owner内存足迹的修改，当然这也是因为chameleon的代码没有相关的统计输出
+
+```c++
+    if(pkt->getAddr()>owner->footprint_)
+    {
+        owner->footprint_=pkt->getAddr();
+        owner->remapStats.footprint=pkt->getAddr();
+        DPRINTF(RemapCtrl, "recvTimingReq pkt->getAddr()%#x\n", pkt->getAddr());
+    }
+```
+
+【Hybrid2 Addtion 2】增加对数据包的一些操作,在`DPRINTF(ChameleonCtrl, "Request succeeded\n");`之前
+
+```c++
+		if (pkt->isWrite() || pkt->isCleanEviction() || pkt->isEviction() || pkt->isWriteback()) 
+        {
+            if(pkt->Is_addr_changed==true)
+            {
+                // pkt->setAddr(pkt->origin_addr_test);
+                pkt->Is_addr_changed=false;
+            }
+    
+            DPRINTF(RemapCtrl, "clear blocked \n");
+        }
+```
+
+
 
 
 
@@ -4192,7 +4222,11 @@ ChameleonCtrl::MemSidePort::recvRangeChange()
 
 ### access
 
-**处理数据包**时调用该函数。 如果访问到HBM地址，将一个cache模式的HBM段转换为PoM
+**处理数据包**时调用该函数（Hybrid2 对此进行了一定注释：handleRequest函数时用，用于双向/单向交换时发出readpkt）。
+
+【Hybrid2在这里实现是与Chameleon大不相同的】 
+
+如果访问到HBM地址，将一个cache模式的HBM段转换为PoM
 
 所有挂在reqQueue上的数据包绝对不能被预处理。 因此，访问函数将在handleDeferredPacket中被调用。 
 
@@ -4683,7 +4717,385 @@ ChameleonCtrl::createReadPacket(Addr mem_addr)
 
 
 
-# HBM_Project
+# HBM_project映射实现的差异
+
+### access
+
+首先是出现的不同的实现的结构体：
+
+* `simpleTlbEntry` ： 用于表示简单的地址重映射条目，包含两个不同内存地址之间的映射信息及相关状态，相应的两个地址严格来自两种不同的内存
+
+  * `Addr mem1Addr` 来自内存介质1的地址
+
+    `Addr mem2Addr` 来自内存介质2的地址
+
+  * `oneWay` 表示是否是单向迁移
+
+  * `mem1Ready` 表示内存介质1是否已经准备好
+
+    `mem2Ready` 表示内存介质2是否已经准备好
+
+  * `ready` 指示两内存地址中的数据是否已准备好使用，当迁移完成时，该值应设为 `true`
+
+  * `mem1Data`：存储内存1中的数据。
+
+    `mem2Data`：存储内存2中的数据。
+
+  * `is_dram_to_hbm` 指示当前的迁移方向是否是从 DRAM 到 HBM
+
+  * `needWait` 用于表示是否需要等待。特别是在从地址A迁移到地址B（`a->b`）时，如果迁移尚未完成，则不能进行从B到A（`b->a`）的读取操作，否则读取到的数据将是旧数据，可能会导致错误
+
+  * `redQueue` 保存来自 CPU 的请求包。 当这个条目准备好时，应清空所有队列。
+
+  * >```c++
+    >        void wtMem1Data(uint8_t* data) {
+    >          mem1Data = data;
+    >          mem1Ready = true;
+    >        }
+    >```
+    >
+    >这个函数将 `data` 写入 `mem1Data`，并将 `mem1Ready` 标志设为 `true`，表示内存1的数据已准备好
+
+  * >```c++
+    >        void wtMem2Data(uint8_t* data) {
+    >          mem2Data = data;
+    >          mem2Ready = true;
+    >        }
+    >```
+    >
+    >这个函数将 `data` 写入 `mem2Data`，并将 `mem2Ready` 标志设为 `true`，表示内存2的数据已准备好
+
+  * > ```c++
+    >         void setAllReady() {//适用于one way以及double way
+    >           ready = true;
+    >           mem1Data = nullptr; mem2Data = nullptr;
+    >           mem1Ready = false; mem2Ready = false;
+    >           // mem1Wb = false; mem2Wb = false;
+    >           // valid = true;
+    >         }
+    > ```
+    >
+    > 这个函数将所有相关标志和数据指针重置：
+    >
+    > - 将 `ready` 设为 `true`，表示数据已准备好。
+    > - 将 `mem1Data` 和 `mem2Data` 设为 `nullptr`。
+    > - 将 `mem1Ready` 和 `mem2Ready` 设为 `false`。
+    > - 注释掉的部分（`mem1Wb`, `mem2Wb`, `valid`）可能用于将来扩展或曾经用过的功能，现在暂时不用
+
+  * >```c++
+    >		bool isOneWay() {
+    >          return oneWay;
+    >        }
+    >
+    >        bool isMem1Ready() {
+    >          return mem1Ready;
+    >        }
+    >
+    >        bool isMem2Ready() {
+    >          return mem2Ready;
+    >        }
+    >
+    >        bool isReady() {
+    >          return ready;
+    >        }
+    >```
+
+```c++
+
+bool
+RemapCtrl::access(PacketPtr pkt)//handleRequest函数时用，用于双向/单向交换时发出readpkt
+{
+    assert(pkt->isRequest());
+    DPRINTF(RemapCtrl, "access  pkt->getAddr()%#x\n", pkt->getAddr());
+    /**
+     * @warning A simple if condition here. May cause problem.
+     */
+    Addr addr_orig = pkt->getAddr();
+    // Addr block_addr_orig = pkt->getBlockAddr(blockSize);
+    // Addr block_addr_orig=addrcontroller.Get_block_addr(pkt->getAddr());//根据自己定义的block大小进行block对齐
+    Addr block_addr_orig=( (pkt->getAddr()>>cache_block_bits)<<cache_block_bits );//根据64B进行block对齐
+
+    // 判断是不是来自Mem1这个内存介质
+    bool _isMem1 = isMem1(addr_orig);
+	// 根据对齐后的地址去mem1或者mem2两种内存介质分别去找到对应simpleTlbEntry的项(simpleTlb[set_id]中的最后一项)
+    // 要搜索简单 TLB（Translation Lookaside Buffer）并查找原始地址是否在表
+    simpleTlbEntry* entryPtr = findByAddr_access(block_addr_orig, _isMem1);
+
+    if (entryPtr == nullptr) 
+    {
+        return true;
+    } 
+
+    else if(entryPtr->isReady())
+    {
+        return true;
+    }
+    else // 如果找到的 TLB 条目未准备好，将请求包添加到条目的请求队列中，并返回 false
+    {
+        // assert(!entryPtr->isReady());
+        entryPtr->reqQueue.push_back(pkt);
+            
+        return false; 
+    }
+    
+}
+```
+
+* 介绍一下这边出现的内存根据指定大小对齐的操作：
+
+  * `Addr block_addr_orig = ( (pkt->getAddr() >> cache_block_bits) << cache_block_bits );`
+
+    * `pkt->getAddr()`这部分获取了一个地址，假设该地址是 `A`。
+
+    * `pkt->getAddr() >> cache_block_bits`
+
+      `cache_block_bits` 通常是与缓存块大小相关的一个值。如果缓存块大小是64字节，那么 `cache_block_bits` 应该是 `6`，因为 `2^6 = 64`。右移 `cache_block_bits` 位相当于除以 `2^cache_block_bits`。所以，这部分代码执行的操作是将地址 `A` 右移 `6` 位，即 `A / 64`，得到一个整数部分 `B`。
+
+    * `(pkt->getAddr() >> cache_block_bits) << cache_block_bits`
+
+      将结果 `B` 再左移 `6` 位，即 `B * 64`，恢复到一个以64字节为单位对齐的地址
+
+  * e.g.
+
+    * 假设 `pkt->getAddr()` 返回的地址 `A = 12345`，并且 `cache_block_bits = 6`。
+    * `12345 >> 6 = 192` ： 右移 `6` 位相当于除以 `64`（丢弃小数部分），结果是 `192`
+    * `192 << 6 = 12288`： 左移 `6` 位相当于乘以 `64`，结果是 `12288`。
+    * `12288` 是 `12345` 向下对齐到最近的 `64` 字节块的起始地址。换句话说，`12288` 是 `12345` 所在的那个64字节块的起始地址
+
+
+
+### functionalaccess
+
+代码和access几乎一模一样，区别在参数列表接收了一个`simpleTlbEntry**` 即指向指针的指针类型的参数传入
+
+在 C++ 中，双指针用于以下几个场景：
+
+1. **函数修改指针的值**：当你需要一个函数能够修改它所接收的指针的值（即指向不同的对象），而不仅仅是修改指针所指向的对象时，你可以使用双指针。
+2. **动态二维数组**：双指针也常用于实现动态的二维数组。
+
+`simpleTlbEntry**` 主要用于第一个场景，即传递一个指向指针的指针，以便在函数内修改指针的值并在函数外部反映这个修改。
+
+```c++
+bool RemapCtrl::functionalaccess(PacketPtr pkt, simpleTlbEntry** entryPtr)
+{
+    // entryPtr = nullptr;
+    assert(pkt->isRead() || pkt->isWrite());
+    DPRINTF(RemapCtrl, "functionalaccess  pkt->getAddr()%#x\n", pkt->getAddr());
+
+    Addr addr_orig = pkt->getAddr();
+    DPRINTF(RemapCtrl, "functionalaccess  huayifan aaa\n");
+    // Addr block_addr_orig = pkt->getBlockAddr(blockSize);
+    // Addr block_addr_orig=addrcontroller.Get_block_addr(pkt->getAddr());//根据自己定义的block大小进行block对齐
+    Addr block_addr_orig=( (pkt->getAddr()>>cache_block_bits)<<cache_block_bits );//根据64B进行block对齐
+
+    DPRINTF(RemapCtrl, "functionalaccess  huayifan bbb\n");
+    bool _isMem1 = isMem1(addr_orig);
+
+    DPRINTF(RemapCtrl, "functionalaccess  huayifan ccc\n");
+    *entryPtr = findByAddr_access(block_addr_orig, _isMem1);
+
+    DPRINTF(RemapCtrl, "functionalaccess  huayifan ddd\n");
+
+    if (*entryPtr == nullptr) 
+    {
+        DPRINTF(RemapCtrl, "functionalaccess  huayifan eee\n");
+        return true;
+    } 
+
+    else if((*entryPtr)->isReady())
+    {
+        DPRINTF(RemapCtrl, "functionalaccess  huayifan fff\n");
+        return true;
+    }
+    else
+    {
+        // assert(!entryPtr->isReady());
+        // entryPtr->reqQueue.push_back(pkt);
+        DPRINTF(RemapCtrl, "functionalaccess  huayifan ggg\n");
+        return false; 
+    }
+
+}
+```
+
+
+
+
+
+### AddSimpleEntry
+
+`mem1` 和 `mem2`：表示两个内存地址，用于创建新的 `simpleTlbEntry` 条目。
+
+`is_oneway`：表示是否单向迁移。
+
+`is_mem1Ready` 和 `is_mem2Ready`：表示 `mem1Data` 和 `mem2Data` 是否准备好。
+
+`is_ready`：表示整个迁移过程是否完成。
+
+`mem1Data` 和 `mem2Data`：表示两个内存地址中的数据。
+
+`is_dram_to_hbm`：表示数据迁移的方向。
+
+`block_size_` 和 `blockSize`：用于控制分块大小的参数。
+
+```c++
+//每次memcpy的时候调用，向simpleTlb中添加一项。注意mem1Data和mem2Data对应的是哪一个src和dest
+void RemapCtrl::AddSimpleEntry(Addr mem1, Addr mem2, bool is_oneway, bool is_mem1Ready, bool is_mem2Ready, bool is_ready, uint8_t * mem1Data, uint8_t * mem2Data, bool is_dram_to_hbm)//添加一项到正在迁移表中。用在memcpy的位置
+{
+    // simpleTlbEntry temp_simpleTlbEntry(mem1, mem2, is_oneway, is_mem1Ready, is_mem2Ready, is_ready, mem1Data, mem2Data, is_dram_to_hbm);
+    uint64_t set_id=addrcontroller.Get_set_id(mem1);
+    assert(addrcontroller.Get_set_id(mem1) == addrcontroller.Get_set_id(mem2));
+	
+    // 使用 for 循环，将每个大块分成小块（64B）并处理。检查是否需要等待，避免同时进行多个迁移操作。
+    for(uint64_t i=0; i<(block_size_/blockSize); i++)
+    {//分割成64B, block_size_是blockSize的整数倍
+
+        bool need_wait=false;
+        for(auto iter=simpleTlb[set_id].begin(); iter!=simpleTlb[set_id].end(); iter++)
+        {
+            if(mem1+i*blockSize==iter->mem1Addr || mem2+i*blockSize==iter->mem2Addr)
+            {
+                need_wait=true;
+                break;
+            }
+        }
+
+
+        simpleTlbEntry temp_simpleTlbEntry(mem1+i*blockSize, mem2+i*blockSize, is_oneway, is_mem1Ready, is_mem2Ready, is_ready, mem1Data, mem2Data, is_dram_to_hbm, need_wait);
+        simpleTlb[set_id].push_back(temp_simpleTlbEntry);
+        if (temp_simpleTlbEntry.isOneWay()) 
+        {
+            if (is_dram_to_hbm) 
+            {
+                // Only need to read data from mem1
+                DPRINTF(RemapCtrl, "One-way migrating data from address %#x to %#x\n", temp_simpleTlbEntry.mem1Addr, temp_simpleTlbEntry.mem2Addr);
+
+                if(temp_simpleTlbEntry.need_wait==false)
+                {
+                    PacketPtr read_pkt = createReadPacket(\
+                    temp_simpleTlbEntry.mem1Addr);
+                    memPort.schedTimingReq(read_pkt, curTick());
+
+                }
+
+            } 
+            
+            else if (!is_dram_to_hbm)
+            {
+                // Only need to read data from mem2
+                DPRINTF(RemapCtrl, "One-way migrating data from address %#x to %#x\n", temp_simpleTlbEntry.mem2Addr, temp_simpleTlbEntry.mem1Addr);
+
+                if(temp_simpleTlbEntry.need_wait==false)
+                {
+                    PacketPtr read_pkt = createReadPacket(\
+                    temp_simpleTlbEntry.mem2Addr);
+                    memPort.schedTimingReq(read_pkt, curTick());
+
+                }
+
+            } 
+            
+            else 
+            {
+                panic("error, AddSimpleEntry\n");
+            }
+        }
+                
+        else 
+        {
+            // Send 2 read packets.
+            DPRINTF(RemapCtrl, "double swap, Migrating data from address \
+                    %#x to %#x\n",
+                    temp_simpleTlbEntry.mem1Addr, temp_simpleTlbEntry.mem2Addr);
+
+            if(temp_simpleTlbEntry.need_wait==false)
+            {
+                PacketPtr read_pkt1 = createReadPacket(temp_simpleTlbEntry.mem1Addr);
+                memPort.schedTimingReq(read_pkt1, curTick());
+
+                PacketPtr read_pkt2 = createReadPacket(temp_simpleTlbEntry.mem2Addr);
+                memPort.schedTimingReq(read_pkt2, curTick()+tickgap_between_two_pkt);
+            }
+        }
+    }
+   
+}
+```
+
+
+
+
+
+
+
+# gem5实现Design的思路
+
+* 最主体的部分是一个负责分发数据这种的内存控制器（例如`remap_ctrl.cc/hh` , `chameleon_ctrl.cc/hh`）
+
+* 还有一个是负责真正Design部分的逻辑的部分，包括一些状态位怎么样变、数据应该怎么样迁移等（`block_and_page_granularity_HBM_prior.cc/hh`）。
+
+  * 内存控制器通过头文件的引入`#include block_and_page_granularity_HBM_prior.hh`，引入包含处理逻辑的控制器类（e.g. 在Hybrid2中 `class AddrController`）作为design处理逻辑和控制器分发数据的媒介。
+
+  * 通过媒介中计算(或其他方式)得到的类似`set_id` `page_id` `page_offset` `page_adddr`等数据，交给内存控制器进行处理。内存控制器也将通过媒介进行一些逻辑处理。
+
+* 相关的代码实现之后，无需手动实现内存控制器构造时的参数类(e.g.  `RemapCtrlParams` 相应的文件 `RemapCtrlParams.hh`)，这个文件将在编译后自动生成。
+
+* 在编译之前，还需要在内存控制器实现代码的相同目录下，实现一个相应的Python类，以最后用于实例化对象并加入到`m5.object`。最简单的python类实现，如下案例所示：(注意引入m5相关的包)
+
+```python
+from m5.params import *
+from m5.proxy import *
+from m5.objects.ClockedObject import ClockedObject
+
+class RemapCtrl(ClockedObject):
+    type = 'RemapCtrl'
+    cxx_header = "HBM_project/remap_ctrl.hh"
+
+    # Use only one port for CPU side
+    cpu_side = ResponsePort("CPU side port, receives requests")
+    mem_side = RequestPort("Memory side port, sends requests")
+
+    # a pointer to the main system
+    # in order to get the cache block size, memory address
+    # maybe useless?
+    system = Param.System(Parent.any, "The system this RemapCtrl is part of")
+```
+
+* 在编写完这段代码之后，需要在`SConscript`（如果没有的话需要新建一个）里增加相关的`python`文件，以使它能够正确编译。
+
+```python
+Import('*')
+SimObject('RemapCtrl.py')
+Source('block_and_page_granularity_HBM_prior.cc')
+Source('remap_ctrl.cc')
+DebugFlag('RemapCtrl', "For hbm hybrid")
+```
+
+* 后续进行系统配置时只需要在导入包的部分，增加代码行`from m5.objects import *`即可在后续进行使用
+
+* 在Hybrid2中进行的`RemapCtrl`配置，即可完成对象仿真。
+
+  * > ```python
+    > if options.hbm_controller:
+    >         system.hbm_ctrl = RemapCtrl()
+    >         system.ctrlbus = VirtualXBar()
+    >         system.ctrlbus.mem_side_ports = system.hbm_ctrl.cpu_side
+    >         system.hbm_ctrl.mem_side = system.membus.cpu_side_ports
+    > ```
+
+* 上面代码中出现的`options.hbm_controller`为命令行相关的操作
+
+* 如果需要在命令行新增类似`--hbm-controller`相关的命令，只需要在`configs/common/Options.py`中，在`def addSEOptions(parser):`中新增相关命令即可。
+
+  * 例如我在命令行试图加入`--parsec`命令：
+
+  * > ```python
+    >  	# parsec
+    >     parser.add_option('--parsec',type="string",default="",
+    >                       help="Specify the parsec benchmark to run.")
+    > ```
+    >
+    > 只需要增加这样一段代码即可
 
 
 

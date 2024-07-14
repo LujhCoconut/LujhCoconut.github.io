@@ -996,3 +996,40 @@ private:
 };
 ```
 
+
+
+
+
+```c++
+#include <iostream>
+
+// 函数1：接受一个int类型的指针，并修改它所指向的值
+void modifyValue(int* ptr) {
+    *ptr = 100;  // 修改ptr所指向的值为100
+}
+
+// 函数2：接受一个int类型的指针的指针，并修改它所指向的指针
+void modifyPointer(int** ptrPtr) {
+    static int value = 50;  // 静态变量，模拟某个值
+    *ptrPtr = &value;  // 修改ptrPtr所指向的指针，使其指向value的地址
+}
+
+int main() {
+    int num1 = 10;
+    int num2 = 20;
+
+    int* ptr1 = &num1;
+    int* ptr2 = &num2;
+
+    // 调用modifyValue函数，修改ptr1所指向的值
+    modifyValue(ptr1);
+    std::cout << "Value of num1 after modifyValue: " << num1 << std::endl;  // 输出：100
+
+    // 调用modifyPointer函数，修改ptr2的指向
+    modifyPointer(&ptr2);
+    std::cout << "Value of num2 after modifyPointer: " << *ptr2 << std::endl;  // 输出：50
+
+    return 0;
+}
+```
+
