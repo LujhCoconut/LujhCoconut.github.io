@@ -2180,22 +2180,213 @@ Packet::PrintReqState::printLabels()
 
 ### makeHtmTransactionalReqResponse
 
+用于将一个HTM（硬件事务内存）事务请求转换为响应，并设置相应的状态码
+
 ```c++
 void
 Packet::makeHtmTransactionalReqResponse(
     const HtmCacheFailure htm_return_code)
 {
+    // 确保当前数据包需要响应。如果数据包不需要响应，则会触发断言失败，程序终止
     assert(needsResponse());
+    // 确保当前数据包是一个请求。如果数据包不是请求，则会触发断言失败，程序终止
     assert(isRequest());
- 
+ 	// 将当前数据包的命令类型转换为响应命令类型。responseCommand 方法根据请求命令类型返回相应的响应命令类型。
     cmd = cmd.responseCommand();
- 
+ 	// 设置HTM事务在缓存中失败的返回代码。htm_return_code 是一个 HtmCacheFailure 类型的参数，表示HTM事务的失败原因
     setHtmTransactionFailedInCache(htm_return_code);
  
     // responses are never express, even if the snoop that
     // triggered them was
+    // 清除 EXPRESS_SNOOP 标志。即使触发响应的嗅探是快速的，响应也从不快速
     flags.clear(EXPRESS_SNOOP);
 }
+```
+
+* 硬件事务内存（Hardware Transactional Memory，HTM）是一种并行编程技术，它允许程序员使用事务的概念来管理内存操作，从而简化并发编程并提高性能。HTM的主要目标是提高多线程程序的性能，同时简化对共享数据的访问。
+
+  * **事务**：
+
+    - 类似于数据库中的事务，HTM中的事务是一组要么全部执行，要么全部回滚的操作。事务保证了操作的原子性和一致性。
+
+    **内存冲突检测**：
+
+    - 在事务执行期间，硬件会监视内存访问以检测冲突。如果多个事务同时访问相同的内存位置并且至少有一个是写操作，硬件将检测到冲突并回滚其中的一个或多个事务。
+
+    **回滚和重试**：
+
+    - 如果事务冲突或遇到其他问题（如缓存溢出），硬件会回滚事务的所有操作。程序可以选择重试事务。
+
+    **原子性**：
+
+    - 事务中的所有操作要么全部成功并提交，要么全部回滚，保持系统状态的一致性
+
+
+
+
+
+### setHtmTransactionFailedInCache
+
+用于设置 HTM（硬件事务内存）事务在缓存中失败的返回代码，并根据情况标记事务失败的标志
+
+`htm_return_code` 是一个 `HtmCacheFailure` 枚举类型的参数，表示 HTM 事务在缓存中失败的具体原因
+
+
+
+```c++
+void
+Packet::setHtmTransactionFailedInCache(
+    const HtmCacheFailure htm_return_code)
+{
+    // 检查 htm_return_code 是否为 NO_FAIL。NO_FAIL 通常表示没有发生失败
+    if (htm_return_code != HtmCacheFailure::NO_FAIL)
+        // 如果 htm_return_code 不等于 NO_FAIL，则设置数据包的 FAILS_TRANSACTION 标志，表明该数据包对应的事务失败
+        flags.set(FAILS_TRANSACTION);
+	// 将 htm_return_code 赋值给数据包的 htmReturnReason 成员变量，记录事务失败的具体原因。
+    htmReturnReason = htm_return_code;
+}
+```
+
+假设我们有一个 HTM 事务请求数据包 `pkt`，并且事务在缓存中失败，失败原因是 `HtmCacheFailure::CACHE_MISS`。可以这样调用该函数：
+
+```c++
+Packet pkt;
+HtmCacheFailure htm_cache_failure = HtmCacheFailure::CACHE_MISS;
+pkt.setHtmTransactionFailedInCache(htm_cache_failure);
+```
+
+
+
+### htmTransactionFailedInCache
+
+检查数据包的 `FAILS_TRANSACTION` 标志是否被设置，判断事务是否在缓存中失败。
+
+```c++
+bool
+Packet::htmTransactionFailedInCache() const
+{
+    return flags.isSet(FAILS_TRANSACTION);
+}
+```
+
+### getHtmTransactionFailedInCacheRC
+
+返回 HTM 事务在缓存中失败的原因。
+
+```c++
+HtmCacheFailure
+Packet::getHtmTransactionFailedInCacheRC() const
+{
+    assert(htmTransactionFailedInCache());
+    return htmReturnReason;
+}
+```
+
+### setHtmTransactional
+
+设置数据包为 HTM 事务包，并存储事务的唯一标识符（UID）。
+
+```c++
+void
+Packet::setHtmTransactional(uint64_t htm_uid)
+{
+    flags.set(FROM_TRANSACTION);
+    htmTransactionUid = htm_uid;
+}
+```
+
+### isHtmTransactional
+
+检查数据包是否是 HTM 事务包。
+
+```c++
+bool
+Packet::isHtmTransactional() const
+{
+    return flags.isSet(FROM_TRANSACTION);
+}
+```
+
+### getHtmTransactionUid
+
+返回 HTM 事务包的唯一标识符（UID）。
+
+```c++
+uint64_t
+Packet::getHtmTransactionUid() const
+{
+    assert(flags.isSet(FROM_TRANSACTION));
+    return htmTransactionUid;
+}
+```
+
+
+
+
+
+### allocate
+
+这段代码定义了 `Packet` 类中的 `allocate` 方法，用于为数据包分配内存。
+
+```c++
+/** Allocate memory for the packet. */
+    void
+    allocate()
+    {
+        // if either this command or the response command has a data
+        // payload, actually allocate space
+        // 检查当前命令或响应命令是否有数据负载。如果有数据负载，则需要分配内存
+        if (hasData() || hasRespData()) {
+            // 保证在分配内存之前，数据包没有使用静态或动态数据。
+            assert(flags.noneSet(STATIC_DATA|DYNAMIC_DATA));
+            // 设置 DYNAMIC_DATA 标志，表示数据包使用动态分配的数据。
+            flags.set(DYNAMIC_DATA);
+            // 为数据包分配大小为 getSize() 的内存，并将指针存储在 data 成员变量中。
+            data = new uint8_t[getSize()];
+        }
+    }
+```
+
+* 为什么需要确保在分配内存之前，数据包没有使用静态或动态数据？
+
+  * **避免重复分配**：
+
+    - 如果数据包已经使用了静态或动态数据（即已经分配了内存），再次调用 `allocate` 方法可能会导致**内存泄漏或内存重复分配**，从而造成程序性能下降或内存使用不稳定。
+
+    **数据包状态管理**：
+
+    - 数据包对象可能会在其生命周期内多次调用 `allocate` 方法或进行其他操作，为了**确保对象状态的一致性和正确性**，需要在**分配内存之前清除已有的数据状态**。这样可以确保每次分配都是基于当前对象的状态和需求进行的。
+
+    **程序逻辑正确性**：
+
+    - 程序设计上，通常会通过标志或状态来管理数据包是否已经分配了内存。在执行 `allocate` 方法之前清除这些标志或状态是良好的编程实践，可以**确保操作的顺序和执行的逻辑是正确**的。
+
+    **断言检查**：
+
+    - 使用 `assert(flags.noneSet(STATIC_DATA|DYNAMIC_DATA));` 的断言，可以在调试阶段检测和捕获潜在的错误状态。如果发现数据包已经使用了静态或动态数据，断言会触发，提醒开发者需要处理或调整代码逻辑。
+
+
+
+### deleteData
+
+用于删除数据包中的数据，并清除相关的标志和指针
+
+```c++
+    /**
+     * delete the data pointed to in the data pointer. Ok to call to
+     * matter how data was allocted.
+     */
+    void
+    deleteData()
+    {
+        // 如果数据包的 DYNAMIC_DATA 标志被设置，表示数据是通过动态分配内存得到的，那么调用 delete [] data; 将释放这块内存
+        if (flags.isSet(DYNAMIC_DATA))
+            delete [] data;
+		// 清除 STATIC_DATA 和 DYNAMIC_DATA 标志，以确保数据包不再被标记为已分配静态或动态数据
+        flags.clear(STATIC_DATA|DYNAMIC_DATA);
+        // 将 data 指针设置为 NULL，以避免在释放后意外访问已释放的内存地址
+        data = NULL;
+    }
 ```
 
 
@@ -3469,9 +3660,129 @@ MemCtrl::pruneBurstTick()
 
     * 指示什么读数据需要被写入
     * -1 ： 不发送
-    * 例如： readType[1]=3 读数据包的数据是3，并且被写入1 【指的应该是Segment 1  也就是DDR Segment 1】
+    * 例如： readType[1]=3 读数据包被送到1，读的数据被写入3 【指的应该是Segment 1/3  也就是DDR Segment 1 HBM Segment】
 
 ![](.\segment_cha.png)
+
+
+
+## 关于MemSidePort
+
+MemSidePort的类，它继承自QueuedRequestPort，表示在内存端的一个端口，用于接收响应
+
+```c++
+    // Port on the memory-side that receives responses.
+    // Refer to sim_cache.hh for further information.
+    class MemSidePort : public QueuedRequestPort
+    {
+      private:
+
+        // 这是一个请求包队列，用于存储接收到的请求数据包
+        ReqPacketQueue reqQueue;
+        // 这是一个用于存储Snoop响应数据包的队列。Snoop响应通常用于缓存协议中的无效ation、更新和写入通知等操作
+        SnoopRespPacketQueue snoopRespQueue;
+        // Not quite sure with * or & here
+        // 这是一个指向ChameleonCtrl类对象的指
+        // 用于指示拥有（owner）这个MemSidePort实例的ChameleonCtrl实例。通常在构造函数中初始化
+        ChameleonCtrl *owner;
+
+      public:
+
+        MemSidePort(const std::string& name, ChameleonCtrl *_owner);
+
+      protected:
+		// 这是一个虚函数，覆盖了基类QueuedRequestPort中的recvTimingResp函数。用于接收并处理定时响应数据包
+        bool recvTimingResp(PacketPtr pkt) override;
+
+        // void recvReqRetry() override;
+		// 这是一个虚函数，覆盖了基类QueuedRequestPort中的recvRangeChange函数。用于接收和处理范围改变通知
+        void recvRangeChange() override;
+    };
+```
+
+* 虚函数在面向对象编程中起着非常重要的作用，主要有以下几个方面：
+  1. **实现多态性（Polymorphism）**：
+     - 虚函数允许在基类中声明接口，并在派生类中重新定义该函数。通过基类指针或引用调用虚函数时，根据实际对象的类型来决定调用哪个版本的函数，实现了多态性。这种特性使得程序能够根据对象的实际类型来动态地选择合适的函数实现，从而提高了代码的灵活性和可维护性。
+  2. **允许运行时绑定（Runtime Binding）**：
+     - 虚函数通过在运行时确定要调用的函数版本，而不是在编译时确定。这种动态绑定的机制使得程序能够在运行时根据对象的实际类型来决定调用哪个函数，从而支持更灵活的程序行为。
+  3. **实现接口和抽象类**：
+     - 虚函数可以在基类中声明为纯虚函数（即没有实现），使得基类成为抽象类，无法直接实例化对象，但可以作为接口使用。派生类必须实现基类中的纯虚函数，从而实现接口的规范和强制约束。
+  4. **方便的函数重写机制**：
+     - 虚函数允许派生类重新定义基类的函数，以适应特定的需求或环境。这种机制使得继承关系更加灵活，子类可以根据需要定制自己的行为，同时还能够利用基类的通用实现。
+  5. **支持动态内存分配和销毁**：
+     - 虚函数使得通过基类指针或引用访问派生类对象成为可能。这种特性对于动态内存管理（如使用 `new` 和 `delete` 运算符）尤为重要，可以根据需要动态地创建和销毁对象，并确保正确调用派生类的函数。
+
+
+
+## 关于CpuSidePort
+
+用于在内存控制器与CPU之间的通信。它管理从CPU接收的数据包请求和响应，并提供处理和重试机制。该类具有以下主要功能：
+
+- 存储和管理响应数据包的队列。
+- 处理从CPU接收的定时和功能性请求。
+- 支持设置和清除阻塞状态，以控制端口的请求处理能力。
+- 提供地址范围查询和重试请求处理的机制。
+
+```c++
+class CPUSidePort : public QueuedResponsePort
+{
+  private:
+    /** A packet queue used to store responses. */
+    RespPacketQueue respQueue;  // 存储响应数据包的队列
+
+    ChameleonCtrl *owner;  // 指向拥有此端口的 ChameleonCtrl 实例的指针
+
+    /**
+     * @brief use event instead of directly sendRetryReq
+     * @todo not added yet
+     */
+    // EventFunctionWrapper sendRetryEvent;  // 用于事件驱动的重试请求（尚未实现）
+
+  public:
+    CPUSidePort(const std::string& name, ChameleonCtrl *_owner);  // 构造函数
+
+    AddrRangeList getAddrRanges() const override;  // 获取地址范围的函数，覆盖基类方法
+
+    void processSendRetry();  // 处理发送重试请求
+
+    /**
+     * Set CPUSidePort as blocked when busy, and reject requests.
+     * Should be called by ChameleonCtrl::setBlocked().
+     */
+    void setBlocked();  // 设置端口为阻塞状态，拒绝请求
+
+    /**
+     * Set CPUSidePort as unblocked when free,
+     * and accept new requests.
+     * Should be called by ChameleonCtrl::clearBlocked().
+     * @warning every sendRetryReq should be done here
+     */
+    void clearBlocked();  // 设置端口为非阻塞状态，接受新请求
+    bool isBlocked() const { return blocked; }  // 检查端口是否阻塞
+
+  protected:
+    /**
+     * Note: ChameleonCtrl::blocked is not
+     * ChameleonCtrl::CPUSidePort::blocked.
+     * In some cases, the two may be different.
+     */
+    bool blocked;  // 标记端口是否阻塞
+    bool mustSendRetry;  // 标记是否必须发送重试请求
+
+    // Almost the same as recvTimingReq
+    Tick recvAtomic(PacketPtr pkt) override
+    { panic("recvAtomic unimpl."); }  // 未实现的原子接收方法
+
+    void recvFunctional(PacketPtr pkt) override;  // 功能性接收方法
+
+    // Will implement tryTiming here
+    bool tryTiming(PacketPtr pkt) override;  // 尝试定时方法
+
+    bool recvTimingReq(PacketPtr pkt) override;  // 接收定时请求
+
+    // void recvRespRetry() override;
+};
+```
 
 
 
@@ -3811,7 +4122,9 @@ ChameleonCtrl::CPUSidePort::tryTiming(PacketPtr pkt)
 
 
 
-### recvTimingReq
+### recvTimingReq 
+
+(与Hybrid2差异从这开始)
 
 用于接收和处理定时请求（Timing Request）
 
@@ -3904,7 +4217,7 @@ ChameleonCtrl::access(PacketPtr pkt)
 
     // Addr address only when used
     Addr segBlockAddr = segAddr & ~(Addr(blockSize - 1));
-	// 请求的块SegBlock地址不在segGrps里的话
+	// 请求的块SegBlock地址超过segGrps最后一条Entry对应的偏移量的话
     if (segBlockAddr > segGrps.back().addr) {
 		// 新增segGrpEntry
         DPRINTF(ChameleonCtrl, "Adding entry "\
@@ -3919,7 +4232,7 @@ ChameleonCtrl::access(PacketPtr pkt)
             segGrps.emplace_back(tmpEntry);
         }
     }
-	// 这个时候segGrps里已经有segBlockAddr相关的segGrpEntry.也就是segGroup
+	// 这个时候segGrps里已经有segBlockAddr相关的segGrpEntry.也就是segGroup-X
     segGrpEntry* entryPtr = &segGrps[grpNum];
 
     // If busy, simply hang it to the queue
@@ -4078,8 +4391,31 @@ ChameleonCtrl::sendReadPacket(segGrpEntry* entryPtr, Addr srcAddr,
     memPort.schedTimingReq(read_pkt, curTick() + 10);
 	// 说明读取的数据应写入什么地方
     // -1: not sending at all
-    // readTypes[1] = 3   第1（数组下标0开始）个Segment
+    // readTypes[1] = 3   读的packet送到第1（数组下标0开始）个Segment,读的数据写到第3个Seg ？
     entryPtr->readTypes[srcNum] = destNum;
+}
+```
+
+
+
+### handleRequest
+
+```c++
+bool
+ChameleonCtrl::handleRequest(PacketPtr pkt)
+{
+    assert(pkt->isRequest());
+    DPRINTF(ChameleonCtrl, "Got request for addr %#x\n", pkt->getAddr());
+
+    bool success = access(pkt);
+
+    // Simply defined latency. Should be more precious later.
+    // Tick latency = pkt->headerDelay;
+    // memPort.schedTimingReq(pkt, curTick() + latency);
+    if (success && !isBlocked()) {
+        memPort.schedTimingReq(pkt, curTick());
+    }
+    return true;
 }
 ```
 
@@ -4087,7 +4423,7 @@ ChameleonCtrl::sendReadPacket(segGrpEntry* entryPtr, Addr srcAddr,
 
 ### writeBack
 
-处理从内存读取响应数据包的写回操作
+主要作用是处理接收到的响应数据包，并根据数据包中的地址和状态信息，将数据写回到指定的目标地址中
 
 ```c++
  /**
@@ -4115,12 +4451,12 @@ ChameleonCtrl::writeBack(PacketPtr pkt)
     int segNum = whichSeg(addr);
     Addr segAddr = getSegAddr(addr);
     int grpNum = segAddr / blockSize;
-	// 指向这个快
+	// 指向这个SegEntry
     segGrpEntry* entryPtr = &segGrps[grpNum];
 
     // entry must be busy
     assert(entryPtr->isBusy());
-
+	// 数据要被写回到哪里，根据segNum找到SegEntry的readType对应的目标Segment编号 乘上HBMSize 加偏移量得到目标地址
     Addr destAddr = entryPtr->readTypes[segNum]*hbmSize\
                     + segAddr;
 
@@ -4136,28 +4472,334 @@ ChameleonCtrl::writeBack(PacketPtr pkt)
      * even if hbm is busy, write to hbm will
      * be strictly later than read from hbm.
      */
+    // 创建一个数据包，交给memPort来调度
     uint8_t *data = new uint8_t[blockSize];
+    // writeDataToBlock：将数据从数据包复制到提供的块指针中，该块指针按给定的块大小对齐
     pkt->writeDataToBlock(data, blockSize);
     PacketPtr write_pkt = createWbPacket(destAddr, data);
     memPort.schedTimingReq(write_pkt, curTick());
 
+    // 当前entry对应的segnum对应的readType没有回写任务，标记回-1
     // No writeback task, set it back to -1
     entryPtr->readTypes[segNum] = -1;
 
     bool  isClear = true;
+    // 看看其它SegMent对应的readType
     for (int tmpDestNum : entryPtr->readTypes) {
         if (tmpDestNum != -1)
             isClear = false;
     }
-
+	// 如果对应的readType都是-1，意味着这个SegEntry不忙
     if (isClear) {
         entryPtr->setBusy(false);
         entryPtr->setDirty(false);
+        // handleDeferredPacket:当一个TlbEntry变为就绪时调用此函数。所有延迟队列中的数据包应该被清除
         handleDeferredPacket(entryPtr, curTick());
 
         return true;
     }
     return false;
 }
+```
+
+
+
+
+
+### handleResponse
+
+用于处理接收到的响应数据包。如果数据包是向CPU发送的响应，它会恢复数据包的状态和地址，并将响应发送回CPU
+
+```c++
+bool
+ChameleonCtrl::handleResponse(PacketPtr pkt)
+{
+    // 确保接收到的数据包pkt确实是一个响应包（response）
+    assert(pkt->isResponse());
+    DPRINTF(ChameleonCtrl, "Got response for addr %#x\n", pkt->getAddr());
+    
+	// 如果条件成立，表示数据包的目标是CPU，因此程序需要将数据包返回给CPU
+    if (pkt->requestorId() != MemSideRequestorId()) {
+        // The packet is towards CPU. Just send it back.
+
+        //使用SenderState将pkt地址改回.
+        // 尝试将数据包pkt中的senderState转换为ChameleonCtrlSenderState类型。
+        // 如果转换成功（receivedState不为空），表示数据包在发送时曾经被修改过其状态
+        ChameleonCtrlSenderState* receivedState =
+            dynamic_cast<ChameleonCtrlSenderState*>(pkt->senderState);
+        
+		// 如果senderState转换成功，说明数据包的状态已经被修改过
+        if (receivedState != NULL) {
+
+            // Change address back only when it has a state.
+            // 将数据包的senderState恢复为先前保存的状态(predecessor)
+            pkt->senderState = receivedState->predecessor;
+            // 获取先前保存的数据包原始地址
+            Addr orig_addr = receivedState->origAddr;
+            // 将数据包的地址设置回原始地址
+            pkt->setAddr(orig_addr);
+
+            DPRINTF(ChameleonCtrl, "Setting packet back to its original"\
+            "address %#x\n", orig_addr);
+
+            /**
+             * @warning Should restore the senderState if the
+             * packet is not successfully sent.
+             * @todo Still wonder how to return bool by schedTimingResp.
+             */
+            // 删除先前保存的状态对象，释放内存
+            delete receivedState;
+        }
+		// 获取数据包的延迟时间。
+        Tick latency = pkt->headerDelay;
+        // 调度数据包pkt在CPU端口上的响应发送，发送时间为当前时钟周期(curTick())加上延迟时间(latency)
+        cpuPort.schedTimingResp(pkt, curTick() + latency);
+
+        return true;
+
+    } else {// 如果数据包的请求者ID等于MemSideRequestorId()，表示响应是发送给ChameleonCtrl的
+        DPRINTF(ChameleonCtrl, "Receiving response for ChameleonCtrl %s\n",
+                pkt->print());
+        // bool finished = writeBack(pkt);
+        writeBack(pkt);
+    }
+
+    return true;
+}
+```
+
+
+
+
+
+### handleDeferredPacket
+
+处理段组条目（segGrpEntry）中的延迟请求队列（reqQueue）。它逐个处理队列中的数据包，尝试访问并发送每个数据包，如果访问失败则返回当前发送时钟周期，以便稍后重新尝试发送。
+
+```c++
+Tick ChameleonCtrl::handleDeferredPacket(segGrpEntry* entryPtr, Tick startTick)
+{
+    Tick sendTick = startTick;  // 初始化发送时钟周期为起始时钟周期
+
+    while (!entryPtr->reqQueue.empty()) {
+        PacketPtr dfpkt = entryPtr->reqQueue.front();  // 获取队列中的第一个数据包
+        entryPtr->reqQueue.pop_front();  // 弹出队列中的第一个数据包
+        sendTick += dfpkt->headerDelay;  // 根据数据包的头延迟更新发送时钟周期
+
+        bool success = access(dfpkt);  // 调用access函数，执行数据包的访问操作
+
+        if (success) {
+            memPort.schedTimingReq(dfpkt, sendTick);  // 在内存端口上安排数据包的定时请求发送
+            DPRINTF(ChameleonCtrl, "Sending deferred packet %s\n", dfpkt->print());  // 打印日志，指示正在发送延迟数据包
+        } else {
+            // 如果访问失败，表示设备或资源忙碌
+            DPRINTF(ChameleonCtrl, "Busy again!\n");
+            return sendTick;  // 返回当前发送时钟周期，表示未能成功发送数据包
+        }
+    }
+
+    DPRINTF(ChameleonCtrl, "Deferred request queue all clear\n");
+    return sendTick;  // 返回最终发送时钟周期，表示延迟请求队列已全部处理完毕
+}
+```
+
+
+
+### createWbPacket
+
+创建一个写回数据数据包，并将指定的数据指针 `data_ptr` 设置到该数据包中
+
+```c++
+PacketPtr
+ChameleonCtrl::createWbPacket(Addr mem_addr, uint8_t *data_ptr)
+{
+    // Create a new write back request
+    // Using the common RequestorId for writeback
+    RequestPtr req = std::make_shared<Request>(
+        mem_addr, blockSize, 0, Request::wbRequestorId);
+
+    PacketPtr new_pkt = new Packet(req, MemCmd::WritebackDirty, blockSize);
+    // new_pkt->allocate();
+
+    // Not quite sure which function to use to set data
+    // new_pkt->setData(data_ptr);
+    new_pkt->dataDynamic(data_ptr);
+
+    return new_pkt;
+}
+```
+
+`RequestPtr req = std::make_shared<Request>(mem_addr, blockSize, 0, Request::wbRequestorId);`
+
+- 创建一个新的写回请求 (`Request`) 对象。
+- `mem_addr`：目标内存地址。
+- `blockSize`：数据块的大小。
+- `0`：请求标志，这里没有特别的标志。
+- `Request::wbRequestorId`：写回请求的请求者ID，通常用于标识该请求是由写回操作发起的。
+
+`PacketPtr new_pkt = new Packet(req, MemCmd::WritebackDirty, blockSize);`
+
+- 创建一个新的数据包 (`Packet`) 对象。
+- `req`：之前创建的请求对象。
+- `MemCmd::WritebackDirty`：数据包命令类型，表示这是一个写回脏数据的操作。
+- `blockSize`：数据块的大小。
+
+`new_pkt->dataDynamic(data_ptr);`
+
+- 将数据指针 `data_ptr` 设置为数据包的新数据。
+- `dataDynamic` 函数将动态分配和管理数据指针 `data_ptr` 的内存。
+
+
+
+`dataDynamic`
+
+将数据指针设置为一个应该用 `delete []` 释放的值。动态数据是该数据包特有的，当数据包从源头传递到目的地时，转发的数据包将分配它们自己的数据。当一个数据包到达最终目的地时，它将填充该特定数据包的动态数据，并在返回源头的途中，在每一个创建新数据包的步骤中（例如在缓存中）都会调用 `memcpy`。最终，当响应到达源头时，需要进行最后一次 `memcpy` 来从数据包中提取数据，然后再释放数据包.
+
+
+
+### createReadPacket
+
+创建一个读取数据包，并分配必要的内存
+
+```c++
+PacketPtr
+ChameleonCtrl::createReadPacket(Addr mem_addr)
+{
+    // Create a new read request
+    // Use the ChameleonCtrl's unique requestor id
+    // 创建一个新的读取请求 (Request) 对象
+    RequestPtr req = std::make_shared<Request>(
+        mem_addr, blockSize, 0, MemSideRequestorId());
+	// 创建一个新的数据包 (Packet) 对象
+    PacketPtr new_pkt = new Packet(req, MemCmd::ReadReq, blockSize);
+    // 分配数据包内部数据结构的内存。确保数据包有足够的空间来存储读取的数据
+    new_pkt->allocate();
+
+    return new_pkt;
+}
+```
+
+
+
+
+
+# HBM_Project
+
+
+
+
+
+# Run_parsec.sh脚本说明
+
+parsec解压出的benchmark有13种，每种对应5种模式，分别是simdev simlarge simmedium simsmall test。
+
+```shell
+#!/bin/bash
+GEM5_DIR=/home/dell/jhlu/gem5_hybrid2
+BENCH_DIR=/home/dell/jhlu/parsec/benchmark
+
+ARGC=$#
+if [[ "$ARGC" < 1 ]]; then
+    echo "set parsec size [dev->0 L->1 M->2 S->3 T->4]"
+    echo "USAGE: run_parsec.sh [size you set up]"
+    exit
+fi
+
+
+# 获取当前脚本所在的目录路径
+current_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+size=$1
+echo "$size"
+
+
+cd "$BENCH_DIR"
+
+# 初始化一个空数组来存储benchmark名，命名为elements
+file_array=()
+
+# 检查 size 是否已经定义
+if [ -z "$size" ]; then
+    echo "Error: size is not set"
+    exit 1
+fi
+
+if [[ "$size" == 0 ]]; then
+    echo "Choose simdev !"
+    while IFS= read -r -d '' file; do
+        file_array+=("$(basename "$file")")
+    done < <(find "$BENCH_DIR" -type f -name "*simdev.rcS" -print0)
+
+elif [[ "$size" == 1 ]]; then
+    echo "Choose simlarge !"
+    while IFS= read -r -d '' file; do
+        file_array+=("$(basename "$file")")
+    done < <(find "$BENCH_DIR" -type f -name "*simlarge.rcS" -print0)
+
+elif [[ "$size" == 2 ]]; then
+    echo "Choose simmedium !"
+    while IFS= read -r -d '' file; do
+        file_array+=("$(basename "$file")")
+    done < <(find "$BENCH_DIR" -type f -name "*simmedium.rcS" -print0)
+
+elif [[ "$size" == 3 ]]; then
+    echo "Choose simsmall !"
+    while IFS= read -r -d '' file; do
+        file_array+=("$(basename "$file")")
+    done < <(find "$BENCH_DIR" -type f -name "*simsmall.rcS" -print0)
+
+elif [[ "$size" == 4 ]]; then
+    echo "Choose simtest !"
+    while IFS= read -r -d '' file; do
+        file_array+=("$(basename "$file")")
+    done < <(find "$BENCH_DIR" -type f -name "*test.rcS" -print0)
+
+else
+    echo "size must be in [dev->0 L->1 M->2 S->3 T->4]"
+fi
+
+# # parsec -> x86? ALPHA ? Using ARM may suffer from unknow problems
+# $GEM5_DIR/build/X86/gem5.opt -d $GEM5_DIR/parsec_trace/
+
+# 判断file_array是否为空
+if [ ${#file_array[@]} -eq 0 ]; then
+    echo "benchmark_array is empty"
+else
+    echo "benchmark_array is not empty"
+fi
+
+cd "$current_dir"
+
+# 设置信号处理函数，捕获 Ctrl+C 信号
+trap 'echo "Ctrl+C pressed. Exiting script."; exit 1' INT
+
+# 实测在full system模式下可以正常运行和输出结果
+for benchmark in "${file_array[@]}"; do
+    echo "Processing $benchmark" || exit 1
+    echo "sh ${BENCH_DIR}/${benchmark}"
+    bcmark=$(echo "$benchmark" | cut -d'_' -f1)
+    M5_PATH=./full_system_images/system \
+    $GEM5_DIR/build/X86/gem5.opt  -d $GEM5_DIR/parsec_trace/$bcmark --debug-flags=MemoryAccess \
+    $GEM5_DIR/configs/example/se.py --num-cpus=1 --cpu-type=TimingSimpleCPU  \
+    --cpu-clock=2200MHz --caches --l2cache \
+    --script=$BENCH_DIR/$benchmark -I 10000 --disk-image=x86root-parsec.img --kernel=x86_64-vmlinux-2.6.28.4-smp || exit 1
+done
+
+# 实测在se模式下 上述代码不可以使用 
+# --script 参数可以用于在全系统模式（FS mode）下执行 .rcS 脚本文
+# 而 --cmd 参数用于在系统仿真模式（SE mode）下执行应用程序
+# SE 模式下，gem5 不直接支持 .rcS 脚本文件，因为这些脚本通常依赖于操作系统环境。
+# 需要提取这些命令并在 --cmd 参数中使用：(实测也不太行)
+# 不可用
+for benchmark in "${file_array[@]}"; do
+    echo "Processing $benchmark" || exit 1
+    bcmark=$(echo "$benchmark" | cut -d'_' -f1)
+    scriptPath="${BENCH_DIR}/${benchmark}"
+    M5_PATH=./full_system_images/system \
+    $GEM5_DIR/build/X86/gem5.opt  -d $GEM5_DIR/parsec_trace/$bcmark --debug-flags=MemoryAccess \
+    $GEM5_DIR/configs/example/se.py --num-cpus=1 --cpu-type=TimingSimpleCPU  \
+    --cpu-clock=2200MHz --caches --l2cache \
+    --parsec=$scriptPath -I 10000  || exit 1
+done
 ```
 
