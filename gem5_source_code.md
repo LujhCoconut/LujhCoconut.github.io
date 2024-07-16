@@ -5028,6 +5028,8 @@ void RemapCtrl::AddSimpleEntry(Addr mem1, Addr mem2, bool is_oneway, bool is_mem
 
 
 
+
+
 # gem5实现Design的思路
 
 * 最主体的部分是一个负责分发数据这种的内存控制器（例如`remap_ctrl.cc/hh` , `chameleon_ctrl.cc/hh`）
