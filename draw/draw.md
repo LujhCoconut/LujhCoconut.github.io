@@ -443,7 +443,7 @@ plt.show()
 
 **Error bar 折线图**
 
-<img src="D:\homepage\draw\error_line.png" style="zoom: 50%;" />
+<img src=".\error_line.png" style="zoom: 50%;" />
 
 ```python
 import numpy as np
