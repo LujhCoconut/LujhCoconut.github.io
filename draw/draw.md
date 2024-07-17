@@ -356,3 +356,124 @@ plt.savefig("model3.pdf", format="pdf",bbox_extra_artists=(legend,at1,at2,at3,),
 plt.show()
 ```
 
+
+
+## Case4: CDF图
+
+<img src=".\model_cdf.png" style="zoom:50%;" />
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 生成样本数据
+np.random.seed(0)
+data = np.random.randn(10)  # 生成10000个服从标准正态分布的样本
+
+# 计算数据的CDF
+data_sorted = np.sort(data)
+cdf = np.arange(1, len(data_sorted) + 1) / len(data_sorted)
+
+# 创建图形
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# 绘制CDF曲线
+ax.plot(data_sorted, cdf, linestyle='-', marker='', color='blue')
+
+# 设置图形标题和轴标签
+ax.set_title('Cumulative Distribution Function (CDF)', fontsize=16)
+ax.set_xlabel('Value', fontsize=14)
+ax.set_ylabel('CDF', fontsize=14)
+
+# 添加网格线
+ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+
+# 设置刻度线的样式
+ax.minorticks_on()
+ax.tick_params(which='both', direction='in', length=6)
+ax.tick_params(which='major', length=10)
+ax.tick_params(axis='x', rotation=0)
+
+# 显示图形
+plt.tight_layout()
+fig.savefig("model_cdf.pdf", format="pdf", bbox_inches="tight")
+plt.show()
+```
+
+
+
+## Case5: Error bar
+
+误差条（Error Bar）是用来表示数据不确定性或误差范围的图形元素
+
+**Error bar 柱状图**
+
+<img src=".\model_error_bar.png" style="zoom:50%;" />
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 样本数据
+categories = ['A', 'B', 'C', 'D', 'E']
+values = [5, 7, 6, 8, 7]
+errors = [0.5, 0.7, 0.2, 0.4, 0.6]
+
+# 创建图形
+fig, ax = plt.subplots(figsize=(6, 6))
+
+# 绘制柱状图，并添加误差条
+bars = ax.bar(categories, values, yerr=errors, capsize=3, color='skyblue', edgecolor='black')
+
+# 设置图形标题和轴标签
+ax.set_title('Bar Chart with Error Bars', fontsize=16)
+ax.set_xlabel('Categories', fontsize=14)
+ax.set_ylabel('Values', fontsize=14)
+
+# 添加网格线
+ax.grid(True, which='both', linestyle='--', linewidth=0.5, axis='y')
+
+# 显示图形
+plt.tight_layout()
+fig.savefig("model_error_bar.pdf", format="pdf",bbox_inches="tight")
+plt.show()
+```
+
+
+
+**Error bar 折线图**
+
+<img src="D:\homepage\draw\error_line.png" style="zoom: 50%;" />
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# 样本数据
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([5, 7, 6, 8, 7])
+errors = np.array([0.5, 0.7, 0.2, 0.4, 0.6])
+
+# 创建图形
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# 绘制折线图，并添加误差条
+ax.errorbar(x, y, yerr=errors, fmt='-o', ecolor='red', capsize=5, capthick=2, elinewidth=1.5, label='Data with Error Bars')
+
+# 设置图形标题和轴标签
+ax.set_title('Line Plot with Error Bars', fontsize=16)
+ax.set_xlabel('X-axis', fontsize=14)
+ax.set_ylabel('Y-axis', fontsize=14)
+
+# 添加图例
+ax.legend()
+
+# 添加网格线
+ax.grid(True, which='both', linestyle='--', linewidth=0.5)
+
+# 显示图形
+plt.tight_layout()
+fig.savefig("model_error_line.pdf", format="pdf",bbox_inches="tight")
+plt.show()
+```
+
