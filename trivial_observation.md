@@ -293,3 +293,14 @@ KSM 的**核心思想**是定期扫描系统内存，查找具有相同内容的
 
 - KVM、Xen、VMware 等
   - 根据具体应用场景选择合适的虚拟化技术和平台，以充分利用其特定的内存优化功能。
+
+
+
+
+
+## Case 2:异构系统的访存干扰
+
+![](.\hete_intf.png)
+
+Solution: QoS-Aware Memory Systems
+
