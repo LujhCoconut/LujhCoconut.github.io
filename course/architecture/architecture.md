@@ -2,7 +2,21 @@
 
 ## 内存系统的挑战与机遇
 
-【PDF】extension://ngphehpfehdmjellohmlojkplilekadg/pages/pdf/web/viewer.html?file=https%3A%2F%2Fsafari.ethz.ch%2Farchitecture%2Ffall2023%2Flib%2Fexe%2Ffetch.php%3Fmedia%3Donur-comparch-fall2023-lecture2a-memory-trends-challenges-opportunities-afterlecture.pdf
+> 【PDF】extension://ngphehpfehdmjellohmlojkplilekadg/pages/pdf/web/viewer.html?file=https%3A%2F%2Fsafari.ethz.ch%2Farchitecture%2Ffall2023%2Flib%2Fexe%2Ffetch.php%3Fmedia%3Donur-comparch-fall2023-lecture2a-memory-trends-challenges-opportunities-afterlecture.pdf
+
+### 四个关键的方向
+
+* Secure/Reliable/Safe Architectures
+* Energy-Efficient Architectures
+  * Memory-centric (Data-centric) Architectures
+* Low-Latency and Predictable Architectures
+* Architectures for AI/ML, Genomics, Medicine, Health
+
+
+
+
+
+
 
 
 

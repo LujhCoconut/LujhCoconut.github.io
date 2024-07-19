@@ -477,3 +477,50 @@ fig.savefig("model_error_line.pdf", format="pdf",bbox_inches="tight")
 plt.show()
 ```
 
+
+
+## Case6 : Stacked Bar
+
+<img src=".\model_stacked_bar.png" style="zoom:67%;" />
+
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+
+# 示例数据
+categories = ['Group 1', 'Group 2', 'Group 3', 'Group 4', 'Group 5', 'Group 6']
+segment1 = [3, 4, 2, 5, 1, 2, 3, 4, 2, 5, 1, 2]
+segment2 = [5, 6, 4, 6, 3, 4, 5, 6, 4, 6, 3, 4]
+segment3 = [2, 3, 3, 2, 4, 3, 2, 3, 3, 2, 4, 3]
+
+# 设置柱体的位置
+x = np.arange(len(categories))
+width = 0.3  # 每个柱体的宽度
+gap = 0.05    # 每组柱体之间的间隙
+
+# 创建堆积柱状图
+fig, ax = plt.subplots()
+
+# 绘制每组中的第一个柱体
+rects1 = ax.bar(x - width/2 - gap/2, segment1[::2], width, label='Segment 1', color='#964a8c')
+rects2 = ax.bar(x - width/2 - gap/2, segment2[::2], width, bottom=segment1[::2], label='Segment 2', color='#96d5b5')
+rects3 = ax.bar(x - width/2 - gap/2, segment3[::2], width, bottom=np.array(segment1[::2]) + np.array(segment2[::2]), label='Segment 3', color='#1f647f')
+
+# 绘制每组中的第二个柱体
+rects4 = ax.bar(x + width/2 + gap/2, segment1[1::2], width,  color='#964a8c')
+rects5 = ax.bar(x + width/2 + gap/2, segment2[1::2], width, bottom=segment1[1::2], color='#96d5b5')
+rects6 = ax.bar(x + width/2 + gap/2, segment3[1::2], width, bottom=np.array(segment1[1::2]) + np.array(segment2[1::2]),color='#1f647f')
+
+# 添加标题和标签
+ax.set_xlabel('Categories')
+ax.set_ylabel('Values')
+ax.set_title('Stacked Bar Chart Example with Groups')
+ax.set_xticks(x)
+ax.set_xticklabels(categories)
+ax.set_ylim(0,15)
+ax.legend(loc="upper right", bbox_to_anchor=(0.92, 1.0), ncol=3, frameon=False,handletextpad=0.5)
+fig.savefig("model_stack_bar.pdf", format="pdf",bbox_inches="tight")
+# 显示图表
+plt.show()
+```
+
