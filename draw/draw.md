@@ -82,6 +82,17 @@ fig.savefig("model1.pdf", format="pdf", bbox_extra_artists=(legend,),bbox_inches
 plt.show()
 ```
 
+<img src=".\treesls_color2.png" style="zoom:67%;" />
+
+颜色选择：图源`TreeSLS `（SOSP'23）
+
+```PYTHON
+COLOR1 = '#d6604d'
+COLOR2 = '#fddbc7'
+COLOR3 = '#e0e0e0'
+COLOR4 = '#878787'
+```
+
 
 
 ------
@@ -522,5 +533,20 @@ ax.legend(loc="upper right", bbox_to_anchor=(0.92, 1.0), ncol=3, frameon=False,h
 fig.savefig("model_stack_bar.pdf", format="pdf",bbox_inches="tight")
 # 显示图表
 plt.show()
+```
+
+**颜色选择：**
+
+<img src=".\treesls_color.png" style="zoom:67%;" />
+
+图源：`TreeSLS` (SOSP'23)
+
+```python
+COLOR1 = '#c13639'
+COLOR2 = '#f09b7b'
+COLOR3 = '#fee5d7'
+COLOR4 = '#e9e9e9'
+COLOR5 = '#b3b3b3'
+COLOR6 = '#656565'
 ```
 
