@@ -21,7 +21,7 @@
 
 
 
-<img src=".\gpu_learn_1.png" style="zoom:67%;" />
+<img src=".\gpu_pic\gpu_learn_1.png" style="zoom:67%;" />
 
 * **warp 和 threads**
 
