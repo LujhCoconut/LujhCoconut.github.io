@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
-	<title>ISCA</title>
+	<title>Tutorial_gem5</title>
 	
 	<!-- Meta -->
 	<meta charset="utf-8">
@@ -31,8 +31,10 @@
 				<div class="resume-header">
 					<div class="row align-items-center">
 						<div class="resume-title col-12 col-md-6 col-lg-8 col-xl-9">
-							<h2 class="resume-name mb-0 text-uppercase">ISCA Blogs</h2>
-							<div class="resume-tagline mb-3 mb-md-0">International Symposium on Computer Architecture（CCF-A）</div>
+							<h2 class="resume-name mb-0 text-uppercase">The Missing Lectures of Computer System and Architechture: Simulator</h2>
+							<div class="resume-tagline mb-3 mb-md-0">Simulator<br>
+                                A Comprehensive yet Easy to Understand Tutorial, primarily Focusing on gem5
+                        </div>
 							<P><a class="resume-link" href="index.html">Back to Homepage</a></P>
 						</div><!--//resume-title-->
 						<div class="resume-contact col-12 col-md-6 col-lg-4 col-xl-3">
@@ -48,7 +50,16 @@
 				<div class="resume-intro py-3">
 					<div class="row align-items-center">
 						<div class="col text-start">
-							<p class="mb-0">本页面主要是记录ISCA部分论文阅读过程中的总结、记录和想法。 </p>
+							<p class="mb-0">
+                                计算机系统与体系结构缺失的实践——模拟器。gem5是广泛使用且火热的体系结构模拟器。其高度抽象和极致的复杂性阻碍了大部分新手深入理解并编写“正确”的代码的热情。
+                                然而网络上缺乏系统全面和深入的gem5教程,多数教程浅尝辄止，难以体会gem5的魅力所在。
+                                传统的计算机体系结构、计算机系统结构、计算机组成等课程，灌输大量的知识就已经占据了大多数的课时。
+                                从而缺乏有效的深入实践，进而这一部分的实践成为了新手入门时缺失的重要一课。<br><br>
+                                当然，学习模拟器不仅仅提供了更深入理解系统体系结构知识的途径，也是论文idea的快速验证方式。
+                                或许，你有了模拟器，就能够几乎实现你想做的everything；如果不能，那么，你也有可能通过自己的理解实现之。
+                                如果这个实现经过了充分的验证，欢迎提交PR。gem5本身就是开源的模拟器，开源社区也比较活跃。你也可以从社区中学习到许多。<br><br>
+                                下面就是The Missing Lectures of Computer System and Architechture: Simulator具体的Lecture部分。
+                                由于笔者自身也不太能够完全理解gem5的整个世界，这里所有的Lecture也只能起到抛砖引玉的作用。如有不对的地方，欢迎邮件联系！！ </p>
 						</div><!--//col-->
 					</div>
 				</div><!--//resume-intro-->
@@ -57,18 +68,84 @@
 					<div class="row">
 						<div class="resume-main col-12 col-lg-8 col-xl-9   pe-0   pe-lg-5">
 							<section class="work-section py-3">
-								<h3 class="text-uppercase resume-section-heading mb-4">Paper Blogs List</h3>
+								<h3 class="text-uppercase resume-section-heading mb-4">Lectures List</h3>
 								<div class="item mb-3">
 									<div class="item-heading row align-items-center mb-2">
-										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a class="resume-link" href="ISCA/buddycom.html">Buddy Compression</a></h4>
-										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">ISCA'20</div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a class="resume-link" href="to_be_updated.html">Lecture 0: What is gem5 ?</a></h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[PDF]</div>
 										
 									</div>
 									<div class="item-content">
-										<p>Buddy Compression: Enabling Larger Memory for Deep Learning and HPC Workloads on GPUs. <br/>Keywords: Compression ; GPU Memory ; Buddy system.</P>
+										<p>本节内容: gem5模拟器简介； SE模式与FS模式； 简单的SE模式配置；理解gem5的统计输出</P>
+									</div>
+								</div> 
+
+                                <div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a class="resume-link" href="to_be_updated.html">Lecture 1: Pybind、Parser </a></h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[PDF]</div>
+										
+									</div>
+									<div class="item-content">
+										<p>本节内容: Python与C++在gem5中的协同； 命令行解析； 命令行的简单设置； 性能评价和性能分析</P>
+									</div>
+								</div> 
+
+                                <div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a class="resume-link" href="to_be_updated.html">Lecture 2: Memory[1] </a></h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[PDF]</div>
+										
+									</div>
+									<div class="item-content">
+										<p>本节内容: 内存控制器实例； 内存控制器源代码；高带宽存储器的变化</P>
 									</div>
 								</div> 
 								
+                                <div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a class="resume-link" href="to_be_updated.html">Lecture 3: Memory[2] </a></h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[PDF]</div>
+										
+									</div>
+									<div class="item-content">
+										<p>本节内容: 内存交织；QoS；内存带宽、频率、时序参数</P>
+									</div>
+								</div> 
+
+                                <div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a class="resume-link" href="to_be_updated.html">Lecture 4: Operating System - Page Table </a></h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[PDF]</div>
+										
+									</div>
+									<div class="item-content">
+										<p>本节内容: 页表源码解析（映射、重映射、地址翻译、序列化与反序列化）</P>
+									</div>
+								</div> 
+
+                                <div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a class="resume-link" href="to_be_updated.html">Lecture 5: Packet Handling </a></h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[PDF]</div>
+										
+									</div>
+									<div class="item-content">
+										<p>本节内容: Packet源码解析；与内存控制器的协同；调试信息设置；高性能C++处理（地址中的位运算）</P>
+									</div>
+								</div> 
+
+                                <div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a class="resume-link" href="to_be_updated.html">Lecture 6: XBar and Cache[1] </a></h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[PDF]</div>
+										
+									</div>
+									<div class="item-content">
+										<p>本节内容: 总线源代码解析；各组件的连接；简单的缓存系统设置</P>
+									</div>
+								</div> 
+
 								
 							</section><!--//work-section-->
 
