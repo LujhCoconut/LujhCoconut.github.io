@@ -34,6 +34,4 @@ sudo umount -l /mnt/dev/
 sudo reboot
 ```
 
-
-
 现在重新ssh到终端就正常了
