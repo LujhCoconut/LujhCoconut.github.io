@@ -1,0 +1,1474 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left: 0.25em solid rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+</style>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+<style type="text/css">
+		#category a{
+			text-decoration: none; 
+			color: black;
+		}
+		/* #category {line-height: 2em;} */
+		.newh{
+			padding-top: 0.5em;
+			padding-bottom: 0.5em;
+		}
+		.newh:hover{
+			background: #E6F0FE;
+		}
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 200px; */
+            padding-right: 0px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 200px; */
+            padding-right: 0px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 300px; */
+            padding-left: 0px;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .book-body {
+            padding-left: 0px;
+        }
+    }
+
+    @media (min-width: 600px) {
+        #category {
+            /* 绝对定位 */
+            position: fixed;
+            /* 目录显示的位置 */
+						float: left;
+						margin-right: 2em;
+            /* right: 0px; */
+            top: 0;
+            /* 目录栏的高度,这里设置为60%主要是为了不挡住返回顶部和折叠按钮 */
+            height: 93%;
+            /* 设置边框这样和正文对比比较明显 */
+            border: 0 solid #eaeaea;
+            /* 开启垂直滚动条 */
+            overflow-y: scroll;
+						width:25%;
+						display:block;
+						/* z-index: 99;; */
+						background: white;
+						
+        }
+
+        /* 正文的样式 */
+        #write {
+            width:100%;
+            display: block;
+						/* float:right; */
+        }
+        img{
+        	display: block;
+        }
+				
+        code,tt{
+            color:#c7254e;
+            background-color:#f9f2f4;
+        }
+				
+        /* 返回顶部按钮样式 */
+        #topButton {
+            position: fixed;
+            float: right;
+            right: 10px;
+            top: 95%;
+						z-index: 99;
+        }
+
+        /* 展开或者折叠 */
+        #foldOrUnfold {
+            position: fixed;
+            float: right;
+            right: 10px;
+            top: 89%;
+						z-index: 99;
+        }
+    }
+
+    @media (-webkit-max-device-pixel-ratio: 1) {
+        ::-webkit-scrollbar-track-piece {
+            background-color: #FFF
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #c2c2c2;
+            background-clip: padding-box;
+            min-height: 28px
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #A0A0A0
+        }
+    }
+		@media (max-width: 400px) {
+			#category {
+					/* 绝对定位 */
+					position: fixed;
+					/* 目录显示的位置 */
+					float: left;
+					/* right: 0px; */
+					top: 0;
+					width: 45%;
+					/* 目录栏的高度,这里设置为60%主要是为了不挡住返回顶部和折叠按钮 */
+					height: 90%;
+					/* 设置边框这样和正文对比比较明显 */
+					border: 2px solid #eaeaea;
+					/* 开启垂直滚动条 */
+					overflow-y: scroll;
+					z-index: 99;
+					display: none;
+					background: white;
+					font-size: 20px;
+					/* line-height: 2em; */
+			}
+			
+			/* 正文的样式 */
+			#book_body {
+					width: 100%;
+					display: block;
+			}
+			img{
+				display: block;
+			}
+			code,tt{
+					color:#c7254e;
+					background-color:#f9f2f4;
+			}
+
+			/* 返回顶部按钮样式 */
+			#topButton {
+					position: fixed;
+					float: right;
+					right: 2%;
+					top: 95%;
+					z-index:99;
+			}
+
+			/* 目录展开或者折叠 */
+			#foldOrUnfold {
+					position: fixed;
+					float: left;
+					right: 4%;
+					top: 90%;
+					z-index:99;
+			}
+	}
+</style>
+<!--侧栏目录生成代码-->
+<script>
+    $(document).ready(function () {
+        $("h1,h2,h3,h4,h5,h6").each(function (i, item) {
+            //获取标签的名字,h1,还是h2
+            var tag = $(item).get(0).localName;
+            //为该标签设置id属性
+            $(item).attr("id", "wow" + i);
+            //添加一个页内超链接,并设置class选择器
+            $("#category").append('<div class="newh"><a class="new' + tag + '" href="#wow' + i + '">' + $(item).text() +
+                '</a></div>');
+            //为每一个标题超链接的class属性设置左边距
+            $(".newh1").css("margin-left", "0em");
+            $(".newh2").css("margin-left", "1em");
+            $(".newh3").css("margin-left", "2em");
+            $(".newh4").css("margin-left", "3em");
+            $(".newh5").css("margin-left", "4em");
+            $(".newh6").css("margin-left", "5em");
+						$(".newh1").css("font-size", "1.5em");
+						$(".newh2").css("font-size", "1.2em");
+						$(".newh3").css("font-size", "1em");
+						$(".newh4").css("font-size", "0.9em");
+						$(".newh5").css("font-size", "0.8em");
+						$(".newh1").css("font-weight", "bold");
+						$(".newh2").css("font-weight", "bold");
+        });
+        //设置class选择器为.book-body的html内容
+        $(".book-body").html($(".book-body").nextAll())
+				$(".newh").on("click",function(){
+					console.log($(this).children("a"));
+					$(this).children("a")[0].click();
+				});
+    });
+</script>
+<script>
+    // 展开或者折叠目录功能
+    function showOrCloseCategory() {
+        var id = document.getElementById("category");
+        var write = document.getElementById("write");
+				//console.log(id.style.display);
+        //如果展开了
+        if (id.style.display == 'block') {
+            //console.log("开始展开");
+            id.style.display = 'none';
+						write.style.float = "";
+						write.style.left = "0em";
+        }
+        //如果被折叠了
+        else if (id.style.display == 'none') {
+            //console.log("开始折叠");
+            id.style.display = 'block';
+						write.style.float = "right";
+						write.style.left = "1em";
+        }
+    }
+    // 返回顶部功能
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+<!--返回顶部-->
+<button onclick="topFunction()" id="topButton">TOP↑</button>
+<button onclick="showOrCloseCategory()" id="foldOrUnfold">目录</button>
+
+<!--文章主体部分-->
+<div class="book-body" id="book_body"> </div>
+<!--目录栏-->
+<div class="book-summary" id="category" style="display:none"></div>
+<title>to_be_rdwr</title>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left: 0.25em solid rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+</style><title>banshee</title>
+<script src="../../autoload.js"></script>
+<p><a class="resume-link" href="../index.html">返回主页</a><br/><a class="resume-link" href="../index.html">返回上一页</a></p>
+</head>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='banshee-micro17'><span>BanShee [MICRO&#39;17] </span></h1><p><strong><span>[Title] </span></strong><span>Banshee: Bandwidth-Efficient DRAM Caching via Software/Hardware Cooperation</span></p><ul><li><p><strong><span>论文速览系列</span></strong></p></li></ul><p><span>年份比较早，这篇文章分析不追求过多细节，直接速通</span></p><blockquote><p><span> 本文代码开源，基于ZSim模拟器进行实验</span></p></blockquote><p>&nbsp;</p><h2 id='abstract'><span>Abstract </span></h2><ul><li><p><span>直接翻译</span></p></li></ul><p><span>将 DRAM 放置在与处理器相同的封装中，可以实现比传统的封装外 DRAM 高出数倍的内存带宽。然而，封装内 DRAM 的延迟并没有明显低于封装外 DRAM。封装内 DRAM 的一个有前景的应用是作为大缓存。不幸的是，大多数以前的 DRAM 缓存设计主要优化缓存命中延迟，而没有将带宽效率作为首要设计约束。因此，正如本文所展示的，这些设计在与封装内 DRAM 配合使用时是次优的。我们提出了一种新的 DRAM 缓存设计——Banshee，它优化了封装内和封装外 DRAM 的带宽效率，同时不会降低访问延迟。Banshee 基于两个关键思想。首先，它通过使用 TLB 和页表条目跟踪 DRAM 缓存的内容，从而消除了标签查找的开销，这一点得益于我们提出的一种新的轻量级 TLB 一致性协议。其次，它通过一种新的基于频率的带宽感知替换策略，减少了不必要的 DRAM 缓存替换流量。我们的评估结果表明，Banshee 在性能上显著提高（平均提升 15%），并且比之前优化延迟的最佳 DRAM 缓存设计减少了 35.8% 的 DRAM 流量。</span></p><ul><li><p><span>简单总结：片上DRAM延迟没有比片外低；基于物理延迟（SOSP&#39;24的工作还有Access Latency，与这个需要区分，是两类延迟）的考虑是17年（甚至是23/24年）之前主要的工作。带宽是一个需要考虑的问题，这篇文章就是</span><strong><span>基于频率的带宽感知替换</span></strong><span>的工作。</span></p></li></ul><p>&nbsp;</p><h2 id='introduction'><span>Introduction</span></h2><blockquote><p><span>论文速览采用AI翻译，部分名词有误，未作修正，意会即可。如内包外包等，即片上片外。</span></p></blockquote><ul><li><p><span>直接翻译</span></p></li></ul><p><span>封装内 DRAM 技术将 CPU 和大容量 DRAM 集成在同一封装中，能够为 CPU 提供比传统封装外 DRAM </span><strong><span>高得多的主存带宽</span></strong><span>。对于</span><strong><span>受限于内存带宽的应用程序</span></strong><span>（如图处理、某些机器学习算法、基于稀疏线性代数的高性能计算代码等），封装内 DRAM 可以显著提升系统性能 [9, 10, 17, 30, 34]。多个硬件厂商已经推出了配备封装内 DRAM 的处理器（如 Intel 的 Knights Landing [56]、AMD 的 Fiji [3] 和 Nvidia 的 Pascal [2]），并且已有大量系统设计为利用封装内 DRAM [18, 20, 27, 32, 38, 39, 41, 45, 50, 54, 59]。封装内 DRAM 的一个关键特性是，</span><strong><span>尽管它提供了高带宽，但其延迟与封装外 DRAM 相似，甚至可能更高</span></strong><span> [1, 19, 55]。这是因为现代封装内 DRAM 产品面向的计算应用通常是</span><strong><span>带宽密集型且对延迟具有一定容忍度</span></strong><span>。然而，许多以前的 DRAM 缓存设计</span><strong><span>假设封装内 DRAM 的低延迟，因此并不一定适合具有封装内 DRAM 的实际系统</span></strong><span>。特别是，许多现有的 DRAM 缓存设计会为元数据管理（如获取 DRAM 缓存标签）和缓存替换产生大量流量到封装内和/或封装外 DRAM。由于多GB缓存的标签数组无法轻易地放入芯片上的 SRAM 中，许多以前的设计</span><strong><span>（特别是细粒度设计）将标签数组存储在封装内 DRAM</span></strong><span> 中 [32, 45, 50]，并且每次标签查找都需要访问它。尽管使用以前提出的技术 [32, 45, 50]，标签查找的延迟可以在很大程度上被隐藏，但</span><strong><span>元数据访问仍然消耗了宝贵的带宽</span></strong><span>。</span></p><ul><li><p><span>为了减少元数据流量，先前的研究 [28, 38] 提出了在页粒度上管理数据，并使用页表条目（PTE）和转换旁路缓存（TLB）来跟踪 DRAM 缓存的内容。通过这种基于页表的映射机制，标签查找的延迟几乎可以忽略不计。不幸的是，这些现有设计需要在所有核心之间维护一致的地址映射，在 TLB 中造成了相当大的复杂性和性能开销。</span></p></li></ul><p><span>对于页粒度的 DRAM 缓存设计，缓存替换可能会导致过多的 DRAM 流量，因为每次替换都需要在片内片外 DRAM 之间移动整页数据。对于那些具有较少空间局部性的页面，大部分传输的数据根本不会被处理器访问，从而浪费了片内片外 DRAM 带宽。当系统中使用大页（例如 2MB 或 1GB）时，这个问题会变得更加严重。此外，如果元数据（例如 LRU 位或频率计数器）存储在 DRAM 缓存本身中，访问和更新这些元数据也会带来额外的 DRAM 流量。现有的解决方案，如足迹缓存 [28, 31]，通过仅缓存那些可能会被处理器访问的页面部分，能够在一定程度上缓解带宽压力。然而，我们的评估（第六节）表明，仍然存在显著的改进空间。</span></p><p><span>在本文中，我们提出了 Banshee，一种 DRAM 缓存设计，其</span><strong><span>目标是最大化片内片外 DRAM 的带宽效率，同时提供低访问延迟</span></strong><span>。Banshee 基于两个关键思想。首先，类似于之前的工作 [38]，Banshee 通过使用 PTE（页表项）和 TLB（转换后备缓冲区）条目来跟踪 DRAM 缓存内容，从而避免了标签查找。然而，与之前的工作不同，Banshee 使用了一种新颖且轻量级的 TLB 一致性机制，具有低复杂度。具体来说，Banshee 在每个内存控制器上维护一个小型硬件表（称为标签缓冲区），该表存储有关页是否被缓存的信息，适用于最近插入或替换的页面。PTE 和 TLB 条目只有在标签缓冲区满时才会延迟更新，从而大大降低了 TLB 一致性所带来的性能开销。Banshee 的第二个关键思想是基于频率的带宽高效替换（FBR）策略，其目标是减少不必要的 DRAM 缓存替换流量。</span></p><p><span>为此，Banshee 通过带宽感知的 FBR 策略，限制替换发生的速率，从而减少 </span></p><ul><li><p><span>FBR 策略中的替换次数</span></p></li><li><p><span>元数据流量（即频率计数器的读取和更新），通过仅在访问的内存样本中访问元数据。</span></p></li></ul><p><span>具体来说，本工作做出了以下贡献：</span></p><p><span>（1）我们提出了一种懒惰且轻量级的 TLB 一致性机制，它比之前基于页表的 DRAM 缓存设计中的 TLB 一致性机制更简单、更高效。</span></p><p><span>（2）我们提出了一种新的</span><strong><span>带宽感知频率基础替换策略</span></strong><span>，通过最小化不必要的数据和元数据传输，显著提高了页粒度 DRAM 缓存的带宽效率。</span></p><p><span>（3）通过结合基于页表的页映射管理和带宽高效的缓存替换策略，Banshee 显著提升了内包 DRAM 带宽效率。与三种其他先进的 DRAM 缓存设计相比，Banshee 的表现优于最好的设计（Alloy Cache [50]）15.0%，同时减少了 35.8% 的内包 DRAM 流量。</span></p><p>&nbsp;</p><h2 id='background'><span>Background</span></h2><blockquote><p><span>论文速览采用AI翻译，部分名词有误，未作修正，意会即可。如内包外包等，即片上片外。</span></p></blockquote><p><span>在大数据分析、机器学习和高性能计算等应用领域，数据集的规模不断增加。对于这些应用，内存带宽可能成为主要的性能瓶颈。为了满足这些应用对高内存带宽的需求，内包 DRAM 被集成到了 CPU 和 GPU 中，在一些现有系统中，它们被作为缓存进行管理 [2, 56]。</span></p><p><span>内包 DRAM 的带宽应谨慎使用，以获得最佳性能。这是因为一些经过精心优化的应用程序可以充分利用内包 DRAM 带宽，如果传输应用程序未使用的数据（例如，DRAM 缓存元数据、因过度缓存替换而产生的额外流量），可能会限制系统性能。尽管内包 DRAM 带宽正在增长，但芯片的计算能力也在提升。我们预计在近期内，带宽/计算比率不会发生剧烈变化。因此，提高 DRAM 缓存的带宽效率将有利于整体系统性能。为了更加具体地说明这一点，我们计算了 Nvidia P100（Pascal）系统（0.14 B/FLOP）[4]、Nvidia V100（Volta）系统（0.12 B/FLOP）[6] 和 Intel Knights Landing 系统（0.12 B/FLOP）[56] 的带宽/FLOPS2 比率。我们发现，尽管这三种系统的内包 DRAM 带宽相差 2 倍，但它们的比率非常相似。这表明，随着额外的 DRAM 带宽可用，计算能力也在增加。</span></p><p><span>在本节中，我们将讨论 DRAM 缓存的设计空间，并说明之前的方案在这个空间中的位置。我们展示了之前方案在两个主要设计考虑方面的带宽低效性：1）跟踪缓存内容，即映射（第 2.1 节）；2）更改缓存内容，即替换（第 2.2 节）。在我们的讨论中，我们假设处理器具有一个在细粒度（64B）管理的 SRAM 最后级缓存（LLC）。物理地址以粗粒度（4KB 页）静态映射到内存控制器（MC）。我们还假设内包 DRAM 类似于第一代高带宽内存（HBM）[29, 46]。内存控制器和 HBM 之间的连接宽度为 16B，但最小数据传输大小为 32B。因此，读取一个 64B 的缓存行加标签需要至少 96B 的传输。我们还假设内包和外包 DRAM 具有相同的延迟 [55]。</span></p><p>&nbsp;</p><h3 id='tracking-dram-cache-contents'><span>Tracking DRAM Cache Contents</span></h3><p><span>对于每个 LLC 未命中，内存控制器需要确定是访问内包 DRAM 还是外包 DRAM。因此，必须在系统中存储每个数据块所在位置的映射。映射可以通过标签或通过虚拟到物理地址的重映射来管理。</span></p><h4 id='using-tags'><span>Using Tags</span></h4><p><span>跟踪缓存内容的最常见技术是显式存储标签集，即通过每个数据块的地址中的位来唯一标识该块。</span><strong><span>然而，当 DRAM 缓存很大时，标签存储的开销可能会很大。例如，一个 16 GB 的 DRAM 缓存，如果以细粒度（或粗粒度）管理，需要 512 MB（或 8 MB）的标签存储。因此，许多先进的 DRAM 缓存设计将标签存储在内包 DRAM 中。这些设计会消耗额外的 DRAM 带宽用于与 DRAM 缓存访问相关的标签查找</span></strong><span>。表 1 总结了几种先进的 DRAM 缓存设计的特点，其中包括两个将标签存储在内包 DRAM 中的设计：Alloy Cache [50] 和 Unison Cache [32]。</span></p><p><img src=".\banshee-1.png" referrerpolicy="no-referrer"></p><ul><li><p><strong><span>Alloy Cache</span></strong><span>  </span></p><ul><li><p><span>是一种直接映射的 DRAM 缓存，它以细粒度存储数据。每个集合的标签和数据在 DRAM 缓存中是相邻存储的。对于每次标签探测，数据也会被预取加载。因此，在缓存命中时，延迟大致相当于一次 DRAM 访问的延迟。在缓存未命中时，Alloy Cache 会产生内包 DRAM 访问的延迟加上外包 DRAM 访问的延迟。在带宽消耗方面，Alloy Cache 需要 </span><strong><span>1）</span></strong><span>从 DRAM 缓存中加载标签和数据，</span><strong><span>2）</span></strong><span>从外包 DRAM 中加载数据，</span><strong><span>3）</span></strong><span>将访问的标签和数据插入 DRAM 缓存。因此，</span><strong><span>未命中和替换时，延迟和带宽消耗都会翻倍</span></strong><span>。原始的 </span><strong><span>Alloy Cache</span></strong><span> 论文 [50] 提出了</span><strong><span>并行发起</span></strong><span>对内包和外包 DRAM 的请求，以隐藏未命中延迟。</span><strong><span>然而，我们假设采用的实现是串行访问，因为预取访问外包 DRAM 会显著增加对已经有限的外包 DRAM 带宽的压力。</span></strong></p></li></ul></li><li><p><strong><span>Unison Cache</span></strong><span> </span></p><ul><li><p><span> 以粗粒度存储数据并支持集合关联性。该设计依赖于路径预测来提供较低的命中延迟。在访问时，内存控制器读取集合中所有标签，并</span><strong><span>仅从预测的路径加载数据。数据加载是预取的。</span></strong><span>在命中并且路径预测正确的情况下，延迟大致相当于一次 DRAM 访问，因为预取的数据和标签访问一起返回。然后，标签会与更新后的 LRU 位一起存回内包 DRAM。</span><strong><span>对于未命中的情况，由于额外的外包 DRAM 访问，延迟会翻倍。</span></strong><span>在缓存未命中的带宽消耗方面，Unison Cache </span><strong><span>1）</span></strong><span>加载预测路径中的标签和数据，</span><strong><span>2）</span></strong><span>进行缓存替换，将预测的页面足迹加载到内包 DRAM 中，</span><strong><span>3）</span></strong><span>将更新后的标签和 LRU 位存回 DRAM 缓存。</span><strong><span>如果页面足迹较大，缓存未命中和替换时的带宽消耗可能是缓存命中时的几十倍。</span></strong></p></li></ul></li></ul><p>&nbsp;</p><h4 id='using-address-mapping'><span>Using Address Mapping</span></h4><p><span>另一种用于跟踪 DRAM 缓存中数据的技术是</span><strong><span>通过页表中的虚拟到物理地址映射机制</span></strong><span> [38, 44]。在这些设计中，数据始终以页粒度进行管理。</span><strong><span>物理地址空间在内包 DRAM 和外包 DRAM 之间进行划分</span></strong><span>。虚拟页地址映射到哪里可以通过其物理地址严格确定。因此，系统不像前面讨论的基于标签的设计那样执行标签查找。</span></p><p><span>在这些基于页表的设计中，有两个主要挑战。</span><strong><span>第一个挑战是 TLB 一致性</span></strong><span>。每当页面被插入或从 DRAM 缓存中替换时，其虚拟到物理的映射会发生变化。这个映射的变化必须在系统中的所有 TLB 中保持一致，以确保没有 TLB 存储错误或过时的映射。在当前系统中，这需要执行全局 TLB 清除操作，即系统中的每个核心都接收到一个中断并刷新其本地 TLB。由于 TLB 清除通常需要多个微秒来服务 [58]，频繁的 TLB 清除会严重影响性能。</span></p><p><span>基于页表的设计中的</span><strong><span>第二个主要挑战是我们所说的地址一致性</span></strong><span>。当虚拟页被重新映射时，其物理地址会发生变化。为了避免系统中任何缓存中的数据不正确，所有属于重新映射物理页面的缓存行必须从所有片上 SRAM 缓存中移除。否则，如果后来将另一个虚拟页面映射到相同的物理页面，核心可能会读取到 SRAM 缓存中的错误值，从而导致执行错误。每次页面重新映射时移除这些包含过时物理地址的缓存行会带来显著的性能开销。</span></p><p>&nbsp;</p><ul><li><p><strong><span>异构内存架构 HMA</span></strong><span> </span></p><ul><li><p><span>采用基于软件的解决方案来处理这些问题。操作系统（OS）定期对所有页面进行排名，并将热页面移入内包 DRAM（冷页面移出）。操作系统更新所有页表项（PTE），刷新所有 TLB 以保持一致性，并从所有片上缓存中刷新重新映射物理页面的缓存行以确保地址一致性。由于这个过程的高性能开销，重新映射只能以非常粗粒度（例如，100 毫秒到 1 秒）进行，以便摊销开销。</span><strong><span>因此，DRAM 缓存替换策略可能无法充分捕获应用程序中的时间局部性。此外，当页面在内包和外包 DRAM 之间移动时，系统中所有正在运行的程序都必须停止，这会导致不希望出现的性能下降。</span></strong></p></li></ul></li></ul><ul><li><p><strong><span>无标签 DRAM 缓存 TDC</span></strong></p><ul><li><p><span> 也采用地址重映射，但通过硬件管理的 TLB 一致性机制实现了频繁的缓存替换。具体来说，TDC 在主存中维护一个 TLB 目录结构，并在每次条目被插入或从系统中的任何 TLB 中移除时更新该目录。这种细粒度的 TLB 一致性带来了额外的设计复杂性。此外，随着核心数量的增加，目录的存储成本可能成为潜在的可扩展性瓶颈。TDC [38] 没有讨论地址一致性问题，因此不清楚 TDC 是否采用了某种解决方案来解决地址一致性问题，或者是否存在这种解决方案。</span></p></li></ul></li></ul><p>&nbsp;</p><h3 id='dram-cache-replacement'><span>DRAM Cache Replacement</span></h3><p><span>缓存替换是内包 DRAM 设计中的另一个重要挑战。我们将讨论先前工作中提出的硬件和软件方法。</span></p><h4 id='hardware-managed'><span>Hardware-Managed</span></h4><p><span>硬件管理的缓存能够在每次 DRAM 缓存未命中时做出替换决策，因此可以快速适应不断变化的工作负载行为。许多设计，包括 Alloy Cache、Unison Cache 和 TDC，在每次缓存未命中时总是将获取的数据插入到 DRAM 缓存中。虽然这是 </span><strong><span>SRAM 缓存的常见做法，但对于 DRAM 缓存来说，由于带宽有限，所产生的额外替换流量是昂贵的</span></strong><span>。一些先前的设计尝试通过一种随机机制 [20, 33] 来减少替换流量，即每次访问时</span><strong><span>以小概率发生替换</span></strong><span>。我们将在 Banshee 中使用类似的技术（参见第 4.2 节）。</span><strong><span>对于页面粒度的 DRAM 缓存设计，频繁的替换还会导致过度获取（over-fetching），即整个页面被缓存，但在驱逐之前，只有对应的部分缓存行被访问。这会导致不必要的 DRAM 流量</span></strong><span>。由于替换产生的 DRAM 流量甚至可能比完全禁用 DRAM 缓存时还要高，从而导致性能的大幅下降，如 [33] 所示。为了解决这个问题，先前的工作使用了扇区缓存设计 [40, 52]，并依赖于足迹预测器 [28, 35] 来确定在缓存未命中时应该加载页面内的哪些缓存行。我们将在第 6 节中展示 Banshee 如何在这些设计中提高带宽效率。</span></p><p><span>替换策略必须选择一个受害者进行驱逐。</span><strong><span>Alloy Cache 是直接映射的，因此只有一个受害者可以被替换</span></strong><span>。传统的集合关联缓存（例如 Unison Cache）使用最近最少使用（LRU）[32] 或频率基础替换（FBR）[33] 策略。这些策略需要额外的元数据来跟踪缓存行的相对访问时间或访问频率。加载和更新这些元数据会产生显著的 DRAM 流量。TDC 实现了一个完全关联的 DRAM 缓存，但使用了 FIFO 替换策略，这对于某些应用会降低命中率。由于 TDC 在每次缓存未命中时按页面粒度进行替换，它不能高效地支持大页面 [38]。</span></p><h4 id='software-managed'><span>Software-Managed</span></h4><p><span>基于软件的缓存替换算法（例如 HMA [44]）可能相对复杂。因此，它们在预测应该保留哪些数据在 DRAM 缓存中时，可能比硬件机制表现更好。然而，它们会带来</span><strong><span>显著的执行时间开销</span></strong><span>，因此通常</span><strong><span>仅周期性地调用</span></strong><span>（例如 [44] 中的做法）。这使得它们在适应变化的应用行为时较慢。</span></p><p>&nbsp;</p><h2 id='banshee-dram-cache-design'><span>BANSHEE DRAM CACHE DESIGN</span></h2><p><span>Banshee 的目标是最大化内包 DRAM 和外包 DRAM 的带宽效率。在本节中，我们将描述 Banshee 如何跟踪 DRAM 缓存的内容。关于 Banshee 如何处理缓存替换，我们将在第 4 节中进行详细说明。</span></p><h3 id='banshee-architecture'><span>Banshee Architecture</span></h3><p><span>图 1 显示了 Banshee 的架构。为了简化起见，我们假设内包 DRAM 和外包 DRAM 共享相同的内存控制器。如果它们具有独立的内存控制器，我们的技术同样适用。内包 DRAM 作为内存侧缓存，并且与片上 SRAM 缓存不是包含关系。硬件和软件进行了三项主要更改，这些更改在图中以红色标出。首先，扩展了页表项（PTE）和 TLB 条目，以指示一个页面是否被缓存，如果被缓存，还会指明它被缓存的位置。其次，新增了一个硬件结构——</span><strong><span>标签缓冲区（Tag Buffer），用于内存控制器中的高效 TLB 一致性管理</span></strong><span>。第三，内存控制器中的逻辑被更改，以支持缓存内容跟踪和缓存替换，具体内容我们将在下文中描述。</span></p><p><img src=".\banshee-2.png" style="zoom:67%;" /></p><p><span>Banshee 以页为粒度管理 DRAM 缓存，并使用页表和 TLB 来跟踪 DRAM 缓存内容，类似于 TDC [38] 和 HMA [44]。然而，与之前基于页表的设计不同，</span><strong><span>Banshee 使用相同的地址空间来处理内包和外包 DRAM，以解决地址一致性问题</span></strong><span>（在 2.1.2 节讨论）。Banshee 在相应的页表项（PTE）和 TLB 条目中增加了额外的位，用来指示一个页面是否被缓存。这个简单的改动解决了地址一致性问题。因为当页面被重新映射时，它的物理地址不会改变，因此在 SRAM 缓存中存在的页面的所有缓存行总是具有一致的地址。</span></p><p><span>为了简化 TLB 一致性问题，Banshee 实现了一种懒惰的软件/硬件协同 TLB 一致性协议，使用 Tag Buffer 存储信息。最近重新映射的页面信息仅存储在 Tag Buffer 中，而不会更新到相应的 PTE 和 TLB 条目。所有内存请求都可以通过检查内存控制器中的 Tag Buffer 来找到最新的映射信息。当 Tag Buffer 被填满时，存储在其中的映射信息将通过软件支持传播到 PTE 和 TLB 条目中。因此，Banshee 通过这种机制显著降低了 TLB 一致性的成本。</span></p><p>&nbsp;</p><h3 id='page-table-and-tlb-extension'><span>Page Table and TLB Extension</span></h3><p><span>Banshee 中的 DRAM 缓存是集合关联式的。每个 PTE 都扩展了两条映射信息，指示页面是否以及在哪里被缓存：</span></p><p><strong><span>1）</span></strong><span>一个新的缓存位指示页面是否驻留在 DRAM 缓存中，</span><strong><span>2）</span></strong><span>一些新的位指示页面缓存的方式。</span></p><p><span>每个 L1 缺失都会将映射信息（即缓存位和方式位）从 TLB 带入内存层次结构。如果请求在到达内存控制器之前被满足，缓存位和方式位将被简单忽略。如果请求错过了 LLC 并到达内存控制器，首先会查找 Tag Buffer 中该页面的最新映射。Tag Buffer 缺失意味着请求附带的信息是最新的。对于 Tag Buffer 命中，请求附带的映射信息将被忽略，并使用 Tag Buffer 中的正确映射信息。来自 L2 或更高层次（如 L3）的硬件预取请求会带来一些复杂性。这些缓存通常在物理地址空间中操作，因此无法访问 TLB 来获取映射信息。然而，在大多数系统中，这类预取会停留在页面边界处 [5]，因为物理地址空间中超出该边界的数据可能与相邻虚拟页中的数据无关。此外，这些预取通常由核心或 L1 缓存发出的需求或预取请求触发（直接或间接）。因此，我们可以将触发请求的映射信息复制到它所触发的预取请求中。</span></p><p>&nbsp;</p><h3 id='tag-buffer'><span>Tag Buffer</span></h3><p><span>Banshee 为每个内存控制器添加了一个 Tag Buffer。Tag Buffer 存储属于该内存控制器的最近重新映射页面的映射信息。图 2 显示了 Tag Buffer 的组织结构。它被组织为一个小型的集合关联缓存。物理页面号作为标签。有效位指示该条目是否包含有效的映射。对于有效条目，缓存位和方式位指示页面是否存在于 DRAM 缓存中以及其存在的位置。重新映射位（remap bit）用于表示一个页面的重新映射信息未在该页面的页面表项中更新。重新映射位启用了我们接下来讨论的优化。</span></p><p><img src=".\banshee-3.png" referrerpolicy="no-referrer"></p><p><span>与到达内存控制器的请求不同，LLC 脏数据驱逐并不携带映射信息。对于这些情况，如果被驱逐的缓存行的映射信息不在 Tag Buffer 中，那么内存控制器需要查询存储在 DRAM 缓存中的标签（参见第4.1节）来确定请求是命中还是未命中。这些标签查询操作会消耗 DRAM 缓存带宽，可能会影响性能。</span></p><p><span>为了减少这种标签查询，我们利用 Tag Buffer 中原本为空的条目来存储缓存于 LLC 中的页面的映射信息。在 LLC 未命中且 Tag Buffer 也未命中的情况下，我们会为该页面在 Tag Buffer 中分配一个条目：该条目的有效位被设置为 1，表示有用的映射，但重新映射位（remap bit）设置为 0，表示该条目存储的是与 PTE 中相同的映射信息。对于 Tag Buffer 命中的情况，脏数据驱逐时无需查询 DRAM 缓存，从而减少 DRAM 流量。其重新映射位为 0 的条目可以从 Tag Buffer 中替换出去，而不影响正确性（我们在这些条目中使用 LRU 替换策略）。</span></p><p>&nbsp;</p><h3 id='page-table-and-tlb-coherence'><span>Page Table and TLB Coherence</span></h3><p><span>随着 Tag Buffer 的填充，存储在其中的映射信息需要传播到页面表，以便为未来的缓存替换腾出空间。由于 Tag Buffer 只包含页面的物理地址，而页面表是通过虚拟地址进行索引的，因此我们需要一种机制来识别所有与物理地址对应的 PTE。TDC 提出了一个基于硬件的反向页面表来将页面的物理地址映射到其 PTE【38】。然而，这种解决方案无法处理页面别名问题，其中多个虚拟页面映射到同一个物理页面。为了识别是否存在别名问题，必须访问操作系统中的一些内部数据结构（即页面描述符），这会产生显著的额外开销。我们观察到，现代操作系统已经具有一个反向映射机制，可以快速识别与物理页面关联的 PTE，无论是否存在别名问题。这个功能对于实现主内存和二级存储（例如硬盘或固态驱动器）之间的页面替换是必要的，因为回收主内存页面框架需要访问并更新所有对应的 PTE。现有系统中的反向映射通常是通过反向页面表（例如 Ultra SPARC 和 PowerPC 中的实现【57】）或特殊的反向映射机制（例如 Linux【12】）来实现的。</span></p><p><span>在 Banshee 中，我们使用这种反向映射来识别映射到给定物理页面的 PTE。当 Tag Buffer 填充到预定的阈值时，它会向随机选择的核心发送一个中断。接收中断的核心执行一个软件例程。具体来说，核心从所有内存控制器的 Tag Buffer 中读取所有条目（那些重新映射位被设置为 1 的条目）（这些条目是内存映射的）。每个 Tag Buffer 条目中存储的物理地址用于通过反向映射机制识别相应的 PTE。然后，根据 Tag Buffer 条目中的值，更新每个 PTE 的缓存位和方式位。在此过程中，Tag Buffer 被锁定，以防止发生 DRAM 缓存替换。然而，DRAM 仍然可以被访问，并且不需要停止程序（与先前的工作【44】不同）</span></p><p><span>在所有 Tag Buffer 条目已传播到 PTE 后，软件例程会发出全系统的 TLB 清除操作以强制执行 TLB 一致性。之后，会向所有 Tag Buffer 发送一条消息，清除所有条目的重新映射位。请注意，为了减少脏数据驱逐时的标签探测，映射信息可以保留在 Tag Buffer 中（参见第 3.3 节）。这里描述的 TLB 一致性机制强制执行缓存位和方式位的一致性。这是唯一可以暂时不一致和过时的两个字段。PTE 的其他字段（例如物理地址、权限位）始终保持一致，因为 Banshee 不会更改它们。因此，当页面表和 TLB 不一致时，操作系统功能（例如调度）对这些 PTE 字段的需求不会受到影响。</span></p><p><span>根据系统的软件和硬件，上述机制可能需要数万个周期【12】。然而，由于这个成本仅在 Tag Buffer 快满时才需要支付，因此 TLB 一致性的成本得到了摊销。此外，正如我们将在第 4 节看到的，页面频繁重映射会因高替换流量而导致性能下降。因此，我们的设计尝试限制页面重映射的频率，进一步减少这种 TLB 一致性发生的次数，从而降低其成本。</span></p><p>&nbsp;</p><h2 id='bandwidth-efficient-cache-replacement'><span>BANDWIDTH-EFFICIENT CACHE REPLACEMENT</span></h2><p><span>如第 2.2 节所讨论的，缓存替换策略会显著影响在封装内和封装外 DRAM 中的流量。对于页面粒度的 DRAM 缓存设计来说，这一点尤为重要，因为在一个页面内会出现过度预取的问题。在本节中，我们提出了一种新的基于频率的替换（FBR）策略，通过采样来实现良好的缓存命中率，同时最小化 DRAM 流量。我们首先在第 4.1 节讨论 DRAM 缓存中数据和元数据的物理布局。然后，在第 4.2 节中描述 Banshee 的缓存替换算法。</span></p><h3 id='dram-cache-layout'><span>DRAM Cache Layout</span></h3><p><span>许多先前提出的基于标签的 DRAM 缓存设计将元数据（例如，标签、LRU 位）和数据存储在同一 DRAM 行中，以利用行缓冲区的局部性，因为它们总是将元数据与数据一起加载。对于细粒度的 DRAM 缓存来说，这种组织方式是高效的。然而，对于页面粒度的 DRAM 缓存来说，页面和标签在 DRAM 行缓冲区中无法很好对齐【32】，这导致了额外的设计复杂性和低效率。</span></p><p><span>在 Banshee 中，并不是每个主存请求都需要访问元数据。因此，我们将元数据和数据分开存储，以便更好的对齐。图 3 显示了一个 DRAM 缓存的数据行和元数据行的布局，假设行缓冲区的大小为 8 KB，页面大小为 4 KB。每个 DRAM 缓存集的元数据占用 32 字节，在标签行中存储。对于一个 4 路关联的 DRAM 缓存，每个集包含 16 KB 的数据和 32 字节的元数据，因此元数据存储的开销仅为 0.2%。</span></p><p><span>Banshee 为每个缓存的页面（图 3 中的灰色部分）存储元数据，同时也为它考虑缓存的一组候选页面存储元数据。每个页面的元数据包括一个标签和一个计数，表示该页面的访问频率。缓存页面的元数据还包括有效位和脏位。直观上，访问最频繁的页面（即频率计数较大的页面）应该保留在 DRAM 缓存中。在未缓存的页面中，最频繁访问的页面应该被追踪为候选页面。</span></p><p><img src=".\banshee-4.png" referrerpolicy="no-referrer"></p><h3 id='bandwidth-aware-replacement-policy'><span>Bandwidth-Aware Replacement Policy</span></h3><p><span>FBR 策略会带来 DRAM 缓存流量，原因有 </span><strong><span>1)</span></strong><span> 读取和更新频率计数器，以及 </span><strong><span>2)</span></strong><span> 替换数据。在 4.2.1 节中，我们介绍了一种基于采样的计数器维护方案，以减少计数器读取/更新的流量。在 4.2.2 节中，我们讨论了我们新的带宽感知替换算法，旨在在保持良好的缓存命中率的同时，最小化替换流量。</span></p><h4 id='sampling-based-counter-updates'><span>Sampling-Based Counter Updates</span></h4><p><span>在标准的 FBR 策略 [36, 51] 中，每次访问页面时都会增加该页面的频率计数器。我们观察到，</span><strong><span>增加每次访问的计数器并不是必要的</span></strong><span>。相反，在 Banshee 中，每次访问只会以一定的采样率更新频率计数器。例如，对于 10% 的采样率，频率计数器每 10 次内存访问更新一次。这将计数器读取/更新流量减少了 10 倍。此外，由于采样减慢了计数器的递增速率，我们可以使用更少的位来表示每个计数器。虽然通过这种采样更新计数器</span><strong><span>可能导致“热”页面检测不准确，但大多数应用程序都表现出一定的空间局部性</span></strong><span>。当对 64 字节的 L1 缓存行的请求在 DRAM 缓存中未命中时，属于同一页面的其他缓存行（对于 4 KB 的页面，应该有 64 个缓存行）很可能会很快被访问。每个访问都有机会更新该页面的频率计数器。事实上，如果不进行采样，我们发现计数器会很快达到较大的值，且只有高位对替换决策有影响。采样有效地“丢弃”了存储和跟踪每个计数器低位的需求，因为低位通常没有有用信息。</span></p><p><span>我们进一步观察到，当 DRAM 缓存工作良好时，即缓存未命中率较低时，替换应该是少见的，计数器也不需要频繁更新。因此，Banshee 使用一种自适应采样率，该采样率是缓存未命中率（动态跟踪）与常数采样系数的乘积。</span></p><h4 id='replacement-algorithm'><span>Replacement Algorithm</span></h4><p><span>对于粗粒度的设计，DRAM 缓存替换可能会非常昂贵，特别是在内存流量方面。每次替换时，内存控制器都会将整个页面从包外 DRAM 转移到包内 DRAM。如果一个页面的空间局部性较差（即该页面在被替换之前只经历了很少的访问），则由于替换引起的包内和包外 DRAM 流量可能会比没有 DRAM 缓存时还要高。这会导致性能下降（参见第六节）。</span></p><p><span>基于频率的替换本身并不能解决这个问题，因为该算法可能会反复将缓存中访问频率最低的页面替换为访问频率更高的候选页面。当页面的计数器值相似时，可能会触发大量这种替换，导致缓存抖动，从而浪费宝贵的包内和包外 DRAM 带宽。</span></p><p><span>Banshee 通过仅在新页面的计数器值大于潜在替换页面的计数器值达到一定阈值时才进行替换，从而解决了这个问题。这确保了刚从 DRAM 缓存中驱逐出去的页面在重新进入缓存之前，预计会被访问（2 × 阈值/采样率）次（即页面的频率计数器将超过缓存页面的频率计数器达到阈值）。这避免了页面频繁进出缓存的情况。</span></p><p><span>需要注意的是，减少替换的频率也会增加 Tag Buffer 溢出的时间，从而间接减少 TLB 一致性的开销。</span></p><p><img src=".\banshee-5.png" style="zoom:67%;" /></p><p><span>算法 1 展示了 Banshee 完整的缓存替换算法。对于每个来自 LLC 的请求，首先生成一个随机数来确定当前的访问是否应该被采样（第 3 行）。如果不进行采样，这是常见的情况，则请求会直接访问适当的 DRAM（包内或包外）。此时不会访问元数据，也不会发生替换。如果当前的访问被采样，则相应集合的元数据将从 DRAM 缓存加载到内存控制器（第 4 行）。如果当前访问的页面在元数据中存在（第 5 行），则其计数器会增加（第 6 行）。如果当前页面是候选页面之一，并且其计数器比缓存页面的计数器大于一个阈值，则应进行缓存替换（第 7-9 行）。默认情况下，阈值是页面中缓存行数与采样系数的乘积除以二（阈值 = 页面大小 × 采样系数 / 2）。直观地讲，这意味着只有当替换页面的好处大于替换操作的成本时，才会进行替换。如果计数器在增加后饱和，则所有元数据中的计数器会通过硬件的移位操作被减半（第 10-15 行）。</span></p><p><span>如果当前页面在元数据中不存在（第 17 行），则会随机选择一个候选页面作为牺牲品（第 19 行）。然而，Banshee 并不总是替换选中的牺牲品：相反，当前页面只能以一定的概率替换选中的牺牲品，且这个概率随着牺牲品计数器的增大而减小（第 20-24 行）。通过这种方式，温暖的候选页面被驱逐的可能性较小。</span></p><p>&nbsp;</p><p><strong><span>后续扩展和实验部分略去</span></strong></p><p>&nbsp;</p></div></div>
+</body>
+</html>
