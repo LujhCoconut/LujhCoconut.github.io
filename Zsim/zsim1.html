@@ -1,0 +1,877 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left: 0.25em solid rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+</style>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+<style type="text/css">
+		#category a{
+			text-decoration: none; 
+			color: black;
+		}
+		/* #category {line-height: 2em;} */
+		.newh{
+			padding-top: 0.5em;
+			padding-bottom: 0.5em;
+		}
+		.newh:hover{
+			background: #E6F0FE;
+		}
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 200px; */
+            padding-right: 0px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 200px; */
+            padding-right: 0px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 300px; */
+            padding-left: 0px;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .book-body {
+            padding-left: 0px;
+        }
+    }
+
+    @media (min-width: 600px) {
+        #category {
+            /* 绝对定位 */
+            position: fixed;
+            /* 目录显示的位置 */
+						float: left;
+						margin-right: 2em;
+            /* right: 0px; */
+            top: 0;
+            /* 目录栏的高度,这里设置为60%主要是为了不挡住返回顶部和折叠按钮 */
+            height: 93%;
+            /* 设置边框这样和正文对比比较明显 */
+            border: 0 solid #eaeaea;
+            /* 开启垂直滚动条 */
+            overflow-y: scroll;
+						width:25%;
+						display:block;
+						/* z-index: 99;; */
+						background: white;
+						
+        }
+
+        /* 正文的样式 */
+        #write {
+            width:100%;
+            display: block;
+						/* float:right; */
+        }
+        img{
+        	display: block;
+        }
+				
+        code,tt{
+            color:#c7254e;
+            background-color:#f9f2f4;
+        }
+				
+        /* 返回顶部按钮样式 */
+        #topButton {
+            position: fixed;
+            float: right;
+            right: 10px;
+            top: 95%;
+						z-index: 99;
+        }
+
+        /* 展开或者折叠 */
+        #foldOrUnfold {
+            position: fixed;
+            float: right;
+            right: 10px;
+            top: 89%;
+						z-index: 99;
+        }
+    }
+
+    @media (-webkit-max-device-pixel-ratio: 1) {
+        ::-webkit-scrollbar-track-piece {
+            background-color: #FFF
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #c2c2c2;
+            background-clip: padding-box;
+            min-height: 28px
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #A0A0A0
+        }
+    }
+		@media (max-width: 400px) {
+			#category {
+					/* 绝对定位 */
+					position: fixed;
+					/* 目录显示的位置 */
+					float: left;
+					/* right: 0px; */
+					top: 0;
+					width: 45%;
+					/* 目录栏的高度,这里设置为60%主要是为了不挡住返回顶部和折叠按钮 */
+					height: 90%;
+					/* 设置边框这样和正文对比比较明显 */
+					border: 2px solid #eaeaea;
+					/* 开启垂直滚动条 */
+					overflow-y: scroll;
+					z-index: 99;
+					display: none;
+					background: white;
+					font-size: 20px;
+					/* line-height: 2em; */
+			}
+			
+			/* 正文的样式 */
+			#book_body {
+					width: 100%;
+					display: block;
+			}
+			img{
+				display: block;
+			}
+			code,tt{
+					color:#c7254e;
+					background-color:#f9f2f4;
+			}
+
+			/* 返回顶部按钮样式 */
+			#topButton {
+					position: fixed;
+					float: right;
+					right: 2%;
+					top: 95%;
+					z-index:99;
+			}
+
+			/* 目录展开或者折叠 */
+			#foldOrUnfold {
+					position: fixed;
+					float: left;
+					right: 4%;
+					top: 90%;
+					z-index:99;
+			}
+	}
+</style>
+<!--侧栏目录生成代码-->
+<script>
+    $(document).ready(function () {
+        $("h1,h2,h3,h4,h5,h6").each(function (i, item) {
+            //获取标签的名字,h1,还是h2
+            var tag = $(item).get(0).localName;
+            //为该标签设置id属性
+            $(item).attr("id", "wow" + i);
+            //添加一个页内超链接,并设置class选择器
+            $("#category").append('<div class="newh"><a class="new' + tag + '" href="#wow' + i + '">' + $(item).text() +
+                '</a></div>');
+            //为每一个标题超链接的class属性设置左边距
+            $(".newh1").css("margin-left", "0em");
+            $(".newh2").css("margin-left", "1em");
+            $(".newh3").css("margin-left", "2em");
+            $(".newh4").css("margin-left", "3em");
+            $(".newh5").css("margin-left", "4em");
+            $(".newh6").css("margin-left", "5em");
+						$(".newh1").css("font-size", "1.5em");
+						$(".newh2").css("font-size", "1.2em");
+						$(".newh3").css("font-size", "1em");
+						$(".newh4").css("font-size", "0.9em");
+						$(".newh5").css("font-size", "0.8em");
+						$(".newh1").css("font-weight", "bold");
+						$(".newh2").css("font-weight", "bold");
+        });
+        //设置class选择器为.book-body的html内容
+        $(".book-body").html($(".book-body").nextAll())
+				$(".newh").on("click",function(){
+					console.log($(this).children("a"));
+					$(this).children("a")[0].click();
+				});
+    });
+</script>
+<script>
+    // 展开或者折叠目录功能
+    function showOrCloseCategory() {
+        var id = document.getElementById("category");
+        var write = document.getElementById("write");
+				//console.log(id.style.display);
+        //如果展开了
+        if (id.style.display == 'block') {
+            //console.log("开始展开");
+            id.style.display = 'none';
+						write.style.float = "";
+						write.style.left = "0em";
+        }
+        //如果被折叠了
+        else if (id.style.display == 'none') {
+            //console.log("开始折叠");
+            id.style.display = 'block';
+						write.style.float = "right";
+						write.style.left = "1em";
+        }
+    }
+    // 返回顶部功能
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+<!--返回顶部-->
+<button onclick="topFunction()" id="topButton">TOP↑</button>
+<button onclick="showOrCloseCategory()" id="foldOrUnfold">目录</button>
+
+<!--文章主体部分-->
+<div class="book-body" id="book_body"> </div>
+<!--目录栏-->
+<div class="book-summary" id="category" style="display:none"></div>
+<title>控制逻辑摸索</title>
+
+
+<script src="../../autoload.js"></script>
+<p><a class="resume-link" href="../index.html">返回主页</a><br/><a class="resume-link" href="../index.html">返回上一页</a></p>
+</style><title>控制逻辑摸索</title>
+</head>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='zsim控制逻辑banshee源码为例'><span>ZSim控制逻辑(banshee源码为例)</span></h1><h2 id='简单逻辑'><span>简单逻辑</span></h2><p><code>banshee/buil/opt/init.cpp line337</code></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c++"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>x</pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">} <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> (<span class="cm-variable">type</span> <span class="cm-operator">==</span> <span class="cm-string">"DramCache"</span>) {</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">mem</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">MemoryController</span>(<span class="cm-variable">name</span>, <span class="cm-variable">frequency</span>, <span class="cm-variable">domain</span>, <span class="cm-variable">config</span>);</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 46px;"></div><div class="CodeMirror-gutters" style="display: none; height: 46px;"></div></div></div></pre><p><span>此处调用</span><code>MemoryController</code><span>，接收参数为</span><code>type</code><span>，定义如下：</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c++"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">string</span> <span class="cm-variable">type</span> <span class="cm-operator">=</span> <span class="cm-variable">config</span>.<span class="cm-variable">get</span><span class="cm-operator">&lt;</span><span class="cm-keyword">const</span> <span class="cm-variable-3">char*</span><span class="cm-operator">&gt;</span>(<span class="cm-string">"sys.mem.type"</span>, <span class="cm-string">"Simple"</span>);</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div><div class="CodeMirror-gutters" style="display: none; height: 23px;"></div></div></div></pre><p><span>该</span><code>config</code><span>指的是</span><code>test</code><span>目录下的</span><code>.cfg</code><span>类型的文件，执行方式为命令行执行即可，较为简单</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="shell"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="shell"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">./build/opt/zsim tests/xxx.cfg</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div><div class="CodeMirror-gutters" style="display: none; height: 23px;"></div></div></div></pre><p><span>使用</span><code>diff</code><span>命令比较</span><code>banshee</code><span>与原生ZSim的</span><code>init.cpp</code><span>比较，除了上述改动之外，其余改动只是部分函数增加了</span><code>config</code><span>参数，因此</span><code>init.cpp</code><span>的逻辑几乎不用动。只需新增一个</span><code>else if (type == &quot;xxxx&quot;) {mem = new XXX(name,frequency,domain,config)};</code></p><p><span>因此，</span><strong><span>似乎</span></strong><span>只需要写好控制器，就能够完成整个系统的逻辑。至于统计输出也在控制器层面实现。</span></p><p>&nbsp;</p><h2 id='memorycontroller--------构造'><span>MemoryController —— 构造</span></h2><p><span>以</span><code>banshee</code><span>实现为例，代码篇幅较长，大部分略去：</span></p><h3 id='构造函数'><span>构造函数</span></h3><p><strong><span>构造函数初始化成员变量</span></strong></p><ul><li><p><code>_name</code><span>: 传入的内存控制器名称。</span></p></li><li><p><code>_collect_trace</code><span>: 是否收集内存访问跟踪。通过配置文件中的 </span><code>sys.mem.enableTrace</code><span> 参数决定。</span><strong><span>如果启用跟踪且当前控制器是 </span><code>mem-0</code><span>，则初始化跟踪文件路径和文件。</span></strong></p></li><li><p><code>_sram_tag</code><span>: 配置是否启用 SRAM 标记（从 </span><code>sys.mem.sram_tag</code><span> 获取）。</span></p></li><li><p><code>_llc_latency</code><span>: 配置 L3 缓存的延迟。</span></p></li><li><p><code>_ext_type</code><span>: 外部 DRAM 类型（通过 </span><code>sys.mem.ext_dram.type</code><span> 配置，可能是 Simple、DDR、MD1 或 DRAMSim）。</span></p></li><li><p><code>_scheme</code><span>: 内存控制器的缓存方案，通过 </span><code>sys.mem.cache_scheme</code><span> 配置，可能是 </span><code>NoCache</code><span>、</span><code>AlloyCache</code><span>、</span><code>UnisonCache</code><span>、</span><code>HybridCache</code><span> 等。</span></p></li><li><p><code>_bw_balance</code><span>: 是否启用带宽平衡（通过 </span><code>sys.mem.bwBalance</code><span> 配置）。</span></p></li></ul><p>&nbsp;</p><p><strong><span>外部 DRAM 配置</span></strong></p><p><span>外部 DRAM 的类型通过 </span><code>_ext_type</code><span> 配置，支持多种类型：</span></p><ul><li><p><strong><span>Simple</span></strong><span>: 使用 </span><code>SimpleMemory</code><span> 模型初始化外部 DRAM。</span></p></li><li><p><strong><span>DDR</span></strong><span>: 使用 </span><code>BuildDDRMemory</code><span> 函数创建 DDR 内存模型。</span></p></li><li><p><strong><span>MD1</span></strong><span>: 使用 </span><code>MD1Memory</code><span> 创建一种新的 DRAM 模型。</span></p></li><li><p><strong><span>DRAMSim</span></strong><span>: 使用 </span><code>DRAMSimMemory</code><span> 模型，并加载相关的配置文件。</span></p></li></ul><p>&nbsp;</p><p><strong><span>内存控制器缓存配置</span></strong></p><p><span>这里的Cache指的是DRAMCache，根据缓存方案（</span><code>_scheme</code><span>），初始化不同类型的缓存结构。缓存方案包括：</span></p><ul><li><p><code>AlloyCache</code><span>: 特定的缓存策略，要求 </span><code>granularity</code><span> 为 64 字节，</span><code>num_ways</code><span> 为 1。</span></p></li><li><p><code>UnisonCache</code><span>: 另一种缓存策略，要求 </span><code>granularity</code><span> 为 4096 字节。</span></p></li><li><p><code>HybridCache</code><span>: 混合缓存策略，支持 4KB 或 2MB 页。</span></p></li><li><p><code>NoCache</code><span>: 没有缓存。</span></p></li><li><p><code>Tagless</code><span>: 不使用标签的缓存策略。</span></p></li></ul><p><span>如果方案是 </span><code>AlloyCache</code><span>、</span><code>UnisonCache</code><span> 或 </span><code>HybridCache</code><span>，会根据配置初始化相关的缓存放置策略（例如，</span><code>LinePlacementPolicy</code><span>、</span><code>PagePlacementPolicy</code><span>）。</span></p><p>&nbsp;</p><p><strong><span>内存控制器模型的初始化</span></strong></p><ul><li><p><span>内存控制器的缓存模型（如 </span><code>SimpleMemory</code><span>、</span><code>DDR</code><span>、</span><code>MD1Memory</code><span>、</span><code>DRAMSimMemory</code><span>）通过不同的类型和配置进行初始化。</span></p><ul><li><p><span>片上堆叠内存或者HBM即这段代码中出现的</span><code>mc_dram</code><span>。</span></p></li><li><p><span>代码中根据</span><code>ext_dram</code><span>和</span><code>mc_dram</code><span>的类型选择对应的内存初始化</span></p></li></ul></li><li><p><span>缓存放置策略根据缓存方案不同被配置成不同的类型（如 </span><code>LinePlacementPolicy</code><span>、</span><code>OSPlacementPolicy</code><span>、</span><code>PagePlacementPolicy</code><span>）</span></p></li></ul><p><img src="D:\homepage\Zsim\zsim-l1-p1.png" referrerpolicy="no-referrer"></p><p><span>在</span><code>banshee/test/test.cfg</code><span>中，</span><code>ext_dram</code><span>和</span><code>mc_dram</code><span>都使用的</span><code>DDR</code></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c++" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">mem</span> <span class="cm-operator">=</span> {</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">enableTrace</span> <span class="cm-operator">=</span> <span class="cm-atom">false</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">mapGranu</span> <span class="cm-operator">=</span> <span class="cm-number">64</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">controllers</span> <span class="cm-operator">=</span> <span class="cm-number">2</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">type</span> <span class="cm-operator">=</span> <span class="cm-string">"DramCache"</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-meta"># cache_scheme: AlloyCache, HybridCache (Banshee), UnisonCache, Tagless</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-variable">cache_scheme</span> <span class="cm-operator">=</span> <span class="cm-string">"AlloyCache"</span>; </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">ext_dram</span> <span class="cm-operator">=</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-variable">type</span> <span class="cm-operator">=</span> <span class="cm-string">"DDR"</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span> &nbsp;<span class="cm-variable">ranksPerChannel</span> <span class="cm-operator">=</span> <span class="cm-number">4</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span> &nbsp;<span class="cm-variable">banksPerRank</span> <span class="cm-operator">=</span> <span class="cm-number">8</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  };</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">mcdram</span> <span class="cm-operator">=</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span> &nbsp;<span class="cm-variable">ranksPerChannel</span> <span class="cm-operator">=</span> <span class="cm-number">4</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span> &nbsp;<span class="cm-variable">banksPerRank</span> <span class="cm-operator">=</span> <span class="cm-number">8</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-variable">cache_granularity</span> <span class="cm-operator">=</span> <span class="cm-number">64</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-variable">size</span> <span class="cm-operator">=</span> <span class="cm-number">512</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-variable">mcdramPerMC</span> <span class="cm-operator">=</span> <span class="cm-number">8</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span> &nbsp;<span class="cm-variable">num_ways</span> <span class="cm-operator">=</span> <span class="cm-number">1</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-variable">sampleRate</span> <span class="cm-operator">=</span> <span class="cm-number">1.0</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span> &nbsp;<span class="cm-meta"># placementPolicy: LRU, FBR </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-variable">placementPolicy</span> <span class="cm-operator">=</span> <span class="cm-string">"LRU"</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-variable">type</span> <span class="cm-operator">=</span> <span class="cm-string">"DDR"</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  };</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">  };</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 576px;"></div><div class="CodeMirror-gutters" style="display: none; height: 576px;"></div></div></div></pre><p><span>由于都选用了DDR作为</span><code>ext_dram</code><span>和</span><code>mc_dram</code><span>的类型，代码中实际调用了</span><code>MemoryController::BuildDDRMemory</code><span>函数：</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c++" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">DDRMemory</span><span class="cm-operator">*</span> </span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-def">MemoryController::BuildDDRMemory</span>(<span class="cm-variable">Config</span><span class="cm-operator">&amp;</span> <span class="cm-variable">config</span>, <span class="cm-variable">uint32_t</span> <span class="cm-variable">frequency</span>, </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-tab" role="presentation" cm-text="	">    </span> <span class="cm-variable">uint32_t</span> <span class="cm-variable">domain</span>, <span class="cm-variable">g_string</span> <span class="cm-variable">name</span>, <span class="cm-keyword">const</span> <span class="cm-variable">string</span><span class="cm-operator">&amp;</span> <span class="cm-variable">prefix</span>, <span class="cm-variable">uint32_t</span> <span class="cm-variable">tBL</span>, <span class="cm-variable-3">double</span> <span class="cm-variable">timing_scale</span>) </span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint32_t</span> <span class="cm-variable">ranksPerChannel</span> <span class="cm-operator">=</span> <span class="cm-variable">config</span>.<span class="cm-variable">get</span><span class="cm-operator">&lt;</span><span class="cm-variable">uint32_t</span><span class="cm-operator">&gt;</span>(<span class="cm-variable">prefix</span> <span class="cm-operator">+</span> <span class="cm-string">"ranksPerChannel"</span>, <span class="cm-number">4</span>);</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint32_t</span> <span class="cm-variable">banksPerRank</span> <span class="cm-operator">=</span> <span class="cm-variable">config</span>.<span class="cm-variable">get</span><span class="cm-operator">&lt;</span><span class="cm-variable">uint32_t</span><span class="cm-operator">&gt;</span>(<span class="cm-variable">prefix</span> <span class="cm-operator">+</span> <span class="cm-string">"banksPerRank"</span>, <span class="cm-number">8</span>); &nbsp;<span class="cm-comment">// DDR3 std is 8</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint32_t</span> <span class="cm-variable">pageSize</span> <span class="cm-operator">=</span> <span class="cm-variable">config</span>.<span class="cm-variable">get</span><span class="cm-operator">&lt;</span><span class="cm-variable">uint32_t</span><span class="cm-operator">&gt;</span>(<span class="cm-variable">prefix</span> <span class="cm-operator">+</span> <span class="cm-string">"pageSize"</span>, <span class="cm-number">8</span><span class="cm-operator">*</span><span class="cm-number">1024</span>); &nbsp;<span class="cm-comment">// 1Kb cols, x4 devices</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">const</span> <span class="cm-variable-3">char*</span> <span class="cm-variable">tech</span> <span class="cm-operator">=</span> <span class="cm-variable">config</span>.<span class="cm-variable">get</span><span class="cm-operator">&lt;</span><span class="cm-keyword">const</span> <span class="cm-variable-3">char*</span><span class="cm-operator">&gt;</span>(<span class="cm-variable">prefix</span> <span class="cm-operator">+</span> <span class="cm-string">"tech"</span>, <span class="cm-string">"DDR3-1333-CL10"</span>); &nbsp;<span class="cm-comment">// see cpp file for other techs</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">const</span> <span class="cm-variable-3">char*</span> <span class="cm-variable">addrMapping</span> <span class="cm-operator">=</span> <span class="cm-variable">config</span>.<span class="cm-variable">get</span><span class="cm-operator">&lt;</span><span class="cm-keyword">const</span> <span class="cm-variable-3">char*</span><span class="cm-operator">&gt;</span>(<span class="cm-variable">prefix</span> <span class="cm-operator">+</span> <span class="cm-string">"addrMapping"</span>, <span class="cm-string">"rank:col:bank"</span>); &nbsp;<span class="cm-comment">// address splitter interleaves channels; row always on top</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// If set, writes are deferred and bursted out to reduce WTR overheads</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">bool</span> <span class="cm-variable">deferWrites</span> <span class="cm-operator">=</span> <span class="cm-variable">config</span>.<span class="cm-variable">get</span><span class="cm-operator">&lt;</span><span class="cm-variable-3">bool</span><span class="cm-operator">&gt;</span>(<span class="cm-variable">prefix</span> <span class="cm-operator">+</span> <span class="cm-string">"deferWrites"</span>, <span class="cm-atom">true</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">bool</span> <span class="cm-variable">closedPage</span> <span class="cm-operator">=</span> <span class="cm-variable">config</span>.<span class="cm-variable">get</span><span class="cm-operator">&lt;</span><span class="cm-variable-3">bool</span><span class="cm-operator">&gt;</span>(<span class="cm-variable">prefix</span> <span class="cm-operator">+</span> <span class="cm-string">"closedPage"</span>, <span class="cm-atom">true</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// Max row hits before we stop prioritizing further row hits to this bank.</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// Balances throughput and fairness; 0 -&gt; FCFS / high (e.g., -1) -&gt; pure FR-FCFS</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint32_t</span> <span class="cm-variable">maxRowHits</span> <span class="cm-operator">=</span> <span class="cm-variable">config</span>.<span class="cm-variable">get</span><span class="cm-operator">&lt;</span><span class="cm-variable">uint32_t</span><span class="cm-operator">&gt;</span>(<span class="cm-variable">prefix</span> <span class="cm-operator">+</span> <span class="cm-string">"maxRowHits"</span>, <span class="cm-number">4</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// Request queues</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint32_t</span> <span class="cm-variable">queueDepth</span> <span class="cm-operator">=</span> <span class="cm-variable">config</span>.<span class="cm-variable">get</span><span class="cm-operator">&lt;</span><span class="cm-variable">uint32_t</span><span class="cm-operator">&gt;</span>(<span class="cm-variable">prefix</span> <span class="cm-operator">+</span> <span class="cm-string">"queueDepth"</span>, <span class="cm-number">16</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint32_t</span> <span class="cm-variable">controllerLatency</span> <span class="cm-operator">=</span> <span class="cm-variable">config</span>.<span class="cm-variable">get</span><span class="cm-operator">&lt;</span><span class="cm-variable">uint32_t</span><span class="cm-operator">&gt;</span>(<span class="cm-variable">prefix</span> <span class="cm-operator">+</span> <span class="cm-string">"controllerLatency"</span>, <span class="cm-number">10</span>); &nbsp;<span class="cm-comment">// in system cycles</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">auto</span> <span class="cm-variable">mem</span> <span class="cm-operator">=</span> (<span class="cm-variable">DDRMemory</span> <span class="cm-operator">*</span>) <span class="cm-variable">gm_malloc</span>(<span class="cm-keyword">sizeof</span>(<span class="cm-variable">DDRMemory</span>));</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">new</span> (<span class="cm-variable">mem</span>) <span class="cm-variable">DDRMemory</span>(<span class="cm-variable">zinfo</span><span class="cm-operator">-&gt;</span><span class="cm-variable">lineSize</span>, <span class="cm-variable">pageSize</span>, <span class="cm-variable">ranksPerChannel</span>, <span class="cm-variable">banksPerRank</span>, <span class="cm-variable">frequency</span>, <span class="cm-variable">tech</span>, <span class="cm-variable">addrMapping</span>, <span class="cm-variable">controllerLatency</span>, <span class="cm-variable">queueDepth</span>, <span class="cm-variable">maxRowHits</span>, <span class="cm-variable">deferWrites</span>, <span class="cm-variable">closedPage</span>, <span class="cm-variable">domain</span>, <span class="cm-variable">name</span>, <span class="cm-variable">tBL</span>, <span class="cm-variable">timing_scale</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">return</span> <span class="cm-variable">mem</span>;</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 645px;"></div><div class="CodeMirror-gutters" style="display: none; height: 645px;"></div></div></div></pre><p>&nbsp;</p><p><strong><span>MC_DRAM额外设置</span></strong></p><p><span>由于</span><code>banshee</code><span>的论文，把</span><code>mc_dram</code><span>当成DRAMCache，因此在源代码中这部分主要就是设置</span><code>banshee</code><span>作为DRAMCache的模式：</span></p><ul><li><p><code>AlloyCache</code></p><ul><li><p><span> 是一种直接映射的 DRAM 缓存，它以细粒度存储数据。每个集合的标签和数据在 DRAM 缓存中是相邻存储的。对于每次标签探测，数据也会被预取加载。因此，在缓存命中时，延迟大致相当于一次 DRAM 访问的延迟。在缓存未命中时，Alloy Cache 会产生片上 DRAM 访问的延迟加上片外 DRAM 访问的延迟。在带宽消耗方面，Alloy Cache 需要 </span><strong><span>1）</span></strong><span>从 DRAM 缓存中加载标签和数据，</span><strong><span>2）</span></strong><span>从片外 DRAM 中加载数据，</span><strong><span>3）</span></strong><span>将访问的标签和数据插入 DRAM 缓存。因此，</span><strong><span>未命中和替换时，延迟和带宽消耗都会翻倍</span></strong><span>。原始的 </span><strong><span>Alloy Cache</span></strong><span> 论文 提出了</span><strong><span>并行发起</span></strong><span>对内包和片外 DRAM 的请求，以隐藏未命中延迟。</span><strong><span>然而，banshee假设采用的实现是串行访问，因为预取访问片外 DRAM 会显著增加对已经有限的片外 DRAM 带宽的压力。</span></strong></p></li></ul></li><li><p><code>UnisonCache</code></p><ul><li><p><span>以粗粒度存储数据并支持集合关联性。该设计依赖于路径预测来提供较低的命中延迟。在访问时，内存控制器读取集合中所有标签，并</span><strong><span>仅从预测的路径加载数据。数据加载是预取的。</span></strong><span>在命中并且路径预测正确的情况下，延迟大致相当于一次 DRAM 访问，因为预取的数据和标签访问一起返回。然后，标签会与更新后的 LRU 位一起存回内包 DRAM。</span><strong><span>对于未命中的情况，由于额外的片外 DRAM 访问，延迟会翻倍。</span></strong><span>在缓存未命中的带宽消耗方面，Unison Cache </span><strong><span>1）</span></strong><span>加载预测路径中的标签和数据，</span><strong><span>2）</span></strong><span>进行缓存替换，将预测的页面足迹加载到片上 DRAM 中，</span><strong><span>3）</span></strong><span>将更新后的标签和 LRU 位存回 DRAM 缓存。</span><strong><span>如果页面足迹较大，缓存未命中和替换时的带宽消耗可能是缓存命中时的几十倍。</span></strong></p></li></ul></li><li><p><code>HybridCache</code></p><ul><li><p><span>不清楚是不是指的是论文中出现的HMA，如果是的话：</span></p></li><li><p><span>采用基于软件的解决方案来处理这些问题。操作系统（OS）定期对所有页面进行排名，并将热页面移入内包 DRAM（冷页面移出）。操作系统更新所有页表项（PTE），刷新所有 TLB 以保持一致性，并从所有片上缓存中刷新重新映射物理页面的缓存行以确保地址一致性。由于这个过程的高性能开销，重新映射只能以非常粗粒度（例如，100 毫秒到 1 秒）进行，以便摊销开销。</span><strong><span>因此，DRAM 缓存替换策略可能无法充分捕获应用程序中的时间局部性。此外，当页面在内包和外包 DRAM 之间移动时，系统中所有正在运行的程序都必须停止，这会导致不希望出现的性能下降。</span></strong></p></li></ul></li><li><p><code>NoCache</code></p></li><li><p><code>Tagless</code><span>:</span></p><ul><li><p><span>也采用地址重映射，但通过硬件管理的 TLB 一致性机制实现了频繁的缓存替换。具体来说，TDC 在主存中维护一个 TLB 目录结构，并在每次条目被插入或从系统中的任何 TLB 中移除时更新该目录。这种细粒度的 TLB 一致性带来了额外的设计复杂性。此外，随着核心数量的增加，目录的存储成本可能成为潜在的可扩展性瓶颈。TDC  没有讨论地址一致性问题，因此不清楚 TDC 是否采用了某种解决方案来解决地址一致性问题，或者是否存在这种解决方案。</span></p></li></ul></li></ul><p>&nbsp;</p><h2 id='memreq'><span>MemReq</span></h2><p><code>memory_hierarchy.h</code></p><p><code>MemReq</code><span> 结构体表示一个内存请求，它包含了请求的地址、访问类型、MESI 状态、请求到达的周期、同步锁等信息。标志位用于标记请求的特殊行为，例如指令获取、预取、写回等。通过这些信息，系统能够管理内存访问、同步、缓存一致性等任务。</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c++" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">/* Memory request */</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">struct</span> <span class="cm-def">MemReq</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">Address</span> <span class="cm-variable">lineAddr</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">AccessType</span> <span class="cm-variable">type</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint32_t</span> <span class="cm-variable">childId</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">MESIState</span><span class="cm-operator">*</span> <span class="cm-variable">state</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint64_t</span> <span class="cm-variable">cycle</span>; <span class="cm-comment">//cycle where request arrives at component</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">//Used for race detection/sync</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">lock_t</span><span class="cm-operator">*</span> <span class="cm-variable">childLock</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">MESIState</span> <span class="cm-variable">initialState</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">//Requester id --- used for contention simulation</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint32_t</span> <span class="cm-variable">srcId</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">//Flags propagate across levels, though not to evictions</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">//Some other things that can be indicated here: Demand vs prefetch accesses, TLB accesses, etc.</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">enum</span> <span class="cm-def">Flag</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">IFETCH</span> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-operator">=</span> (<span class="cm-number">1</span><span class="cm-operator">&lt;&lt;</span><span class="cm-number">1</span>), <span class="cm-comment">//For instruction fetches. Purely informative for now, does not imply NOEXCL (but ifetches should be marked NOEXCL)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">NOEXCL</span> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-operator">=</span> (<span class="cm-number">1</span><span class="cm-operator">&lt;&lt;</span><span class="cm-number">2</span>), <span class="cm-comment">//Do not give back E on a GETS request (turns MESI protocol into MSI for this line). Used on e.g., ifetches and NUCA.</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">NONINCLWB</span> &nbsp; &nbsp; <span class="cm-operator">=</span> (<span class="cm-number">1</span><span class="cm-operator">&lt;&lt;</span><span class="cm-number">3</span>), <span class="cm-comment">//This is a non-inclusive writeback. Do not assume that the line was in the lower level. Used on NUCA (BankDir).</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">PUTX_KEEPEXCL</span> <span class="cm-operator">=</span> (<span class="cm-number">1</span><span class="cm-operator">&lt;&lt;</span><span class="cm-number">4</span>), <span class="cm-comment">//Non-relinquishing PUTX. On a PUTX, maintain the requestor's E state instead of removing the sharer (i.e., this is a pure writeback)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">PREFETCH</span> &nbsp; &nbsp; &nbsp;<span class="cm-operator">=</span> (<span class="cm-number">1</span><span class="cm-operator">&lt;&lt;</span><span class="cm-number">5</span>), <span class="cm-comment">//Prefetch GETS access. Only set at level where prefetch is issued; handled early in MESICC</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  };</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint32_t</span> <span class="cm-variable">flags</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">inline</span> <span class="cm-variable-3">void</span> <span class="cm-variable">set</span>(<span class="cm-variable">Flag</span> <span class="cm-variable">f</span>) {<span class="cm-variable">flags</span> <span class="cm-operator">|=</span> <span class="cm-variable">f</span>;}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">inline</span> <span class="cm-variable-3">bool</span> <span class="cm-variable">is</span> (<span class="cm-variable">Flag</span> <span class="cm-variable">f</span>) <span class="cm-keyword">const</span> {<span class="cm-keyword">return</span> <span class="cm-variable">flags</span> <span class="cm-operator">&amp;</span> <span class="cm-variable">f</span>;}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 761px;"></div><div class="CodeMirror-gutters" style="display: none; height: 761px;"></div></div></div></pre><h3 id='主要字段解释'><span>主要字段解释</span></h3><ol><li><p><strong><span>地址 (</span><code>lineAddr</code><span>)</span></strong><span>：</span></p><ul><li><p><code>lineAddr</code><span> 存储了与该内存请求相关的内存地址（通常是缓存行地址）。这通常是一个表示地址的类型（如 </span><code>uint64_t</code><span>）。</span></p></li><li><p><span>该地址用于标识请求操作的缓存行或内存块。</span></p></li></ul></li><li><p><strong><span>访问类型 (</span><code>type</code><span>)</span></strong><span>：</span></p><ul><li><p><code>type</code><span> 是一个枚举类型，表示内存请求的类型（比如读取、写入等）。具体的类型定义在 </span><code>AccessType</code><span> 枚举中（该部分代码未显示）。常见的类型有 </span><code>READ</code><span>、</span><code>WRITE</code><span> 或者特定的访问类型（如 </span><code>IFETCH</code><span> 用于指令获取）。</span></p></li></ul></li><li><p><strong><span>子请求 ID (</span><code>childId</code><span>)</span></strong><span>：</span></p><ul><li><p><code>childId</code><span> 用于标识子请求的 ID。这个字段可能与事务或内存操作的级别相关，帮助追踪请求的源头。</span></p></li></ul></li><li><p><strong><span>MESI 状态 (</span><code>state</code><span>)</span></strong><span>：</span></p><ul><li><p><code>state</code><span> 指向一个 </span><code>MESIState</code><span> 对象，该对象表示内存请求时该缓存行的 MESI 状态。MESI 协议用于跟踪缓存行在多个缓存之间的状态，确保数据一致性。</span></p></li></ul></li><li><p><strong><span>请求到达周期 (</span><code>cycle</code><span>)</span></strong><span>：</span></p><ul><li><p><code>cycle</code><span> 表示请求到达组件的周期，通常用于模拟时间和延迟，确保在正确的时钟周期进行内存操作。</span></p></li></ul></li><li><p><strong><span>子锁 (</span><code>childLock</code><span>)</span></strong><span>：</span></p><ul><li><p><span>这个字段用于同步或竞争检测。它是一个锁指针，用于防止不同组件或处理器间的竞态条件，确保内存请求的正确同步。</span></p></li></ul></li><li><p><strong><span>初始状态 (</span><code>initialState</code><span>)</span></strong><span>：</span></p><ul><li><p><code>initialState</code><span> 存储请求发起时缓存行的初始 MESI 状态。这个状态在处理过程中用于检测是否发生了状态变化。</span></p></li></ul></li><li><p><strong><span>请求源 ID (</span><code>srcId</code><span>)</span></strong><span>：</span></p><ul><li><p><code>srcId</code><span> 表示发起请求的源的 ID，用于模拟请求的来源，通常用于处理内存访问争用或追踪访问源。</span></p></li></ul></li></ol><h3 id='标志位-flags'><span>标志位 (</span><code>flags</code><span>)</span></h3><p><code>flags</code><span> 字段使用了一组标志位，表示不同的内存请求特征，这些标志在内存请求传播或缓存一致性处理过程中起到了重要作用。以下是各个标志位的作用：</span></p><ol><li><p><strong><code>IFETCH</code></strong><span>：</span></p><ul><li><p><span>表示这是一次指令获取操作。通常用于指令读取，主要用于区分与数据访问的请求。该标志用于表示这是一次纯粹的指令请求，但不会影响缓存一致性协议中的排他性（</span><code>NOEXCL</code><span>）。</span></p></li></ul></li><li><p><strong><code>NOEXCL</code></strong><span>：</span></p><ul><li><p><span>表示在进行 </span><code>GETS</code><span> 请求时，不需要返回排他（Exclusive）状态，即缓存一致性协议在这一请求中变为 MSI（Modified, Shared, Invalid）协议，而不是标准的 MESI 协议。</span></p></li></ul></li><li><p><strong><code>NONINCLWB</code></strong><span>：</span></p><ul><li><p><span>表示这是一次非包含性写回。该请求不会假定目标缓存行已经在较低层次的缓存中，常见于某些非统一缓存架构（如 NUCA）。</span></p></li></ul></li><li><p><strong><code>PUTX_KEEPEXCL</code></strong><span>：</span></p><ul><li><p><span>用于 PUTX 请求时，保持请求源的排他性状态（E），而不是移除共享者。用于写回操作，确保在写回时不会影响该缓存行的排他状态。</span></p></li></ul></li><li><p><strong><code>PREFETCH</code></strong><span>：</span></p><ul><li><p><span>表示这是一次预取请求。预取请求在处理时通常与正常的内存访问有所不同，可能不需要参与完整的缓存一致性协议。</span></p></li></ul></li></ol><h3 id='内联函数'><span>内联函数</span></h3><ul><li><p><strong><code>set(Flag f)</code></strong><span>：将特定的标志位设置为 1。用于在请求中标记特定的操作类型。</span></p></li><li><p><strong><code>is(Flag f)</code></strong><span>：检查是否设置了特定的标志位。如果标志位已设置，返回 </span><code>true</code><span>。</span></p></li></ul><p>&nbsp;</p><h3 id='invreq'><span>InvReq</span></h3><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c++"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>x</pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">/* Invalidation/downgrade request */</span></span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">struct</span> <span class="cm-def">InvReq</span> {</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">Address</span> <span class="cm-variable">lineAddr</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">InvType</span> <span class="cm-variable">type</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// NOTE: writeback should start false, children pull it up to true</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">bool*</span> <span class="cm-variable">writeback</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint64_t</span> <span class="cm-variable">cycle</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">uint32_t</span> <span class="cm-variable">srcId</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 207px;"></div><div class="CodeMirror-gutters" style="display: none; height: 207px;"></div></div></div></pre><p>&nbsp;</p><h3 id='其它'><span>其它</span></h3><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c++" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c++"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">typedef</span> <span class="cm-keyword">enum</span> {</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 获取缓存行的副本，不需要独占权限（例如处理器进行加载操作）。这个请求通常表示从缓存中读取数据，且允许多个处理器共享这个缓存行。不会要求排他性（Exclusive）权限。</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">GETS</span>, </span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 获取缓存行并且需要独占权限（例如处理器进行存储或原子操作）。这个请求通常表示一个处理器需要对缓存行进行写入，并要求其他处理器无法访问这个缓存行的副本，因此需要独占权限。</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">GETX</span>, </span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 写回操作，表示将缓存行从缓存中“清洁”地写回到更低层次的缓存，且该缓存行未被修改（没有脏数据）。这个操作通常发生在较低层次的缓存（例如 L2 或 L3）将缓存行从其缓存中逐出时。</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">PUTS</span>, </span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 写回操作，表示将缓存行从缓存中“脏”地写回到更低层次的缓存，且该缓存行已经被修改（有脏数据）。这种操作通常用于将修改过的数据写回到较低层次的缓存，或者当缓存行被逐出时。</span></span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">PUTX</span> &nbsp;</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">} <span class="cm-variable">AccessType</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">/* Types of Invalidation. An Invalidation is a request issued from upper to lower</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-comment">* levels of the hierarchy.</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> <span class="cm-comment">*/</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">typedef</span> <span class="cm-keyword">enum</span> {</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 完全失效该缓存行。即使该缓存行在较低层次的缓存中被共享，也会使其无效，并要求缓存行被删除。</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">INV</span>, &nbsp;</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 失效该缓存行的独占访问权限（即失效排他性）。这个请求允许较低层次的缓存保留一个非独占的副本，但失效该缓存行的排他性状态。通常用于使其他处理器能够访问该缓存行，但失效该行的排他访问权限。</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">INVX</span>, </span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 不失效该缓存行，而是仅将数据发送给上层请求者。这个操作通常在目录（如目录缓存）中使用。它仅适用于缓存行处于共享（S）状态的情况下，且不会导致缓存行被失效。</span></span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">FWD</span>, &nbsp;</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">} <span class="cm-variable">InvType</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">/* Coherence states for the MESI protocol */</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">typedef</span> <span class="cm-keyword">enum</span> {</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">I</span>, <span class="cm-comment">// invalid 缓存行处于失效状态，意味着该缓存行不包含有效的数据，缓存行可以被其他处理器访问或加载数据。</span></span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">S</span>, <span class="cm-comment">// shared (and clean) 缓存行处于共享状态，表示该缓存行可以被多个处理器共享且没有被修改。该行的副本存在于多个缓存中，且所有缓存行都是只读的</span></span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">E</span>, <span class="cm-comment">// exclusive and clean 缓存行处于独占状态，意味着该缓存行仅存在于当前缓存中且未被修改。当前缓存是该缓存行的唯一副本，并且数据可以被修改（写入）</span></span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">M</span> &nbsp;<span class="cm-comment">// exclusive and dirty 缓存行处于脏状态，意味着缓存行的副本是唯一的且已被修改。该缓存行包含的数据已被修改，且它未被写回到主内存中</span></span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">} <span class="cm-variable">MESIState</span>;</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 830px;"></div><div class="CodeMirror-gutters" style="display: none; height: 830px;"></div></div></div></pre><p>&nbsp;</p><h3 id='memorycontroller--------access'><span>MemoryController —— Access</span></h3><p>&nbsp;</p></div></div>
+</body>
+</html>
