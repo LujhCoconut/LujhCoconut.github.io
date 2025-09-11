@@ -1,0 +1,884 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left: 0.25em solid rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+
+:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+
+
+
+</style>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://yandex.st/highlightjs/6.2/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+<style type="text/css">
+		#category a{
+			text-decoration: none; 
+			color: black;
+		}
+		/* #category {line-height: 2em;} */
+		.newh{
+			padding-top: 0.5em;
+			padding-bottom: 0.5em;
+		}
+		.newh:hover{
+			background: #E6F0FE;
+		}
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 200px; */
+            padding-right: 0px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 200px; */
+            padding-right: 0px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .book-body {
+            /* padding-left: 300px; */
+            padding-left: 0px;
+        }
+    }
+
+    @media (max-width: 700px) {
+        .book-body {
+            padding-left: 0px;
+        }
+    }
+
+    @media (min-width: 600px) {
+        #category {
+            /* 绝对定位 */
+            position: fixed;
+            /* 目录显示的位置 */
+						float: left;
+						margin-right: 2em;
+            /* right: 0px; */
+            top: 0;
+            /* 目录栏的高度,这里设置为60%主要是为了不挡住返回顶部和折叠按钮 */
+            height: 93%;
+            /* 设置边框这样和正文对比比较明显 */
+            border: 0 solid #eaeaea;
+            /* 开启垂直滚动条 */
+            overflow-y: scroll;
+						width:25%;
+						display:block;
+						/* z-index: 99;; */
+						background: white;
+						
+        }
+
+        /* 正文的样式 */
+        #write {
+            width:100%;
+            display: block;
+						/* float:right; */
+        }
+        img{
+        	display: block;
+        }
+				
+        code,tt{
+            color:#c7254e;
+            background-color:#f9f2f4;
+        }
+				
+        /* 返回顶部按钮样式 */
+        #topButton {
+            position: fixed;
+            float: right;
+            right: 10px;
+            top: 95%;
+						z-index: 99;
+        }
+
+        /* 展开或者折叠 */
+        #foldOrUnfold {
+            position: fixed;
+            float: right;
+            right: 10px;
+            top: 89%;
+						z-index: 99;
+        }
+    }
+
+    @media (-webkit-max-device-pixel-ratio: 1) {
+        ::-webkit-scrollbar-track-piece {
+            background-color: #FFF
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #c2c2c2;
+            background-clip: padding-box;
+            min-height: 28px
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #A0A0A0
+        }
+    }
+		@media (max-width: 400px) {
+			#category {
+					/* 绝对定位 */
+					position: fixed;
+					/* 目录显示的位置 */
+					float: left;
+					/* right: 0px; */
+					top: 0;
+					width: 45%;
+					/* 目录栏的高度,这里设置为60%主要是为了不挡住返回顶部和折叠按钮 */
+					height: 90%;
+					/* 设置边框这样和正文对比比较明显 */
+					border: 2px solid #eaeaea;
+					/* 开启垂直滚动条 */
+					overflow-y: scroll;
+					z-index: 99;
+					display: none;
+					background: white;
+					font-size: 20px;
+					/* line-height: 2em; */
+			}
+			
+			/* 正文的样式 */
+			#book_body {
+					width: 100%;
+					display: block;
+			}
+			img{
+				display: block;
+			}
+			code,tt{
+					color:#c7254e;
+					background-color:#f9f2f4;
+			}
+
+			/* 返回顶部按钮样式 */
+			#topButton {
+					position: fixed;
+					float: right;
+					right: 2%;
+					top: 95%;
+					z-index:99;
+			}
+
+			/* 目录展开或者折叠 */
+			#foldOrUnfold {
+					position: fixed;
+					float: left;
+					right: 4%;
+					top: 90%;
+					z-index:99;
+			}
+	}
+</style>
+<!--侧栏目录生成代码-->
+<script>
+    $(document).ready(function () {
+        $("h1,h2,h3,h4,h5,h6").each(function (i, item) {
+            //获取标签的名字,h1,还是h2
+            var tag = $(item).get(0).localName;
+            //为该标签设置id属性
+            $(item).attr("id", "wow" + i);
+            //添加一个页内超链接,并设置class选择器
+            $("#category").append('<div class="newh"><a class="new' + tag + '" href="#wow' + i + '">' + $(item).text() +
+                '</a></div>');
+            //为每一个标题超链接的class属性设置左边距
+            $(".newh1").css("margin-left", "0em");
+            $(".newh2").css("margin-left", "1em");
+            $(".newh3").css("margin-left", "2em");
+            $(".newh4").css("margin-left", "3em");
+            $(".newh5").css("margin-left", "4em");
+            $(".newh6").css("margin-left", "5em");
+						$(".newh1").css("font-size", "1.5em");
+						$(".newh2").css("font-size", "1.2em");
+						$(".newh3").css("font-size", "1em");
+						$(".newh4").css("font-size", "0.9em");
+						$(".newh5").css("font-size", "0.8em");
+						$(".newh1").css("font-weight", "bold");
+						$(".newh2").css("font-weight", "bold");
+        });
+        //设置class选择器为.book-body的html内容
+        $(".book-body").html($(".book-body").nextAll())
+				$(".newh").on("click",function(){
+					console.log($(this).children("a"));
+					$(this).children("a")[0].click();
+				});
+    });
+</script>
+<script>
+    // 展开或者折叠目录功能
+    function showOrCloseCategory() {
+        var id = document.getElementById("category");
+        var write = document.getElementById("write");
+				//console.log(id.style.display);
+        //如果展开了
+        if (id.style.display == 'block') {
+            //console.log("开始展开");
+            id.style.display = 'none';
+						write.style.float = "";
+						write.style.left = "0em";
+        }
+        //如果被折叠了
+        else if (id.style.display == 'none') {
+            //console.log("开始折叠");
+            id.style.display = 'block';
+						write.style.float = "right";
+						write.style.left = "1em";
+        }
+    }
+    // 返回顶部功能
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+<!--返回顶部-->
+<button onclick="topFunction()" id="topButton">TOP↑</button>
+<button onclick="showOrCloseCategory()" id="foldOrUnfold">目录</button>
+
+<!--文章主体部分-->
+<div class="book-body" id="book_body"> </div>
+<!--目录栏-->
+<div class="book-summary" id="category" style="display:none"></div>
+<title>QEMU_003</title>
+
+
+</head>
+<script src="../../autoload.js"></script>
+<p><a class="resume-link" href="../index.html">返回主页</a><br/><a class="resume-link" href="../ASPLOS.html">返回上一页</a></p>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+    <div id='write'  class=''><h1 id='understanding-qemu-l201'><span>Understanding QEMU [L2.01]</span></h1><p><span>本节内容主要包含：QEMU基本组件</span></p><p><span>本节QEMU源代码版本： qemu-10.0.3。涉及到的代码文件如下所示</span></p><ul><li><p><code>main.c</code><span>,</span><code>system.h</code><span>,</span><code>runstate.c</code><span>,</span><code>main-loop.c</code><span>,</span><code>vl.c</code></p></li></ul><blockquote><p><span>参考文献：</span></p><ul><li><p><span>《QEMU/KVM源码解析与应用》</span></p></li></ul><p><code>@last_update</code><span>: 2025/09/10</span></p></blockquote><p>&nbsp;</p><p><span>&quot;Everying is a file&quot;</span></p><p>&nbsp;</p><h2 id='qemu事件循环机制'><span>QEMU事件循环机制</span></h2><p><span>在上一节的末尾，其实出现了包括</span><code>kvm_fd</code><span>,</span><code>vm_fd</code><span>,</span><code>vcpu_fd</code><span>在内的各种fd。”一切皆文件“是UNIX/Linux的著名哲学理念。Linux具体文件、设备、网络socket等都可以抽象为文件。内核通过虚拟文件系统VFS抽象出一个统一的界面。Linux通过fd(文件描述符)来访问一个文件，application可以调用select \ poll \ epoll系统调用监听文件变化。</span></p><p><span>QEMU程序的运行也基于各类文件fd事件，在运行过程中将感兴趣的文件fd添加到监听列表上并定义相应的处理函数。在QEMU主线程中，有一个循环用来处理这些文件fd的事件（如用户的输入、来自VNC的连接，vNIC对应tap设备的收包...）</span></p><p>&nbsp;</p><h3 id='为什么需要事件循环'><span>为什么需要事件循环？</span></h3><p><span>QEMU 本质上是一个用户态的虚拟机监控器（VMM），除了 vCPU 执行指令，还需要处理：</span></p><ul><li><p><span>虚拟设备的 I/O 请求（磁盘、网卡、串口等）</span></p></li></ul><ul><li><p><span>定时器回调（比如虚拟时钟、硬件超时）</span></p></li></ul><ul><li><p><span>文件描述符事件（tap 接口、socket 通信）</span></p></li></ul><ul><li><p><span>管理命令（QMP/QEMU Monitor Protocol）</span></p></li></ul><ul><li><p><span>VM 的生命周期事件（挂起、恢复、迁移）</span></p></li></ul><p><span>这些事件都是异步发生的，因此 QEMU 需要一个 </span><strong><span>事件循环机制</span></strong><span> 来统一管理。</span></p><p>&nbsp;</p><h3 id='glib事件循环机制'><span>glib事件循环机制</span></h3><p><span>QEMU的事件循环机制基于glib (跨平台，C编写的库)。或者说QEMU 的事件循环是基于 </span><strong><span>glib</span></strong><span> 提供的抽象，但 QEMU 自己实现了一个轻量级的循环框架。</span></p><p><span>glib 的 </span><strong><span>事件循环机制（GMainLoop / GMainContext）</span></strong><span> 是 QEMU、GTK 等很多项目的基础。它本质上是一个 </span><strong><span>多路事件分发器</span></strong><span>，统一处理文件描述符、定时器、空闲任务等事件。</span></p><ul><li><p><span>基本概念</span></p><ul><li><p><span>glib 提供了一个 </span><strong><span>可移植的事件循环框架</span></strong><span>，类似于 </span><code>select/poll/epoll</code><span> 的封装。</span></p></li><li><p><span>核心目标：统一处理 </span><strong><span>I/O 事件</span></strong><span>、</span><strong><span>定时器事件</span></strong><span>、</span><strong><span>idle 回调</span></strong><span> 等。</span></p></li><li><p><span>主要对象有两个：</span></p><ul><li><p><strong><span>GMainContext</span></strong><span>：事件循环的上下文，负责保存事件源和调度逻辑。</span></p></li><li><p><strong><span>GMainLoop</span></strong><span>：基于 GMainContext 封装的一个循环对象，提供开始/停止循环的 API。</span></p></li></ul></li></ul></li><li><p><span>事件源（GSource）</span></p><ul><li><p><span>所有事件都抽象为 </span><strong><span>GSource</span></strong><span>：</span></p><ul><li><p><strong><span>I/O Source</span></strong><span>：文件描述符可读/可写（基于 </span><code>GPollFD</code><span>）</span></p></li><li><p><strong><span>Timeout Source</span></strong><span>：定时器，某个时间点触发</span></p></li><li><p><strong><span>Idle Source</span></strong><span>：CPU 空闲时执行</span></p></li><li><p><strong><span>Custom Source</span></strong><span>：用户自定义事件源</span></p></li></ul></li><li><p><span>每个 GSource 有三个函数：</span></p><ul><li><p><code>prepare()</code><span>：检查是否准备好触发事件</span></p></li><li><p><code>check()</code><span>：检测事件是否真的发生</span></p></li><li><p><code>dispatch()</code><span>：事件回调执行</span></p></li><li><blockquote><p><span>其实还有别的，比如query : 用于获取实际需要调用poll的文件</span></p></blockquote></li></ul></li><li><p><span>事件源可以有不同优先级，事件循环通常先处理高优先级事件源</span></p></li></ul></li><li><p><span>工作流程</span></p><ul><li><p><span>glib 的事件循环本质上是不断执行以下步骤：</span></p></li><li><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">while</span> (<span class="cm-variable">g_main_loop_is_running</span>(<span class="cm-variable">loop</span>)) {</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 1. 找到所有活跃的 source，准备事件</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">g_main_context_prepare</span>(<span class="cm-variable">context</span>, <span class="cm-operator">&amp;</span><span class="cm-variable">max_priority</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 2. 计算超时时间，调用 poll/epoll/kqueue 等等待事件</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">g_main_context_poll</span>(<span class="cm-variable">context</span>, <span class="cm-variable">timeout</span>, <span class="cm-variable">fds</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 3. 检查哪些 source 触发</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">g_main_context_check</span>(<span class="cm-variable">context</span>, <span class="cm-variable">max_priority</span>, <span class="cm-variable">fds</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 4. 分发事件回调</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">g_main_context_dispatch</span>(<span class="cm-variable">context</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 230px;"></div><div class="CodeMirror-gutters" style="display: none; height: 230px;"></div></div></div></pre></li><li><p><span>流程说明：</span></p><ul><li><p><strong><span>prepare</span></strong><span>：看哪些 source 可能即将触发（例如超时器快到期）。</span></p></li><li><p><strong><span>poll</span></strong><span>：阻塞等待 I/O 事件或超时。</span></p></li><li><p><strong><span>check</span></strong><span>：确认哪些事件真正发生。</span></p></li><li><p><strong><span>dispatch</span></strong><span>：调用对应的回调函数。</span></p></li></ul></li></ul></li></ul><p><img src=".\qemu_003_f1.png" referrerpolicy="no-referrer"></p><p><span>这就是glib事件循环机制的处理流程，应用程序需要做的就是把新的事件源加入到这个处理流程中，glib会负责处理事件源上注册的各种事件。</span></p><blockquote><p><span>补充问题</span></p><p><span>Q: 什么是Poll ?</span></p><ul><li><p><span>狭义的poll</span></p><ul><li><p><span>在 Linux/Unix 系统里，</span><strong><span>poll</span></strong><span> 是一个系统调用，用来等待 </span><strong><span>一个或多个文件描述符（fd）</span></strong><span> 的事件发生（比如可读、可写、异常）。</span></p></li><li><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">int</span> <span class="cm-def">poll</span>(<span class="cm-keyword">struct</span> <span class="cm-def">pollfd</span> <span class="cm-operator">*</span><span class="cm-variable">fds</span>, <span class="cm-variable">nfds_t</span> <span class="cm-variable">nfds</span>, <span class="cm-variable-3">int</span> <span class="cm-variable">timeout</span>);</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div><div class="CodeMirror-gutters" style="display: none; height: 23px;"></div></div></div></pre><ul><li><p><code>fds</code><span>：要监听的文件描述符数组，每个 fd 可以指定关心的事件（可读、可写等）。</span></p></li><li><p><code>nfds</code><span>：数组长度。</span></p></li><li><p><code>timeout</code><span>：超时时间（毫秒），</span><code>-1</code><span> 表示无限等待。</span></p></li><li><p><span>返回值</span></p><ul><li><p><span>大于 0 ：有事件发生</span></p></li><li><p><span>等于 0 ：超时</span></p></li><li><p><span>小于 0 ：出错</span></p></li></ul></li></ul></li><li><p><span>比如：</span></p><ul><li><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">struct</span> <span class="cm-def">pollfd</span> <span class="cm-def">fds</span>[<span class="cm-number">2</span>];</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">fds</span>[<span class="cm-number">0</span>].<span class="cm-variable">fd</span> <span class="cm-operator">=</span> <span class="cm-variable">sockfd</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">fds</span>[<span class="cm-number">0</span>].<span class="cm-variable">events</span> <span class="cm-operator">=</span> <span class="cm-variable">POLLIN</span>; &nbsp; <span class="cm-comment">// 关心是否可读</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">fds</span>[<span class="cm-number">1</span>].<span class="cm-variable">fd</span> <span class="cm-operator">=</span> <span class="cm-variable">timerfd</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">fds</span>[<span class="cm-number">1</span>].<span class="cm-variable">events</span> <span class="cm-operator">=</span> <span class="cm-variable">POLLIN</span>; &nbsp; <span class="cm-comment">// 关心定时器是否到期</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">int</span> <span class="cm-variable">ret</span> <span class="cm-operator">=</span> <span class="cm-variable">poll</span>(<span class="cm-variable">fds</span>, <span class="cm-number">2</span>, <span class="cm-number">1000</span>); &nbsp;<span class="cm-comment">// 等待 1 秒</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">if</span> (<span class="cm-variable">ret</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">fds</span>[<span class="cm-number">0</span>].<span class="cm-variable">revents</span> <span class="cm-operator">&amp;</span> <span class="cm-variable">POLLIN</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">printf</span>(<span class="cm-string">"socket 有数据\n"</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">fds</span>[<span class="cm-number">1</span>].<span class="cm-variable">revents</span> <span class="cm-operator">&amp;</span> <span class="cm-variable">POLLIN</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">printf</span>(<span class="cm-string">"定时器到期\n"</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 346px;"></div><div class="CodeMirror-gutters" style="display: none; height: 346px;"></div></div></div></pre></li><li><p><span>这样就能在一个阻塞点同时等待多个事件。</span></p></li></ul></li></ul></li><li><p><span>广义的poll</span></p><ul><li><p><span>在很多事件循环文档里，</span><strong><span>poll</span></strong><span> 被泛指为 </span><strong><span>等待事件</span></strong><span> 的阶段，不一定非得是 </span><code>poll()</code><span> 系统调用，也可能是：</span></p><ul><li><p><code>select()</code></p></li><li><p><code>epoll_wait()</code><span>（Linux 更高效）</span></p></li><li><p><code>kqueue()</code><span>（BSD / macOS）</span></p></li><li><p><code>IOCP</code><span>（Windows）</span></p></li></ul></li><li><p><span>glib 事件循环里的 </span><strong><span>poll 阶段</span></strong><span> 就是：主循环根据所有 GSource 的需要，收集 fd 和超时时间 → 调用 </span><code>poll()</code><span> 或 </span><code>epoll_wait()</code><span> → 等待事件发生或定时器超时。</span></p></li></ul></li><li><p><span>一句话解释：“poll”就是 </span><strong><span>挂起当前线程，等待一组事件（I/O、定时器等）发生</span></strong><span> 的机制；在事件循环中，poll 阶段就是负责阻塞直到事件准备好，然后再进入 dispatch 阶段。dispatch可以调用事件源对应事件的处理函数。</span></p></li></ul></blockquote><p>&nbsp;</p><h3 id='qemu中的事件循环'><span>QEMU中的事件循环</span></h3><h4 id='背景知识tap设备'><span>背景知识：tap设备</span></h4><p><span>Q: 什么是tap设备</span></p><p><strong><span>TAP 设备</span></strong><span>是 Linux 内核里提供的一种</span><strong><span>虚拟网络设备</span></strong><span>，用于用户态程序和内核网络协议栈之间传递数据，常用于虚拟化（QEMU/KVM、容器）和网络仿真。</span></p><p><span>一句话理解：TAP 就像一根虚拟网线，一端插在虚拟机（通过 QEMU），另一端插在宿主机内核的网络栈，从而让虚拟机能像真实主机一样收发以太网数据。</span></p><p><span>Linux 里有两种虚拟网络设备：</span></p><blockquote><ul><li><p><span>TUN (network TUNnel)</span></p><ul><li><p><span>面向 </span><strong><span>三层（L3，IP 层）</span></strong><span>，收发的是 </span><strong><span>IP 包</span></strong><span>。</span></p></li><li><p><span>常用于 VPN、隧道协议（比如 OpenVPN）。</span></p></li></ul></li><li><p><span>TAP (network tap)</span></p><ul><li><p><span>面向 </span><strong><span>二层（L2，以太网层）</span></strong><span>，收发的是 </span><strong><span>以太网帧</span></strong><span>。</span></p></li><li><p><span>常用于虚拟机、容器虚拟网卡，因为虚拟机需要完整的以太网接口。</span></p></li></ul></li></ul><p><span>TAP 设备在内核里表现为一个 </span><strong><span>虚拟网卡</span></strong><span>（比如 </span><code>tap0</code><span>），但是它不直接连到物理网卡，而是：</span></p><ul><li><p><span>一端在 </span><strong><span>内核网络栈</span></strong><span>（表现得像 eth0 一样，可以配置 IP、MAC 地址）。</span></p></li><li><p><span>一端通过 </span><strong><span>字符设备文件 </span><code>/dev/net/tun</code></strong><span> 暴露给用户空间程序。</span></p></li></ul><p><span>用户空间程序（比如 QEMU、OpenVPN）可以：</span></p><ul><li><p><span>通过 </span><code>read()</code><span> 从 TAP 设备拿到 </span><strong><span>虚拟网卡收到的以太网帧</span></strong><span>；</span></p></li><li><p><span>通过 </span><code>write()</code><span> 把 </span><strong><span>以太网帧写到 TAP 设备</span></strong><span>，内核网络栈就会认为这是网卡收来的包</span></p></li></ul></blockquote><p><span>TAP在虚拟化里的作用</span></p><p><span>在 QEMU/KVM 中：</span></p><ul><li><p><span>虚拟机的虚拟网卡（比如 e1000、virtio-net）连接到 TAP 设备。</span></p></li><li><p><span>当 Guest OS 发送一个以太网帧时 → QEMU 把它写入 TAP → TAP 交给内核网络栈 → 可以通过 bridge 转发到物理网卡，或者转给别的 VM。</span></p></li><li><p><span>当外部网络有数据进来 → 通过 bridge 转发到 TAP → QEMU 从 TAP 读出来 → 交给 Guest OS 的网卡设备。</span></p></li><li><blockquote><p><span>所以 TAP 就是 </span><strong><span>虚拟机和宿主机网络世界的桥梁</span></strong><span>。</span></p></blockquote></li></ul><p>&nbsp;</p><h4 id='背景知识qmp'><span>背景知识：QMP</span></h4><p><span>QMP 是 QEMU 提供的一种 </span><strong><span>基于 JSON 的控制协议</span></strong><span> (QEMU Monitor Protocol)，运行在 </span><strong><span>管理平面</span></strong><span>。</span></p><p><span>用来 </span><strong><span>控制和管理虚拟机</span></strong><span>，比如：</span></p><ul><li><p><span>启动/停止/挂起/恢复虚拟机</span></p></li></ul><ul><li><p><span>创建/删除快照</span></p></li></ul><ul><li><p><span>热插拔设备（CPU、内存、磁盘、网卡）</span></p></li></ul><ul><li><p><span>查询虚拟机状态（CPU 寄存器、内存使用、块设备 I/O）</span></p></li></ul><p><strong><span>交互方式</span></strong><span>：</span></p><ul><li><p><span>用户（或者管理程序，比如 libvirt、OpenStack）通过 socket 连接 QEMU 的 QMP 接口</span></p></li><li><p><span>发送 JSON 命令，QEMU 返回 JSON 格式的结果</span></p></li></ul><blockquote><p><strong><span>QMP</span></strong><span> 是管理接口（像命令行 API），用来控制虚拟机。</span></p></blockquote><p>&nbsp;</p><h4 id='背景知识vnc'><span>背景知识：VNC</span></h4><p><span>VNC 是一种 </span><strong><span>远程桌面协议</span></strong><span>（图形界面访问协议），QEMU 可以内置一个 VNC 服务器。</span></p><p><span>用来 </span><strong><span>远程访问虚拟机的显示画面</span></strong><span>，就像你坐在虚拟机的显示器前一样。</span></p><ul><li><p><span>可以看到 Guest OS 的图形界面（比如 BIOS 界面、Linux 桌面、Windows 桌面）</span></p></li><li><p><span>可以用鼠标、键盘在远程控制虚拟机</span></p></li></ul><p><strong><span>交互方式</span></strong><span>：</span></p><ul><li><p><span>QEMU 作为 VNC Server</span></p></li><li><p><span>VNC Client（比如 </span><code>vncviewer</code><span>、</span><code>TigerVNC</code><span>、</span><code>Remmina</code><span>）连接上去</span></p></li><li><p><span>传输的是像素/键盘/鼠标事件</span></p></li></ul><p><span>例子：</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="shell"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="shell"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment"># 启动一个 VM，启用 VNC 服务器在 :1 (5901端口)</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">qemu-system-x86_64 <span class="cm-attribute">-hda</span> disk.img <span class="cm-attribute">-vnc</span> :1</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment"># 然后用 VNC 客户端连接：</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">vncviewer localhost:1</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 115px;"></div><div class="CodeMirror-gutters" style="display: none; height: 115px;"></div></div></div></pre><blockquote><p><span>可以把 </span><strong><span>VNC 理解为“QEMU 提供的远程显示/远程桌面接口”</span></strong><span>。用来操作虚拟机的屏幕和输入设备。</span></p></blockquote><p>&nbsp;</p><h4 id='注册和处理'><span>注册和处理</span></h4><p>&nbsp;</p><p><img src=".\qemu_003_f2.png" referrerpolicy="no-referrer"></p><p><span>如图所示，QEMU在运行过程中会注册一些感兴趣的事件，设置其对应的处理函数</span></p><blockquote><p><span>例如，对于VNC来说，会创建一个socket用于监听来自用户的连接，注册其可读事件为</span><code>vnc_client_io</code><span>,当VNC有连接到来的时候，glib的框架就会调用</span><code>vnc_client_io</code><span>函数。</span></p></blockquote><p><span>图中的例子是注册网卡设备的后端tap设备的收包。收到包后QEMU调用</span><code>tap_send</code><span>将包路由给虚拟机网卡前端，若虚拟机使用qmp，则在管理界面中当用户发送qmp命令过来之后，glib会调用事先注册的</span><code>tcp_chr_accept</code><span>来处理用户的qmp命令。</span></p><p>&nbsp;</p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="shell"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="shell"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>x</pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">qemu-system-x86_64 <span class="cm-attribute">-m</span> <span class="cm-number">1024</span> <span class="cm-attribute">-smp</span> <span class="cm-number">4</span> <span class="cm-attribute">-hda</span> /home/test/test.img <span class="cm-attribute">--enable-kvm</span> <span class="cm-attribute">-vnc</span> :0</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div><div class="CodeMirror-gutters" style="display: none; height: 23px;"></div></div></div></pre><p><span>这个命令是启动一个 </span><strong><span>QEMU 虚拟机</span></strong><span> 的完整示例，表示启动一个 64 位 QEMU 虚拟机，分配 </span><strong><span>1GB 内存</span></strong><span>、</span><strong><span>4 个 vCPU</span></strong><span>，硬盘镜像是 </span><code>/home/test/test.img</code><span>，使用 </span><strong><span>KVM 硬件加速</span></strong><span>，并且通过 </span><strong><span>VNC (5900端口)</span></strong><span> 输出显示画面。</span></p><p>&nbsp;</p><p><span>再次强调事件循环的意义：</span></p><ul><li><p><span>让所有关心的事件——无论是 I/O 事件还是定时器事件——都能被及时处理，不会被漏掉或无限等待。</span></p></li></ul><p>&nbsp;</p><p><span>QEMU的main函数早期版本定义在</span><code>vl.c</code><span>中，现在（</span><code>qemu-10.0.3</code><span>）定义在</span><code>main.c</code><span>中，在进行好所有初始化工作后会调用函数main_loop来开始主循环。</span></p><p><span>具体代码是这样的</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>x</pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">int</span> <span class="cm-def">main</span>(<span class="cm-variable-3">int</span> <span class="cm-variable">argc</span>, <span class="cm-variable-3">char</span> <span class="cm-variable-3">**</span><span class="cm-variable">argv</span>)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">qemu_init</span>(<span class="cm-variable">argc</span>, <span class="cm-variable">argv</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">bql_unlock</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">replay_mutex_unlock</span>();</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">qemu_main</span>) { <span class="cm-comment">// MacOS特殊情况</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">QemuThread</span> <span class="cm-variable">main_loop_thread</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">qemu_thread_create</span>(<span class="cm-operator">&amp;</span><span class="cm-variable">main_loop_thread</span>, <span class="cm-string">"qemu_main"</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-variable">qemu_default_main</span>, <span class="cm-variable">NULL</span>, <span class="cm-variable">QEMU_THREAD_DETACHED</span>);</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">return</span> <span class="cm-variable">qemu_main</span>();</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  } <span class="cm-keyword">else</span> {</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">qemu_default_main</span>(<span class="cm-variable">NULL</span>); <span class="cm-comment">// Linux/Windows 常见路径</span></span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">g_assert_not_reached</span>();</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 346px;"></div><div class="CodeMirror-gutters" style="display: none; height: 346px;"></div></div></div></pre><p><span>这里的这个</span><code>qemu_init</code><span>还是定义在</span><code>vl.c</code><span>当中的</span></p><p><code>qemu_default_main()</code><span>中的</span><code>qemu_main_loop</code><span>在</span><code>system.h</code><span>中申明，在</span><code>runstate.c</code><span>中实现。</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">int</span> <span class="cm-def">qemu_main_loop</span>(<span class="cm-variable-3">void</span>)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">status</span> <span class="cm-operator">=</span> <span class="cm-variable">EXIT_SUCCESS</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">main_loop_should_exit</span>(<span class="cm-operator">&amp;</span><span class="cm-variable">status</span>)) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">main_loop_wait</span>(<span class="cm-atom">false</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">return</span> <span class="cm-variable">status</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 230px;"></div><div class="CodeMirror-gutters" style="display: none; height: 230px;"></div></div></div></pre><p><span>然后这里的</span><code>`main_loop_wait</code><span>是实现在</span><code>main_loop.c</code><span>中</span></p><blockquote><p><code>main_loop_wait</code></p></blockquote><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">void</span> <span class="cm-def">main_loop_wait</span>(<span class="cm-variable-3">int</span> <span class="cm-variable">nonblocking</span>)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-comment">// ......</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">timeout_ns</span> <span class="cm-operator">=</span> <span class="cm-variable">qemu_soonest_timeout</span>(<span class="cm-variable">timeout_ns</span>,</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">timerlistgroup_deadline_ns</span>(</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-operator">&amp;</span><span class="cm-variable">main_loop_tlg</span>));</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">ret</span> <span class="cm-operator">=</span> <span class="cm-variable">os_host_main_loop_wait</span>(<span class="cm-variable">timeout_ns</span>);</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// ......</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 254px;"></div><div class="CodeMirror-gutters" style="display: none; height: 254px;"></div></div></div></pre><p><span>QEMU主循环对应的三个函数如图所示，被上述代码中的</span><code>os_host_main_loop_wait</code><span>包含：</span></p><p><img src=".\qemu_003_f3.png" referrerpolicy="no-referrer"></p><blockquote><p><span>注： 此处第三步写错了，是</span><code>glib_pollfds_poll</code></p></blockquote><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>x</pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">static</span> <span class="cm-variable-3">int</span> <span class="cm-def">os_host_main_loop_wait</span>(<span class="cm-variable-3">int64_t</span> <span class="cm-variable">timeout</span>)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">GMainContext</span> <span class="cm-operator">*</span><span class="cm-variable">context</span> <span class="cm-operator">=</span> <span class="cm-variable">g_main_context_default</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">ret</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">g_main_context_acquire</span>(<span class="cm-variable">context</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">glib_pollfds_fill</span>(<span class="cm-operator">&amp;</span><span class="cm-variable">timeout</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">bql_unlock</span>();</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">replay_mutex_unlock</span>();</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">ret</span> <span class="cm-operator">=</span> <span class="cm-variable">qemu_poll_ns</span>((<span class="cm-variable">GPollFD</span> <span class="cm-operator">*</span>)<span class="cm-variable">gpollfds</span><span class="cm-operator">-&gt;</span><span class="cm-variable">data</span>, <span class="cm-variable">gpollfds</span><span class="cm-operator">-&gt;</span><span class="cm-variable">len</span>, <span class="cm-variable">timeout</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">replay_mutex_lock</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">bql_lock</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">glib_pollfds_poll</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">g_main_context_release</span>(<span class="cm-variable">context</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">return</span> <span class="cm-variable">ret</span>;</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 530px;"></div><div class="CodeMirror-gutters" style="display: none; height: 530px;"></div></div></div></pre><p><span>这段代码也被定义在</span><code>main-loop.c</code><span>中。</span></p><p><code>main_loop_wait</code><span>在调用</span><code>os_host_main_loop_wait</code><span>之前会调用</span><code>qemu_soonest_timeout</code><span>先计算一个最小timeout值，该值从定时器列表中获取的，表示监听事件的时候最多让主循环阻塞的时间。timeout使得QEMU能够及时处理系统中的定时器到期事件。</span></p><blockquote><p><span>更通俗地描述：在 QEMU 里，主循环 </span><code>main_loop_wait()</code><span> 负责处理两类事件（i） I/O事件 （ii）定时器事件（QEMU 设定的虚拟时钟/周期性任务，到达触发时间时需要执行）。</span></p><p><span>为了避免 CPU 忙等 （轮询），QEMU 的主循环会调用一个阻塞函数 </span><code>os_host_main_loop_wait()</code><span>，通常基于 </span><code>ppoll() / select() / epoll()</code><span>，让线程“睡眠”直到事件到来。</span></p><p><span>但问题是：如果只靠 I/O 事件唤醒，</span><strong><span>定时器就可能错过触发时间</span></strong><span>。所以 QEMU 需要一个 </span><strong><span>超时机制 (timeout)</span></strong><span> 来保证按时处理定时器。</span></p><p><span>所谓 </span><strong><span>定时器到期事件</span></strong><span>，就是某个定时器设定的时间到了，需要执行对应的回调函数。举几个在 QEMU 里的例子：</span></p><ul><li><p><strong><span>虚拟时钟 (vm_clock)</span></strong><span>：模拟 CPU 指令执行的时钟，定期触发事件来同步 vCPU 与外设。</span></p></li><li><p><strong><span>周期性任务</span></strong><span>：比如刷新虚拟机状态、统计性能数据、触发 watchdog、刷新屏幕（VNC/SDL）。</span></p></li><li><p><strong><span>设备模拟定时器</span></strong><span>：模拟硬件设备的定时器（如网卡需要周期性发送中断、磁盘控制器定时刷新缓存）。</span></p></li></ul><blockquote><p><span>当某个定时器的到期时间 &lt;= 当前虚拟时钟，就会触发“定时器到期事件”，执行对应的 handler。</span></p><p><strong><span>timeout 的作用</span></strong><span> = 限制主循环最多阻塞多久，以便 QEMU 能够及时处理这些定时器事件。</span></p></blockquote></blockquote><p>&nbsp;</p><p><span>QEMU主循环的一个函数是</span><code>glib_pollfds_fill</code><span> (定义在</span><code>main-loop.c</code><span>中)。</span></p><ul><li><p><strong><span>主要工作</span></strong><span>：获取所有需要进行监听的fd，并且计算一个最小的超时时间</span></p><ul><li><p><span>glib 主循环管理了很多 </span><strong><span>事件源 (GSource)</span></strong><span>；</span></p></li><li><p><span>每个事件源可能关心一个或多个 </span><strong><span>文件描述符 (GPollFD)</span></strong><span>；</span></p></li><li><p><code>glib_pollfds_fill()</code><span> 会遍历这些事件源，把 fd 都汇总到一个统一的数组中。</span></p></li></ul></li></ul><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>x</pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">static</span> <span class="cm-variable-3">void</span> <span class="cm-def">glib_pollfds_fill</span>(<span class="cm-variable-3">int64_t</span> <span class="cm-variable-3">*</span><span class="cm-variable">cur_timeout</span>)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 获取默认上下文： glib 的事件循环基于 GMainContext，它管理了所有事件源 (GSource)</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 这里拿到默认上下文（QEMU 一般就用默认的）</span></span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">GMainContext</span> <span class="cm-operator">*</span><span class="cm-variable">context</span> <span class="cm-operator">=</span> <span class="cm-variable">g_main_context_default</span>();</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">timeout</span> <span class="cm-operator">=</span> <span class="cm-number">0</span>;</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int64_t</span> <span class="cm-variable">timeout_ns</span>;</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">n</span>;</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-comment">// 预处理（准备阶段）：通知 glib “我要开始收集 pollfd 了”。</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// max_priority 会返回当前最高优先级事件，用于后续筛选事件。</span></span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">g_main_context_prepare</span>(<span class="cm-variable">context</span>, <span class="cm-operator">&amp;</span><span class="cm-variable">max_priority</span>);</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 分配 GPollFD 数组</span></span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">glib_pollfds_idx</span> <span class="cm-operator">=</span> <span class="cm-variable">gpollfds</span><span class="cm-operator">-&gt;</span><span class="cm-variable">len</span>;</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">n</span> <span class="cm-operator">=</span> <span class="cm-variable">glib_n_poll_fds</span>;</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">do</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">GPollFD</span> <span class="cm-operator">*</span><span class="cm-variable">pfds</span>;</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">glib_n_poll_fds</span> <span class="cm-operator">=</span> <span class="cm-variable">n</span>;</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">g_array_set_size</span>(<span class="cm-variable">gpollfds</span>, <span class="cm-variable">glib_pollfds_idx</span> <span class="cm-operator">+</span> <span class="cm-variable">glib_n_poll_fds</span>);</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">pfds</span> <span class="cm-operator">=</span> <span class="cm-operator">&amp;</span><span class="cm-variable">g_array_index</span>(<span class="cm-variable">gpollfds</span>, <span class="cm-variable">GPollFD</span>, <span class="cm-variable">glib_pollfds_idx</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">n</span> <span class="cm-operator">=</span> <span class="cm-variable">g_main_context_query</span>(<span class="cm-variable">context</span>, <span class="cm-variable">max_priority</span>, <span class="cm-operator">&amp;</span><span class="cm-variable">timeout</span>, <span class="cm-variable">pfds</span>,</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-variable">glib_n_poll_fds</span>);</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  } <span class="cm-keyword">while</span> (<span class="cm-variable">n</span> <span class="cm-operator">!=</span> <span class="cm-variable">glib_n_poll_fds</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" class="cm-tab-wrap-hack" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 处理超时时间</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">timeout</span> <span class="cm-operator">&lt;</span> <span class="cm-number">0</span>) {</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">timeout_ns</span> <span class="cm-operator">=</span> <span class="cm-operator">-</span><span class="cm-number">1</span>;</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  } <span class="cm-keyword">else</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">timeout_ns</span> <span class="cm-operator">=</span> (<span class="cm-variable-3">int64_t</span>)<span class="cm-variable">timeout</span> <span class="cm-operator">*</span> (<span class="cm-variable-3">int64_t</span>)<span class="cm-variable">SCALE_MS</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-comment">// 融合 QEMU 自己的定时器</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-operator">*</span><span class="cm-variable">cur_timeout</span> <span class="cm-operator">=</span> <span class="cm-variable">qemu_soonest_timeout</span>(<span class="cm-variable">timeout_ns</span>, <span class="cm-operator">*</span><span class="cm-variable">cur_timeout</span>);</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 784px;"></div><div class="CodeMirror-gutters" style="display: none; height: 784px;"></div></div></div></pre><ul><li><p><span>分配 GPollFD 数组</span></p><ul><li><p><span>这段循环在干两件事：</span></p><ul><li><p><span>分配存放 pollfd 的数组</span></p><ul><li><p><code>gpollfds</code><span> 是一个 </span><code>GArray</code><span>，用来装所有 </span><code>GPollFD</code><span>（文件描述符 + 关注事件）。</span></p></li><li><p><code>glib_pollfds_idx</code><span> 记录当前数组位置。</span></p></li><li><p><code>g_array_set_size()</code><span> 动态调整大小，保证能放下所有 fd。</span></p></li><li><blockquote><p><span>关于pollfd,linux代码如下</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">struct</span> <span class="cm-def">pollfd</span> {</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> &nbsp; <span class="cm-variable">fd</span>; &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-comment">// 文件描述符，比如 socket、pipe、字符设备</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">short</span> <span class="cm-variable">events</span>; &nbsp; &nbsp; <span class="cm-comment">// 关注的事件类型，比如可读、可写、异常</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">short</span> <span class="cm-variable">revents</span>; &nbsp; &nbsp;<span class="cm-comment">// 实际发生的事件，由 poll() 填写</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 115px;"></div><div class="CodeMirror-gutters" style="display: none; height: 115px;"></div></div></div></pre><p><span>用于 </span><strong><span>多路复用 I/O</span></strong><span>：如果有多个 socket、文件、管道，你不想每个都单独阻塞读/写；就把它们都放到一个 </span><code>pollfd</code><span> 数组里。</span></p><p><span>系统会：</span></p><ul><li><p><span>阻塞或等待，直到某个 fd 的事件发生或超时；</span></p></li><li><p><span>返回后，每个 </span><code>pollfd.revents</code><span> 告诉你哪些 fd 就绪，可以安全操作。</span></p></li></ul></blockquote></li></ul></li><li><p><span>调用 </span><code>g_main_context_query()</code></p><ul><li><p><span>这是 glib 的关键函数：它会把当前上下文里所有 </span><code>GSource</code><span> 的 pollfd 复制到 </span><code>pfds</code><span> 数组。</span></p></li><li><p><span>同时返回一个 </span><code>timeout</code><span>，表示“glib 事件源中最近要触发的定时器的超时时间（毫秒）”。</span></p></li><li><blockquote><p><span>Q? 为什么有 while 循环？</span></p><ul><li><p><span>因为我们一开始可能不知道需要多少个 pollfd。</span></p></li><li><p><code>g_main_context_query()</code><span> 会告诉你“实际需要 n 个”。</span></p></li><li><p><span>如果 </span><code>n != glib_n_poll_fds</code><span>，就重新分配，再跑一次，直到数组够大。</span></p></li></ul></blockquote></li></ul></li></ul></li></ul></li><li><p><span>处理超时时间</span></p><ul><li><p><code>timeout</code><span> 是 glib 给出的定时器到期时间（单位 ms）。</span></p></li><li><p><span>转换成纳秒 </span><code>timeout_ns</code><span>。</span></p></li><li><p><span>如果 </span><code>timeout &lt; 0</code><span>，说明 glib 没有定时器要处理，设成 </span><code>-1</code><span>（即 poll 可以无限阻塞）。</span></p></li></ul></li><li><p><span> 融合 QEMU 自己的定时器</span></p><ul><li><p><span>QEMU 除了 glib 的定时器，还有自己维护的 </span><strong><span>虚拟机定时器</span></strong><span>（虚拟时钟、周期任务、设备定时器）。</span></p></li><li><p><code>qemu_soonest_timeout()</code><span>会取：</span><code>min(glib_timeout, qemu_timeout, 传入的cur_timeout)</code></p><ul><li><p><span>这样最终的 </span><code>cur_timeout</code><span> 就是 </span><strong><span>最早要触发的定时器时间（最大主循环阻塞时间）</span></strong><span>。</span></p></li><li><p><span>这个值会传给 </span><code>poll()</code><span>，确保事件循环不会阻塞太久，能按时醒来处理定时器。</span></p></li></ul></li></ul></li></ul><p>&nbsp;</p><p><span>此时就完成了上图的第一步，已经有了所有需要监听的fd了，然后会调用</span><code>qemu_mutex_unlock_iothread</code><span>释放QEMU大锁（Big QEMU Lock, BQL）。关于BQL将在下一节中介绍。</span></p><p><span>接着，</span><code>os_host_main_loop_wait</code><span>函数会调用</span><code>qemu_poll_ns</code></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">ret</span> <span class="cm-operator">=</span> <span class="cm-variable">qemu_poll_ns</span>((<span class="cm-variable">GPollFD</span> <span class="cm-operator">*</span>)<span class="cm-variable">gpollfds</span><span class="cm-operator">-&gt;</span><span class="cm-variable">data</span>, <span class="cm-variable">gpollfds</span><span class="cm-operator">-&gt;</span><span class="cm-variable">len</span>, <span class="cm-variable">timeout</span>);</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div><div class="CodeMirror-gutters" style="display: none; height: 23px;"></div></div></div></pre><p><span>该函数在</span><code>timer.h</code><span>中声明，在</span><code>qemu-timer.c</code><span>中实现</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>x</pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">int</span> <span class="cm-def">qemu_poll_ns</span>(<span class="cm-variable">GPollFD</span> <span class="cm-operator">*</span><span class="cm-variable">fds</span>, <span class="cm-variable">guint</span> <span class="cm-variable">nfds</span>, <span class="cm-variable-3">int64_t</span> <span class="cm-variable">timeout</span>)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-meta">#ifdef CONFIG_PPOLL</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">timeout</span> <span class="cm-operator">&lt;</span> <span class="cm-number">0</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">return</span> <span class="cm-variable">ppoll</span>((<span class="cm-keyword">struct</span> <span class="cm-def">pollfd</span> <span class="cm-operator">*</span>)<span class="cm-variable">fds</span>, <span class="cm-variable">nfds</span>, <span class="cm-variable">NULL</span>, <span class="cm-variable">NULL</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  } <span class="cm-keyword">else</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">struct</span> <span class="cm-def">timespec</span> <span class="cm-def">ts</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable-3">int64_t</span> <span class="cm-variable">tvsec</span> <span class="cm-operator">=</span> <span class="cm-variable">timeout</span> <span class="cm-operator">/</span> <span class="cm-number">1000000000LL</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-comment">/* Avoid possibly overflowing and specifying a negative number of</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-comment">* seconds, which would turn a very long timeout into a busy-wait.</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-comment">*/</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">tvsec</span> <span class="cm-operator">&gt;</span> (<span class="cm-variable-3">int64_t</span>)<span class="cm-variable">INT32_MAX</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">tvsec</span> <span class="cm-operator">=</span> <span class="cm-variable">INT32_MAX</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">ts</span>.<span class="cm-variable">tv_sec</span> <span class="cm-operator">=</span> <span class="cm-variable">tvsec</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">ts</span>.<span class="cm-variable">tv_nsec</span> <span class="cm-operator">=</span> <span class="cm-variable">timeout</span> <span class="cm-operator">%</span> <span class="cm-number">1000000000LL</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">return</span> <span class="cm-variable">ppoll</span>((<span class="cm-keyword">struct</span> <span class="cm-def">pollfd</span> <span class="cm-operator">*</span>)<span class="cm-variable">fds</span>, <span class="cm-variable">nfds</span>, <span class="cm-operator">&amp;</span><span class="cm-variable">ts</span>, <span class="cm-variable">NULL</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-meta">#else</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">return</span> <span class="cm-variable">g_poll</span>(<span class="cm-variable">fds</span>, <span class="cm-variable">nfds</span>, <span class="cm-variable">qemu_timeout_ns_to_ms</span>(<span class="cm-variable">timeout</span>));</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-meta">#endif</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 507px;"></div><div class="CodeMirror-gutters" style="display: none; height: 507px;"></div></div></div></pre><p><span>它接收三个参数</span></p><ul><li><p><code>fds</code><span>：文件描述符数组（GPollFD，glib 封装的 pollfd）</span></p></li></ul><ul><li><p><code>nfds</code><span>：数组长度</span></p></li><li><p><code>timeout</code><span>：等待时间，</span><strong><span>纳秒级</span></strong><span>，可以是负数（表示无限阻塞）</span></p></li></ul><p>&nbsp;</p><p><span>判断是否使用 </span><code>ppoll</code></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-meta">#ifdef CONFIG_PPOLL</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div><div class="CodeMirror-gutters" style="display: none; height: 23px;"></div></div></div></pre><ul><li><p><span>如果系统支持 </span><code>ppoll()</code><span>（Linux/现代 Unix）就使用它；</span></p></li><li><p><span>否则 fallback 到 glib 的 </span><code>g_poll()</code><span>（glib 封装的 poll，单位是毫秒）。</span></p></li></ul><p>&nbsp;</p><p><code>qemu_poll_ns</code><span>的调用会阻塞主线程，当该函数返回之后</span></p><ul><li><p><span>要么表示有文件fd上发生了事件</span></p></li><li><p><span>要么表示有一个超时</span></p></li></ul><p><span>不管怎么样，这都将进入图中的第三步，也就是调用</span><code>glib_pollfds_poll</code><span>进行事件的分发处理</span></p><p><span>该函数实现于</span><code>main-loop.c</code><span>中</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">static</span> <span class="cm-variable-3">void</span> <span class="cm-def">glib_pollfds_poll</span>(<span class="cm-variable-3">void</span>)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">GMainContext</span> <span class="cm-operator">*</span><span class="cm-variable">context</span> <span class="cm-operator">=</span> <span class="cm-variable">g_main_context_default</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">GPollFD</span> <span class="cm-operator">*</span><span class="cm-variable">pfds</span> <span class="cm-operator">=</span> <span class="cm-operator">&amp;</span><span class="cm-variable">g_array_index</span>(<span class="cm-variable">gpollfds</span>, <span class="cm-variable">GPollFD</span>, <span class="cm-variable">glib_pollfds_idx</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">g_main_context_check</span>(<span class="cm-variable">context</span>, <span class="cm-variable">max_priority</span>, <span class="cm-variable">pfds</span>, <span class="cm-variable">glib_n_poll_fds</span>)) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">g_main_context_dispatch</span>(<span class="cm-variable">context</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 207px;"></div><div class="CodeMirror-gutters" style="display: none; height: 207px;"></div></div></div></pre><p><span>该函数调用了glib框架中的</span><code>g_main_context_check</code><span>检测事件，然后调用</span><code>g_main_context_dispatch</code><span>进行了事件的分发。</span></p><p>&nbsp;</p><p>&nbsp;</p><h4 id='qemu主循环真正的循环'><span>QEMU主循环真正的循环</span></h4><p><span>上面的</span><code>main_loop_wait</code><span>其实只执行了一次，真正的循环发生在</span><code>qemu_main_loop</code><span>里。也即是之前提到的在</span><code>runstate.c</code><span>中提到的代码。返回值是程序退出状态（</span><code>EXIT_SUCCESS</code><span> 或其他）</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">int</span> <span class="cm-def">qemu_main_loop</span>(<span class="cm-variable-3">void</span>)</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">{</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">status</span> <span class="cm-operator">=</span> <span class="cm-variable">EXIT_SUCCESS</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">while</span> (<span class="cm-operator">!</span><span class="cm-variable">main_loop_should_exit</span>(<span class="cm-operator">&amp;</span><span class="cm-variable">status</span>)) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">main_loop_wait</span>(<span class="cm-atom">false</span>);</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+    </span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">return</span> <span class="cm-variable">status</span>;</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 230px;"></div><div class="CodeMirror-gutters" style="display: none; height: 230px;"></div></div></div></pre><ul><li><p><code>main_loop_should_exit(&amp;status)</code><span>：判断 QEMU 是否需要退出</span></p><ul><li><p><span>例如收到 </span><code>Ctrl+C</code><span>、虚拟机关闭、崩溃等</span></p></li><li><p><span>如果不退出，返回 </span><code>false</code><span>，循环继续</span></p></li></ul></li><li><p><code>main_loop_wait(false)</code><span>：</span><strong><span>一次事件迭代</span></strong></p><ul><li><p><span>填充 fd 数组（I/O + 定时器）</span></p></li><li><p><span>计算超时</span></p></li><li><p><span>阻塞等待事件（</span><code>os_host_main_loop_wait()</code><span>）</span></p></li><li><p><span>处理就绪事件和定时器</span></p></li></ul></li></ul><p>&nbsp;</p><p><strong><span>循环效果</span></strong></p><ul><li><p><span>每次循环都会重新收集 </span><strong><span>新的事件源</span></strong><span>（新注册的 I/O 或定时器）</span></p></li><li><p><span>只要事件循环没有退出条件，主循环会 </span><strong><span>无限调用 </span><code>main_loop_wait()</code></strong></p></li><li><p><span>因此：</span></p><ul><li><p><span>新的 I/O 事件会被下一轮循环捕获并处理</span></p></li><li><p><span>定时器事件会在到期时被触发</span></p></li></ul></li></ul><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">+-----------------------+</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">| qemu_main_loop() &nbsp; &nbsp;  |</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">| while (!exit) &nbsp; &nbsp; &nbsp; &nbsp; |</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">| &nbsp; main_loop_wait() &nbsp;  |-----&gt; 收集 fd + timeout</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |-----&gt; 阻塞等待 I/O / timeout</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |-----&gt; 触发回调</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">+-----------------------+</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">循环直到退出条件满足</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 207px;"></div><div class="CodeMirror-gutters" style="display: none; height: 207px;"></div></div></div></pre><p>&nbsp;</p></div></div>
+    </body>
+    </html>
