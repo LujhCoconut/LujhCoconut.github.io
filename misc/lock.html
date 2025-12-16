@@ -1,0 +1,709 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'><style type='text/css'>html {overflow-x: initial !important;}</style>
+<style type='text/css'  id="style-base">:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, "Segoe UI Emoji", "SF Pro", sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p *, #write.first-line-indent svg * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; position: relative; }
+#write svg h1, #write svg h2, #write svg h3, #write svg h4, #write svg h5, #write svg h6, #write svg p { position: static; white-space: nowrap; overflow: visible; }
+foreignobject { overflow: visible; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+li p { orphans: 1; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.mermaid-svg { margin: auto; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left: 0.25em solid rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+</style>
+<style type='text/css'  id="style-codemirror">.CodeMirror { height: auto; }
+.CodeMirror.cm-s-inner { background: inherit; }
+.CodeMirror-scroll { overflow: auto hidden; z-index: 3; }
+.CodeMirror-gutter-filler, .CodeMirror-scrollbar-filler { background-color: rgb(255, 255, 255); }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); background: inherit; white-space: nowrap; }
+.CodeMirror-linenumber { padding: 0px 3px 0px 5px; text-align: right; color: rgb(153, 153, 153); }
+.cm-s-inner .cm-keyword { color: rgb(119, 0, 136); }
+.cm-s-inner .cm-atom, .cm-s-inner.cm-atom { color: rgb(34, 17, 153); }
+.cm-s-inner .cm-number { color: rgb(17, 102, 68); }
+.cm-s-inner .cm-def { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-variable { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-variable-2 { color: rgb(0, 85, 170); }
+.cm-s-inner .cm-variable-3 { color: rgb(0, 136, 85); }
+.cm-s-inner .cm-string { color: rgb(170, 17, 17); }
+.cm-s-inner .cm-property { color: rgb(0, 0, 0); }
+.cm-s-inner .cm-operator { color: rgb(152, 26, 26); }
+.cm-s-inner .cm-comment, .cm-s-inner.cm-comment { color: rgb(170, 85, 0); }
+.cm-s-inner .cm-string-2 { color: rgb(255, 85, 0); }
+.cm-s-inner .cm-meta { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-qualifier { color: rgb(85, 85, 85); }
+.cm-s-inner .cm-builtin { color: rgb(51, 0, 170); }
+.cm-s-inner .cm-bracket { color: rgb(153, 153, 119); }
+.cm-s-inner .cm-tag { color: rgb(17, 119, 0); }
+.cm-s-inner .cm-attribute { color: rgb(0, 0, 204); }
+.cm-s-inner .cm-header, .cm-s-inner.cm-header { color: rgb(0, 0, 255); }
+.cm-s-inner .cm-quote, .cm-s-inner.cm-quote { color: rgb(0, 153, 0); }
+.cm-s-inner .cm-hr, .cm-s-inner.cm-hr { color: rgb(153, 153, 153); }
+.cm-s-inner .cm-link, .cm-s-inner.cm-link { color: rgb(0, 0, 204); }
+.cm-negative { color: rgb(221, 68, 68); }
+.cm-positive { color: rgb(34, 153, 34); }
+.cm-header, .cm-strong { font-weight: 700; }
+.cm-del { text-decoration: line-through; }
+.cm-em { font-style: italic; }
+.cm-link { text-decoration: underline; }
+.cm-error { color: red; }
+.cm-invalidchar { color: red; }
+.cm-constant { color: rgb(38, 139, 210); }
+.cm-defined { color: rgb(181, 137, 0); }
+div.CodeMirror span.CodeMirror-matchingbracket { color: rgb(0, 255, 0); }
+div.CodeMirror span.CodeMirror-nonmatchingbracket { color: rgb(255, 34, 34); }
+.cm-s-inner .CodeMirror-activeline-background { background: inherit; }
+.CodeMirror { position: relative; overflow: hidden; }
+.CodeMirror-scroll { height: 100%; outline: 0px; position: relative; box-sizing: content-box; background: inherit; }
+.CodeMirror-sizer { position: relative; }
+.CodeMirror-gutter-filler, .CodeMirror-hscrollbar, .CodeMirror-scrollbar-filler, .CodeMirror-vscrollbar { position: absolute; z-index: 6; display: none; outline: 0px; }
+.CodeMirror-vscrollbar { right: 0px; top: 0px; overflow: hidden; }
+.CodeMirror-hscrollbar { bottom: 0px; left: 0px; overflow: auto hidden; }
+.CodeMirror-scrollbar-filler { right: 0px; bottom: 0px; }
+.CodeMirror-gutter-filler { left: 0px; bottom: 0px; }
+.CodeMirror-gutters { position: absolute; left: 0px; top: 0px; padding-bottom: 10px; z-index: 3; overflow-y: hidden; }
+.CodeMirror-gutter { white-space: normal; height: 100%; box-sizing: content-box; padding-bottom: 30px; margin-bottom: -32px; display: inline-block; }
+.CodeMirror-gutter-wrapper { position: absolute; z-index: 4; background: 0px 0px !important; border: none !important; }
+.CodeMirror-gutter-background { position: absolute; top: 0px; bottom: 0px; z-index: 4; }
+.CodeMirror-gutter-elt { position: absolute; cursor: default; z-index: 4; }
+.CodeMirror-lines { cursor: text; }
+.CodeMirror pre { border-radius: 0px; border-width: 0px; background: 0px 0px; font-family: inherit; font-size: inherit; margin: 0px; white-space: pre; overflow-wrap: normal; color: inherit; z-index: 2; position: relative; overflow: visible; }
+.CodeMirror-wrap pre { overflow-wrap: break-word; white-space: pre-wrap; word-break: normal; }
+.CodeMirror-code pre { border-right: 30px solid transparent; width: fit-content; }
+.CodeMirror-wrap .CodeMirror-code pre { border-right: none; width: auto; }
+.CodeMirror-linebackground { position: absolute; inset: 0px; z-index: 0; }
+.CodeMirror-linewidget { position: relative; z-index: 2; overflow: auto; }
+.CodeMirror-wrap .CodeMirror-scroll { overflow-x: hidden; }
+.CodeMirror-measure { position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden; }
+.CodeMirror-measure pre { position: static; }
+.CodeMirror div.CodeMirror-cursor { position: absolute; visibility: hidden; border-right: none; width: 0px; }
+.CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+.CodeMirror-focused div.CodeMirror-cursor { visibility: inherit; }
+.cm-searching { background: rgba(255, 255, 0, 0.4); }
+span.cm-underlined { text-decoration: underline; }
+span.cm-strikethrough { text-decoration: line-through; }
+.cm-tw-syntaxerror { color: rgb(255, 255, 255); background-color: rgb(153, 0, 0); }
+.cm-tw-deleted { text-decoration: line-through; }
+.cm-tw-header5 { font-weight: 700; }
+.cm-tw-listitem:first-child { padding-left: 10px; }
+.cm-tw-box { border-style: solid; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-color: inherit; border-top-width: 0px !important; }
+.cm-tw-underline { text-decoration: underline; }
+@media print {
+  .CodeMirror div.CodeMirror-cursor { visibility: hidden; }
+}
+
+</style>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&amp;subset=latin,latin-ext' type='text/css' />
+<style type='text/css'  id="style-theme_css">:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', 'SF Pro', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+</style>
+<style type='text/css'  id="style-lp">ol, ul {padding-left: 40px}</style>
+
+<title>lock</title>
+</head>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='lock'><span>Lock</span></h1><h2 id='乐观与悲观'><span>乐观与悲观</span></h2><p><strong><span>Q1: 乐观锁和悲观锁的优缺点以及适用场景是什么？操作系统中有哪些场景使用了乐观锁或者悲观锁？</span></strong></p><ul><li><p><strong><span>乐观锁</span></strong><span>：</span></p><ul><li><p><span>优点：</span></p><ul><li><p><span>性能较高：无锁状态下读操作不会阻塞。</span></p></li><li><p><span>适用于读多写少（低冲突）的应用场景，因为更新冲突几率较小。</span></p></li></ul></li><li><p><span>缺点：</span></p><ul><li><p><span>存在写操作失败的可能，例如在高冲突场景下频繁回滚或重试会降低性能。</span></p></li></ul></li><li><p><span>适用场景：</span></p><ul><li><p><span>数据库事务场景，例如基于版本号的并发控制。</span></p></li><li><p><span>微服务中，更新资源时采用的非阻塞更新模型。</span></p></li></ul></li><li><p><strong><span>操作系统中的应用场景</span></strong><span>：</span></p><ul><li><p><span>操作系统中大多数内核数据结构使用 </span><strong><span>RCU（Read-Copy-Update）</span></strong><span> 技术：RCU 是一种高效的乐观锁实现，允许读操作无锁地访问共享数据，而写操作以更新为主，例如 Linux 内核的任务调度器读取任务队列时。</span></p></li></ul></li></ul></li><li><p><strong><span>悲观锁</span></strong><span>：</span></p><ul><li><p><span>优点：</span></p><ul><li><p><span>可以保证数据一致性，在高并发场景下有效防止读写冲突。</span></p></li></ul></li><li><p><span>缺点：</span></p><ul><li><p><span>开销较大，由于锁机制会导致更多的线程等待，降低系统整体吞吐量。</span></p></li><li><p><span>死锁风险，需要小心设计。</span></p></li></ul></li><li><p><span>适用场景：</span></p><ul><li><p><span>银行转账系统中，防止并发事务中获取相同资源（如数据库余额提取时产生错误）。</span></p></li></ul></li><li><p><strong><span>操作系统中的应用场景</span></strong><span>：</span></p><ul><li><p><span>在操作系统中，</span><strong><span>inode 锁的悲观实现</span></strong><span> 会用于读取文件元数据（如大小或修改时间）。</span></p></li><li><p><span>卷管理文件系统（如 XFS）中常用的互斥锁实现文件的元数据更新。</span></p></li></ul></li></ul></li></ul><hr /><h2 id='自旋与互斥'><span>自旋与互斥</span></h2><p><strong><span>Q2: 什么是自旋锁？自旋锁相比于互斥锁的优缺点？操作系统中有哪些地方使用了自旋锁？</span></strong></p><p><a href='[ghostrace](https://lujhcoconut.github.io/Others/USENIXSec/GhostRace.html)'><span>ghostrace</span></a></p><p><strong><span>自旋锁定义</span></strong><span>： 自旋锁是一种非阻塞锁，当线程尝试获取锁失败时不会进入阻塞队列等待，而是持续“自旋”（轮询），直到获取锁成功。</span></p><p><strong><span>优缺点</span></strong><span>：</span></p><ul><li><p><span>优点：</span></p><ul><li><p><span>避免线程阻塞/唤醒带来的性能开销：适合锁持有时间很短的场景。</span></p></li><li><p><span>实现简单，常用在内核态中断处理等对性能敏感的区域。</span></p></li></ul></li><li><p><span>缺点：</span></p><ul><li><p><span>持续占用 CPU 时间：可能降低 CPU 整体性能</span></p></li><li><p><span>不适合锁持有时间较长的场景</span></p></li></ul></li><li><p><span>注意：自旋锁不适合线程切换频繁的场景，因为频繁轮询会浪费大量 CPU 资源</span></p></li><li><p><strong><span>操作系统中的自旋锁</span></strong></p><ul><li><p><strong><span>Linux 内核</span></strong><span>：自旋锁经常用于防止中断上下文与用户上下文间的竞争。例如，中断处理程序修改全局变量时，可能会使用自旋锁保护数据。</span></p></li><li><p><span>示例：Linux 内核调度器使用自旋锁保护进程切换的 CPU 核心资源，避免多个线程同时调度到同一 CPU。</span></p></li></ul></li></ul><hr /><h2 id='可重入锁'><span>可重入锁</span></h2><p><strong><span>Q3: 什么是可重入锁？在多线程编程中的作用是什么？操作系统中是否支持类似机制？</span></strong></p><p><strong><span>可重入锁定义</span></strong><span>： 可重入锁是一种允许同一个线程多次获取的锁，即一个线程在持有锁的情况下可以重复获取而不会导致死锁。内部通过计数器记录锁的获取和释放次数。</span></p><p><strong><span>作用</span></strong><span>：</span></p><ul><li><p><span>支持递归调用：一个方法中可能调用另一个加锁的方法（或自己），如果锁不可重入，会发生死锁。</span></p></li><li><p><span>增加系统的灵活性：保证复杂调用链中的线程安全性。</span></p></li></ul><p><strong><span>操作系统中的可重入机制</span></strong><span>：</span></p><ul><li><p><strong><span>信号安全函数</span></strong><span>：在操作系统中，可重入性用于保证中断信号处理不会破坏主线程的状态。例如，Linux 的特定系统调用（如 </span><code>setjmp</code><span> 和 </span><code>siglongjmp</code><span>）是可重入的。</span></p></li><li><p><strong><span>Linux 信号量（Semaphore）</span></strong><span>：针对多核环境下的资源共享，信号量可以支持可重入机制多个线程计数锁。</span></p></li></ul><hr /><h2 id='分布式锁'><span>分布式锁</span></h2><p><strong><span>Q4: 分布式锁在什么情况下会出现问题？如何解决这些问题？</span></strong></p><ul><li><p><strong><span>锁超时问题</span></strong><span>：</span></p><ul><li><p><span>当任务执行时间大于锁的生存时间时，锁会被误删，其他线程可能错误地获取锁。</span></p></li></ul></li><li><p><strong><span>锁丢失问题</span></strong><span>：</span></p><ul><li><p><span>Redis 崩溃或主从同步出现延迟，导致锁失效。</span></p></li><li><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang=""><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">时间 操作</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T1  客户端A从主节点获取锁成功</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T2  主节点崩溃，锁未同步到从节点</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T3  从节点B升级为新主节点</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T4  客户端B从新主节点获取相同锁成功 ← 锁丢失！</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T5  客户端A和B同时操作共享资源</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 138px;"></div><div class="CodeMirror-gutters" style="display: none; height: 138px;"></div></div></div></pre></li></ul></li><li><p><strong><span>死锁问题</span></strong><span>：</span></p><ul><li><p><span>在分布式环境中，多个服务间交互可能导致循环依赖，引发死锁。</span></p></li></ul></li></ul><p><strong><span>解决方案</span></strong><span>：</span></p><ul><li><p><strong><span>锁续租（延签）</span></strong><span>：</span></p><ul><li><p><span>在任务执行中，定期检查当前锁是否快超时，通过心跳机制延长锁的有效期。</span></p><ul><li><p><span>启动一个守护线程，定期检查锁是否仍被持有，并在锁即将过期时延长其生存时间。</span></p></li><li><p><strong><span>续租时机</span></strong><span>：在锁过期时间的1/3到2/3之间开始续租</span></p></li><li><p><strong><span>续租频率</span></strong><span>：一般为过期时间的1/3</span></p></li><li><p><strong><span>失败处理</span></strong><span>：续租失败时立即重试，连续失败多次则放弃锁</span></p></li></ul></li></ul></li><li><p><strong><span>设置唯一标识</span></strong><span>：</span></p><ul><li><p><span>分布式锁时，使用线程或服务唯一标识（如 UUID）进行识别，避免误解锁。</span></p></li></ul></li><li><p><strong><span>Redlock 算法</span></strong><span>：</span></p><ul><li><p><span>在多个 Redis 节点中锁实现基于 Quorum 的机制，只有获得大多数节点锁后才算加锁成功。</span></p><ul><li><p><span>在N个独立的Redis节点上获取锁，当且仅当获得大多数节点（N/2+1）的锁时，才算成功获取。</span></p></li></ul></li></ul></li></ul><hr /><h2 id='信号量'><span>信号量</span></h2><p><strong><span>Q5: 什么是信号量？与互斥锁的主要区别是什么？可以举例说明吗？</span></strong></p><p><strong><span>信号量</span></strong><span>： 信号量（Semaphore）是一种计数器，用于管理对共享资源的访问权限。它允许多个线程同时访问固定数量的资源。</span></p><ul><li><p><span>基本操作：</span><code>wait</code><span>（P操作）减少信号量；</span><code>signal</code><span>（V操作）增加信号量。</span></p></li><li><p><span>信号量是线程间协作工具，与互斥锁不同。</span></p></li></ul><p><strong><span>互斥锁对比信号量</span></strong><span>：</span></p><ul><li><p><strong><span>互斥锁</span></strong><span>：只能有一个线程获得锁，因此很适合保证独占访问。</span></p></li><li><p><strong><span>信号量</span></strong><span>：允许多个线程访问资源，适合限制对资源的总访问数。</span></p></li></ul><p><strong><span>关键区别</span></strong><span>：</span></p><ul><li><p><span>互斥锁值只为 </span><code>0</code><span> 或 </span><code>1</code><span>。</span></p></li><li><p><span>信号量可以包含正整数。</span></p></li></ul><p><strong><span>操作系统中的应用</span></strong><span>：</span></p><ul><li><p><strong><span>信号量</span></strong><span>：</span></p><ul><li><p><span>操作系统中的线程池，用信号量管理最大线程数。例如，Linux 使用信号量限制读/写访问。</span></p></li></ul></li><li><p><strong><span>互斥锁</span></strong><span>：</span></p><ul><li><p><span>常用于抢占文件锁、I/O 设备控制权等。</span></p></li></ul></li></ul><hr /><h2 id='自旋锁性能陷阱numamcs锁qspinlock'><span>自旋锁性能陷阱+NUMA+MCS锁+qspinlock</span></h2><p><strong><span>Q6: 自旋锁的使用中如何避免性能陷阱？在 NUMA 架构（非一致性内存访问）中它会带来什么影响？</span></strong></p><p><strong><span>性能陷阱</span></strong><span>：</span></p><p><span>在自旋锁中，线程会不断占用 CPU 流水线进行轮询等待，这可能导致：</span></p><ul><li><p><strong><span>高 CPU 开销</span></strong><span>：其他任务可能无法获取 CPU 时间片。</span></p></li><li><p><strong><span>缓存伪共享</span></strong><span>：多个线程频繁更新共享变量（如锁标志）导致同一缓存行被大量无效化，进一步降低性能。</span></p><ul><li><p><span>缓存行是CPU与内存之间数据传输的最小单位，通常是</span><strong><span>64字节</span></strong><span>。如果两个无关的变量在内存中靠得特别近，近到足以被放进同一个64字节的块里，那么它们就被“绑定”在了一起。多核并发修改，激活MESI协议。因为</span><code>lock1</code><span>和</span><code>lock2</code><span>在同一个缓存行，当线程1获取</span><code>lock1</code><span>（将其从0改为1）时，会导致线程2用于自旋检查</span><code>lock2</code><span>的缓存行失效。线程2必须从内存或核心1重新加载整个缓存行，才能再次检查</span><code>lock2</code><span>是否可用。这造成了巨大的、完全不必要的性能开销。逻辑上无竞争，性能上却像在竞争最激烈的一把锁。解决方案的核心就是</span><strong><span>主动填充内存，让这些变量各自独占一个缓存行</span></strong><span>。</span></p></li></ul></li></ul><p><strong><span>性能优化方法</span></strong><span>：</span></p><ul><li><p><strong><span>自旋时间限制</span></strong><span>：</span></p><ul><li><p><span>设置自旋次数上限，超过阈值后线程进入阻塞状态（如使用操作系统的 </span><code>sched_yield()</code><span>）。</span></p></li></ul></li><li><p><strong><span>指数回退（Exponential Backoff）</span></strong><span>：</span></p><ul><li><p><span>增加线程重试之间的时间间隔。避免多个线程同时争抢锁，产生激烈的竞争。</span></p></li></ul></li><li><p><strong><span>使用 CPU pause 指令</span></strong><span>：</span></p><ul><li><p><span>在 x86 架构下，使用 </span><code>pause</code><span> 指令（例如 </span><code>__asm__ __volatile__ (&quot;pause&quot; ::: &quot;memory&quot;)</code><span>）可以减少自旋影响并防止流水线阻塞。</span></p></li></ul></li></ul><p><strong><span>NUMA 架构中的问题</span></strong><span>：</span></p><ul><li><p><strong><span>伪共享</span></strong><span>：</span></p><ul><li><p><span>在 NUMA 环境，锁的标志位可能跨越多个 NUMA 节点的缓存，这会导致频繁的远程内存访问，增加缓存一致性协议的成本。</span></p></li></ul></li><li><p><strong><span>优化策略</span></strong><span>：</span></p><ul><li><p><span>使用 </span><strong><span>局部锁（Local Locking）</span></strong><span>，即将锁分布到每个 NUMA 节点的本地内存中，减少跨节点访问。</span></p></li><li><p><span>使用更高效的数据结构如 MCS 锁，MCS 锁将队列锁的队列节点分配到线程本地，减少内存共享。</span></p></li></ul></li><li><p><strong><span>操作系统中的应用</span></strong><span>：</span></p><ul><li><p><span>自旋锁在底层内核中，如 </span><strong><span>Linux 内核</span></strong><span>，被广泛用于短期锁定操作（如中断处理程序）。但当用于 NUMA 架构时，Linux 内核通过 </span><code>qspinlock</code><span>（队列自旋锁）解决伪共享问题。</span></p></li></ul></li></ul><p>&nbsp;</p><p><strong><span>MCS</span></strong></p><p><span>MCS锁（Mellor-Crummey Scott Lock）是一种</span><strong><span>基于队列的公平自旋锁</span></strong><span>。它的核心理念是：</span></p><ul><li><p><strong><span>每个线程在自己的本地变量上自旋</span></strong><span>，而不是在共享变量上</span></p></li><li><p><span>通过链表组织等待线程，保证FIFO公平性</span></p></li><li><p><span>完全消除缓存伪共享</span></p></li></ul><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="C"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// MCS节点，每个线程一个</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">struct</span> <span class="cm-def">mcs_node</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">struct</span> <span class="cm-def">mcs_node</span> <span class="cm-operator">*</span><span class="cm-variable">next</span>; &nbsp; &nbsp;<span class="cm-comment">// 指向下一个等待者</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">int</span> <span class="cm-variable">locked</span>; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-comment">// 1=需要等待，0=可以获取锁</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 缓存行填充，确保每个节点独占一个缓存行</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable-3">char</span> <span class="cm-variable">padding</span>[<span class="cm-variable">CACHELINE_SIZE</span> <span class="cm-operator">-</span> <span class="cm-keyword">sizeof</span>(<span class="cm-keyword">struct</span> <span class="cm-def">mcs_node</span><span class="cm-operator">*</span>) <span class="cm-operator">-</span> <span class="cm-keyword">sizeof</span>(<span class="cm-variable-3">int</span>)];</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// MCS锁</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">struct</span> <span class="cm-def">mcs_lock</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">struct</span> <span class="cm-def">mcs_node</span> <span class="cm-operator">*</span><span class="cm-variable">tail</span>; &nbsp; &nbsp;<span class="cm-comment">// 指向队列尾部</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">};</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 277px;"></div><div class="CodeMirror-gutters" style="display: none; height: 277px;"></div></div></div></pre><p><span>假设线程T1\T2\T3按顺序请求锁</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang=""><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">初始状态:</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">lock-&gt;tail = NULL</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T1节点: {next=NULL, locked=1}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T2节点: {next=NULL, locked=1}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T3节点: {next=NULL, locked=1}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T1加锁:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">1. lock-&gt;tail 从 NULL → T1</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">2. 无前驱，T1直接获取锁</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T2加锁:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">1. lock-&gt;tail 从 T1 → T2, prev=T1</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">2. T1.next = T2</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">3. T2在T2.locked上自旋(等待T1释放)</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T3加锁:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">1. lock-&gt;tail 从 T2 → T3, prev=T2</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">2. T2.next = T3</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">3. T3在T3.locked上自旋</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T1解锁:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">1. 发现T1.next=T2不为NULL</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">2. 设置T2.locked=0</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">3. T2从自旋中退出，获取锁</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">T2解锁:</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">1. 发现T2.next=T3不为NULL</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">2. 设置T3.locked=0</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">3. T3从自旋中退出，获取锁</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 668px;"></div><div class="CodeMirror-gutters" style="display: none; height: 668px;"></div></div></div></pre><p>&nbsp;</p><p><strong><span>QSpinLock</span></strong></p><p><span>QSpinlock是Linux内核中使用的</span><strong><span>高效队列自旋锁</span></strong><span>。它结合了票据锁和MCS锁的优点：</span></p><ul><li><p><span>使用单个32位字表示锁状态</span></p></li><li><p><span>前24位表示队列尾，后8位表示锁状态</span></p></li><li><p><span>向后兼容传统自旋锁接口</span></p></li></ul><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// Linux内核中的qspinlock定义</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">typedef</span> <span class="cm-keyword">struct</span> <span class="cm-def">qspinlock</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">atomic_t</span> <span class="cm-variable">val</span>; &nbsp;<span class="cm-comment">// 32位原子变量</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">} <span class="cm-variable">spinlock_t</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// val的位布局：</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// 位  0: locked bit (锁是否被持有)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// 位  1-2: pending bit (优化用)</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// 位  3-7: 未使用</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// 位  8-31: tail (队列尾部编码)</span></span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 230px;"></div><div class="CodeMirror-gutters" style="display: none; height: 230px;"></div></div></div></pre><p><span>QSpinlock的关键优化是</span><strong><span>pending位</span></strong><span>，用于处理低竞争场景：</span></p><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="c" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// 简化版qspinlock逻辑</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">void</span> <span class="cm-def">queued_spin_lock</span>(<span class="cm-keyword">struct</span> <span class="cm-def">qspinlock</span> <span class="cm-operator">*</span><span class="cm-variable">lock</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 1. 首先尝试快速路径：直接获取锁</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">likely</span>(<span class="cm-variable">atomic_try_cmpxchg_acquire</span>(<span class="cm-operator">&amp;</span><span class="cm-variable">lock</span><span class="cm-operator">-&gt;</span><span class="cm-variable">val</span>, <span class="cm-number">0</span>, <span class="cm-variable">_Q_LOCKED_VAL</span>)))</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">return</span>;</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 2. 设置pending位，表示"我在排队"</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">atomic_or</span>(<span class="cm-operator">&amp;</span><span class="cm-variable">lock</span><span class="cm-operator">-&gt;</span><span class="cm-variable">val</span>, <span class="cm-variable">_Q_PENDING_VAL</span>);</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-comment">// 3. 自旋等待</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">for</span> (;;) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">val</span> <span class="cm-operator">&amp;</span> <span class="cm-variable">_Q_LOCKED_VAL</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-comment">// 锁被持有，继续等待</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">cpu_relax</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  } <span class="cm-keyword">else</span> {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-comment">// 锁可用，尝试获取</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span> (<span class="cm-variable">atomic_try_cmpxchg</span>(<span class="cm-operator">&amp;</span><span class="cm-variable">lock</span><span class="cm-operator">-&gt;</span><span class="cm-variable">val</span>, <span class="cm-operator">&amp;</span><span class="cm-variable">old</span>, <span class="cm-variable">_Q_LOCKED_VAL</span>))</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">break</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 484px;"></div><div class="CodeMirror-gutters" style="display: none; height: 484px;"></div></div></div></pre><p>&nbsp;</p><p>&nbsp;</p><hr /><p><strong><span>Q7: 什么是读写锁的“饥饿”问题？如何设计避免线程饥饿的公平读写锁？</span></strong></p><p><strong><span>饥饿问题</span></strong><span>：</span></p><ul><li><p><strong><span>读饥饿</span></strong><span>：</span></p><ul><li><p><span>若读操作频繁，写操作的优先级低，可能导致写线程长期得不到执行。</span></p></li></ul></li><li><p><strong><span>写饥饿</span></strong><span>：</span></p><ul><li><p><span>若写操作优先，可能导致读线程“饿死”，尤其在高并发读取场景下。</span></p></li></ul></li></ul><p>&nbsp;</p><p><strong><span>避免饥饿的公平读写锁设计</span></strong><span>：</span></p><ul><li><p><strong><span>写优先策略</span></strong><span>:</span></p><ul><li><p><span>控制写优先级，将写操作插入队列的前端。</span></p></li><li><p><span>具体实现：允许当前完成的锁释放后写优先运行（通过队列和调度实现）。</span></p></li></ul></li><li><p><strong><span>使用单队列管理所有请求</span></strong><span>:</span></p><ul><li><p><span>通过 FIFO 队列（如 Java 的 </span><code>ReentrantReadWriteLock</code><span>）跟踪每个线程的锁请求，确保线程按照入队顺序公平获取锁。</span></p></li></ul></li><li><p><strong><span>可调优先级</span></strong><span>:</span></p><ul><li><p><span>某些锁实现可以动态调整优先级。读线程超过某个数量时降低写优先级。</span></p></li></ul></li></ul><p><strong><span>操作系统中的实际应用</span></strong><span>：</span></p><ul><li><p><span>Linux 文件系统的 </span><strong><span>rw_semaphore</span></strong><span> 实现读写锁，用于读线程与写线程的公平调度。</span></p></li></ul><p>&nbsp;</p><p>&nbsp;</p><hr /><h2 id='分布式锁一致性paxosraft'><span>分布式锁一致性、Paxos、Raft</span></h2><p><strong><span>Q8: 分布式锁的实现中为什么要保证多副本写一致性？如果网络分区这种极端情况发生，如何继续保证锁的一致性？</span></strong></p><p>&nbsp;</p><p><strong><span>多副本写一致性的意义</span></strong><span>：</span></p><p><span>分布式锁需要保证强一致性，如果多副本状态不一致，可能导致以下问题：</span></p><ul><li><p><strong><span>锁丢失</span></strong><span>：某副本认为锁已释放，导致数据出现竞态条件。</span></p></li><li><p><strong><span>双重加锁</span></strong><span>：两个线程可能同时获取相同资源的锁，破坏系统一致性。</span></p></li></ul><p>&nbsp;</p><p><strong><span>一致性模型的选择</span></strong><span>：</span></p><p><span>常用的一致性模型：Etcd、ZooKeeper。</span></p><p><span>最终一致性：如 Dynamo-based 系统，在特定场景下可能引入不一致风险。</span></p><p>&nbsp;</p><p><strong><span>保证锁的一致性方法</span></strong><span>:</span></p><ul><li><p><span>分布式环境下通常使用 </span><strong><span>Paxos</span></strong><span> 或 </span><strong><span>Raft 共识算法</span></strong><span> 选举主节点，实现对写操作强一致性保证。</span></p></li></ul><p>&nbsp;</p><blockquote><p><span>Q: 什么是分布式共识？</span></p><p><span>A: 在一个由多个节点组成的分布式系统中，共识算法需要确保：(1) </span><strong><span>一致性</span></strong><span>：所有非故障节点最终就某个值达成一致 (2) </span><strong><span>终止性</span></strong><span>：算法最终能产生结果 (3) </span><strong><span>合法性</span></strong><span>：输出的值必须是某个节点提议的值</span></p></blockquote><h3 id='paxos-算法详解'><strong><span>Paxos 算法详解</span></strong></h3><h4 id='基本角色'><span>基本角色: </span></h4><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="PYTHON"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="python"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">PaxosRole</span>:</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">PROPOSER</span> <span class="cm-operator">=</span> <span class="cm-number">1</span> &nbsp; <span class="cm-comment"># 提议者：发起提案</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">ACCEPTOR</span> <span class="cm-operator">=</span> <span class="cm-number">2</span> &nbsp; <span class="cm-comment"># 接受者：投票决定是否接受提案</span></span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">LEARNER</span> &nbsp;<span class="cm-operator">=</span> <span class="cm-number">3</span> &nbsp; <span class="cm-comment"># 学习者：学习被选定的值</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 92px;"></div><div class="CodeMirror-gutters" style="display: none; height: 92px;"></div></div></div></pre><h4 id='核心流程两阶段提交'><span>核心流程：两阶段提交</span></h4><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="SHELL" style="break-inside: unset;"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="shell"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">第一阶段：准备阶段（Prepare Phase）</span></pre></div><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">检查是否有更高优先级的谈判在进行,获取历史信息（之前谈过什么合同）,获得多数派的<span class="cm-string">"参与承诺"</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">┌─────────┐ &nbsp;  ┌─────────┐ &nbsp;  ┌─────────┐</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">│Proposer │ &nbsp;  │Acceptor1│ &nbsp;  │Acceptor2│</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">└────┬────┘ &nbsp;  └────┬────┘ &nbsp;  └────┬────┘</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │  Prepare(n)  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │─────────────&gt;│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │  Promise(n,  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │  prev_n, &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │  prev_v) &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │&lt;─────────────│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │  Prepare(n)  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │────────────────────────────&gt;│</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │  Promise(n,  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │  prev_n, &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │  prev_v) &nbsp; &nbsp; │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │&lt;────────────────────────────│</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; └──────────────┴──────────────┘</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span cm-text="" cm-zwsp="">
+</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">第二阶段：接受阶段（Accept Phase）,正式签约</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │  Accept(n, v)│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │─────────────&gt;│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │  Accepted &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │&lt;─────────────│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │  Accept(n, v)│ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │────────────────────────────&gt;│</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │  Accepted &nbsp;  │</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │&lt;────────────────────────────│</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  │</span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; └──────────────┴──────────────┘</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 853px;"></div><div class="CodeMirror-gutters" style="display: none; height: 853px;"></div></div></div></pre><p>&nbsp;</p><h3 id='raft算法详解'><span>Raft算法详解</span></h3><p><span>Raft 将共识问题分解为三个子问题：（1）</span><strong><span>领导者选举</span></strong><span>：选出一个Leader  （2）</span><strong><span>日志复制</span></strong><span>：Leader复制日志到其他节点 （3）</span><strong><span>安全性</span></strong><span>：确保系统一致性</span></p><p><span>Raft 通过五个规则保证安全性：</span></p><ul><li><p><strong><span>选举限制</span></strong><span>：只有拥有最新日志的节点才能成为Leader</span></p></li><li><p><strong><span>提交规则</span></strong><span>：Leader只能提交当前Term的日志</span></p></li><li><p><strong><span>状态机安全</span></strong><span>：如果日志条目在某个索引位置被提交，那么所有更高索引的位置都包含相同的条目</span></p></li><li><p><strong><span>领导者完整性</span></strong><span>：选举出的Leader包含所有已提交的日志</span></p></li><li><p><strong><span>只追加</span></strong><span>：Leader从不删除或覆盖日志</span></p></li></ul><p>&nbsp;</p><p><strong><span>网络分区时的一致性方案</span></strong><span>：</span></p><p><strong><span>脑裂问题</span></strong><span>：在分布式锁网络分区时，不同分区可能产生多个活动主节点（Leader），导致多个线程之间的锁失效。</span></p><p><strong><span>解决方案</span></strong><span>：</span></p><ul><li><p><strong><span>ZooKeeper</span></strong><span>：利用会话超时机制，主节点无法发送心跳时自动降级为从节点。</span></p></li><li><p><strong><span>Redis Redlock 分布式锁</span></strong><span>：</span></p><ul><li><p><span>Redlock 需要在大多数节点（如 3/5 个副本）获得锁才能认为锁定成功。</span></p></li><li><p><span>超时策略允许锁自动释放，防止死锁。</span></p></li></ul></li><li><p><span>Quorum 模型：保持多数派仲裁，无多数派的网络分区会停止服务以避免冲突。</span></p></li></ul><p>&nbsp;</p><hr /><h2 id='mcs锁和clh锁'><span>MCS锁和CLH锁</span></h2><p><strong><span>Q9: 请比较 MCS 锁和 CLH 锁，分别适用于什么场景？操作系统中的应用是什么？</span></strong></p><ul><li><p><strong><span>MCS 锁</span></strong><span>：</span></p><ul><li><p><span>名称来源于 Mellor-Crummey 和 Scott。</span></p></li><li><p><span>它是基于队列的自旋锁，每个线程会在本地维护一个节点，轮询等待前一个节点释放锁，从而减少总线和缓存冲突。</span></p></li></ul></li><li><p><strong><span>CLH 锁</span></strong><span>：</span></p><ul><li><p><span>名称来源于 Craig、Landin 和 Hagersten。</span></p></li><li><p><span>基于链表的自旋锁，每个线程轮询其“前驱节点”的状态来判断是否可以获取锁。</span></p></li></ul></li></ul><figure class='table-figure'><table><thead><tr><th><span>特性</span></th><th><span>MCS 锁</span></th><th><span>CLH 锁</span></th></tr></thead><tbody><tr><td><span>队列结构</span></td><td><span>显式队列节点</span></td><td><span>隐式队列</span></td></tr><tr><td><span>锁状态存储</span></td><td><span>本地变量</span></td><td><span>前驱节点变量</span></td></tr><tr><td><span>CPU 缓存一致性优化</span></td><td><span>是</span></td><td><span>否</span></td></tr><tr><td><span>高并发支持</span></td><td><span>高</span></td><td><span>高</span></td></tr><tr><td><span>空间复杂度</span></td><td><span>O(n)（每个线程独立变量）</span></td><td><span>O(1)（节点少）</span></td></tr></tbody></table></figure><p><strong><span>适用场景</span></strong><span>：</span></p><ul><li><p><strong><span>MCS 锁</span></strong><span>：</span></p><ul><li><p><span>适用于多核高并发竞争场景，因其减少了缓存一致性流量，避免了伪共享。</span></p></li></ul></li><li><p><strong><span>CLH 锁</span></strong><span>：</span></p><ul><li><p><span>用于锁竞争较低、线程数量备份较少的场景。</span></p></li><li><p>&nbsp;</p></li></ul></li></ul><p><strong><span>操作系统中的应用</span></strong><span>：</span></p><ul><li><p><strong><span>Linux Ticket Locks</span></strong><span>：</span></p><ul><li><p><span>在 Linux 自旋锁中，类似于 MCS 锁的实现，用于高性能场景。</span></p></li></ul></li><li><p><strong><span>Windows NR 中断锁机制</span></strong><span>：</span></p><ul><li><p><span>MS Windows 的内核可基于 CLH 锁优化线程调度和资源共享。</span></p></li></ul></li></ul><p>&nbsp;</p><hr /><h2 id='rdma分布式锁'><span>RDMA分布式锁</span></h2><p><strong><span>Q10: 在 RDMA 环境中，如何实现高效的分布式锁？能够简述其实现原理和挑战吗？</span></strong></p><ul><li><p><strong><span>RDMA 特性</span></strong><span>：</span></p><ul><li><p><span>RDMA 允许节点直接访问远程内存，而无需操作系统介入（如上下文切换、系统调用中断等），提供极低延迟和高带宽的通信能力。</span></p></li><li><p><span>在 RDMA 下，可以通过以下方式实现分布式锁：</span></p><ul><li><p><strong><span>基于 CAS（Compare-And-Swap）原语</span></strong><span>：利用远程节点内存的原子操作实现锁竞争。</span></p></li><li><p><strong><span>利用一侧加锁、另一侧轮询</span></strong><span>：通过远程内存（像状态标志）控制多方的锁获取。</span></p></li></ul></li></ul></li></ul><p><strong><span>常见实现模式</span></strong><span>:</span></p><ol><li><p><strong><span>Centralized Lock Server（集中式锁服务）</span></strong><span>：</span></p><ul><li><p><span>由一个锁服务器维护锁状态，所有客户端通过 RDMA 读取和更新锁。</span></p></li><li><p><span>实现：</span></p><ul><li><p><span>锁状态存储在锁服务器的内存中。</span></p></li><li><p><span>客户端通过 RDMA </span><code>COMPARE_AND_WRITE</code><span> 操作远程修改锁状态。</span></p></li></ul></li><li><p><span>优点：</span></p><ul><li><p><span>逻辑简单。</span></p></li><li><p><span>高性能（RDMA 的低延迟）。</span></p></li></ul></li><li><p><span>缺点：</span></p><ul><li><p><span>单点瓶颈（可能导致锁服务器负载过大）。</span></p></li></ul></li></ul></li><li><p><strong><span>Distributed Ownership（分布式所有权）</span></strong><span>：</span></p><ul><li><p><span>将锁分布在多台机器上，每个锁由单个节点初始化。</span></p></li><li><p><span>实现：</span></p><ul><li><p><span>每台服务器维护一部分锁状态。</span></p></li><li><p><span>客户端通过 RDMA 请求对应锁所在节点尝试锁获取。</span></p></li></ul></li><li><p><span>优点：</span></p><ul><li><p><span>锁状态分散，减少了集中瓶颈。</span></p></li></ul></li><li><p><span>缺点：</span></p><ul><li><p><span>锁的分布管理增加了复杂性。</span></p></li></ul></li></ul></li></ol><p>&nbsp;</p><p><strong><span>RDMA 实现分布式锁的挑战</span></strong><span>:</span></p><ul><li><p><strong><span>一致性保证（Consistency Guarantee）</span></strong><span>：</span></p><ul><li><p><span>由于远程内存不能直接执行复杂逻辑，锁状态的原子更新需要特别注意。</span></p></li><li><p><span>可通过硬件支持的原子操作（e.g. </span><code>COMPARE_AND_SWAP</code><span>）解决。</span></p></li></ul></li><li><p><strong><span>网络分区</span></strong><span>：</span></p><ul><li><p><span>若某节点故障或者网络分区，如何处理锁状态（比如锁丢失或锁悬挂问题）是一个挑战。</span></p></li><li><p><span>解决方法：结合分布式共识算法（如 Raft）处理故障恢复。</span></p></li></ul></li><li><p><strong><span>资源管理瓶颈</span></strong><span>：</span></p><ul><li><p><span>RDMA 的 </span><code>QP（Queue Pair）</code><span> 数量有限（每对节点间 RDMA 连接需要一个 QP）。</span></p></li></ul></li></ul><p>&nbsp;</p><p>&nbsp;</p><hr /><h2 id='rdma锁的比较'><span>RDMA锁的比较</span></h2><p><strong><span>Q11: 请描述两种基于 RDMA 的锁实现：基于原子性操作的（e.g., CAS）锁与基于队列锁的分布式锁各自的优缺点？</span></strong></p><p><span>在 RDMA 中，分布式锁实现主要分为两类：</span><strong><span>基于原子操作（CAS-based Lock）</span><span>*</span><em><span>和</span><span>*</span></em><span>基于队列锁（Queue-based Lock）</span></strong><span>。</span></p><p><strong><span>基于原子操作的锁（CAS-based Lock）</span></strong><span>:</span></p><ul><li><p><strong><span>实现原理</span></strong><span>:</span></p><ul><li><p><span>使用 RDMA 提供的原子性操作（如 </span><strong><span>Compare-And-Swap</span></strong><span> 或 </span><strong><span>Fetch-And-Add</span></strong><span>），让客户端直接尝试修改远程锁状态。</span></p></li><li><p><code>lock</code><span> 请求示意伪代码：</span></p></li><li><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="C"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// 伪代码</span></span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">remote_mem</span> <span class="cm-operator">=</span> <span class="cm-variable">lock_server_memory</span>;</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">while</span> (<span class="cm-variable">CAS</span>(<span class="cm-variable">remote_mem</span>, <span class="cm-variable">UNLOCKED</span>, <span class="cm-variable">LOCKED</span>) <span class="cm-operator">==</span> <span class="cm-atom">false</span>) {</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">sleep</span>();</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-comment">// 获取锁逻辑</span></span></pre></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 138px;"></div><div class="CodeMirror-gutters" style="display: none; height: 138px;"></div></div></div></pre></li></ul><ul><li><p><span>锁状态通常存储在远程节点的共享内存中（例如单独的 </span><code>uint64_t lock_flag</code><span>）。</span></p></li></ul></li></ul><ul><li><p><strong><span>优点</span></strong><span>:</span></p><ol><li><p><span>简单高效：直接通过硬件原语完成加锁。</span></p></li><li><p><span>低延迟：RDMA 的硬件特性消除了操作系统中断和网络栈的延迟。</span></p></li></ol></li><li><p><strong><span>缺点</span></strong><span>:</span></p><ol><li><p><strong><span>高冲突场景性能下降</span></strong><span>：当多个客户端争抢同一个锁时，可能导致网络风暴（大量 CAS 操作请求）。</span></p></li><li><p><strong><span>饥饿问题</span></strong><span>：由于没有队列管理，某些进程可能永远得不到锁。</span></p></li></ol></li></ul><p>&nbsp;</p><p><strong><span>基于队列的锁（Queue-based Lock）</span></strong></p><p><strong><span>实现原理</span></strong><span>:</span></p><ul><li><p><span>基于 RDMA 每个连接的队列特性，构造每个客户端间的多个队列节点。</span></p></li><li><p><span>锁争用按照 FIFO 顺序排队，只有队列头可执行锁操作，类似于 MCS/CLH 锁。</span></p></li></ul><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="C"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">enqueue_on_remote</span>(<span class="cm-variable">queue_addr</span>);</span></pre></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">wait_until_head</span>(<span class="cm-variable">queue</span>); <span class="cm-comment">// 等待到自己是队头</span></span></pre><div class="" style="position: relative;"><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable">acquire_lock</span>();</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 69px;"></div><div class="CodeMirror-gutters" style="display: none; height: 69px;"></div></div></div></pre><ul><li><p><strong><span>优点</span></strong><span>:</span></p><ol><li><p><strong><span>消除饥饿</span></strong><span>：基于队列的调度公平性，确保所有请求都能被服务。</span></p></li><li><p><strong><span>网络吞吐高效</span></strong><span>：避免了高频冲突场景下 CAS 请求的性能下降。</span></p></li></ol></li><li><p><strong><span>缺点</span></strong><span>:</span></p><ol><li><p><span>实现复杂：需要管理多个队列节点。</span></p></li><li><p><span>延迟可能较高：由于排队机制，锁分发速度比 CAS 略慢。</span></p></li></ol></li></ul><p>&nbsp;</p><hr /><h2 id='rdma-aba'><span>RDMA ABA</span></h2><p><span>Q12: 在 RDMA 中如何避免锁等待队列的翻转问题（如 ABA 问题）？实际应用中有哪些解决方案？</span></p><p><strong><span>锁队列翻转问题（ABA 问题）</span></strong><span>:</span></p><ul><li><p><span>ABA 问题描述：</span></p><ul><li><p><span>线程 A 取锁时，发现锁状态从 “X -&gt; Y -&gt; X” 变化，看似没有变化，但实际上锁状态已被另一个线程改变。</span></p></li></ul></li><li><p><span>在 RDMA 中，由于队列和锁操作基于远程内存，ABA 问题可能导致线程轮询锁状态时产生错误锁定。</span></p></li></ul><p><strong><span>常见解决方案</span></strong><span>:</span></p><ol><li><p><strong><span>加版本号解决 ABA 问题</span></strong><span>:</span></p><ul><li><p><span>在锁变量中引入版本号。</span></p></li><li><p><span>例如，锁存储为 64 位，低 32 位存储锁标志，高 32 位存储版本号：</span></p><ul><li><pre class="md-fences md-end-block ty-contain-cm modeLoaded" spellcheck="false" lang="C"><div class="CodeMirror cm-s-inner cm-s-null-scroll CodeMirror-wrap" lang="c"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 9.52344px; left: 8px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" tabindex="0" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;"></textarea></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 0px; margin-bottom: 0px; border-right-width: 0px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-code" role="presentation"><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: 0px; width: 0px;"></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-variable-3">uint64_t</span> <span class="cm-variable">lock_word</span> <span class="cm-operator">=</span> (<span class="cm-variable">version</span> <span class="cm-operator">&lt;&lt;</span> <span class="cm-number">32</span>) <span class="cm-operator">|</span> <span class="cm-variable">flag</span>;</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 0px; width: 1px; border-bottom: 0px solid transparent; top: 23px;"></div><div class="CodeMirror-gutters" style="display: none; height: 23px;"></div></div></div></pre><p><span>修改操作（CAS）时，必须同时更新版本号。</span></p></li></ul></li><li><p><strong><span>基于乐观锁和 CAS 双重检查</span></strong><span>:</span></p><ul><li><p><span>在获取锁之前，线程先读取一次检查锁状态，并在执行操作时再次验证状态是否一致。</span></p></li><li><p><span>这种方式结合了乐观锁和 CAS 的优点。</span></p></li></ul></li><li><p><strong><span>使用内存屏障提高一致性</span></strong><span>:</span></p><ul><li><p><span>在锁状态更新之后，确保发布内存屏障（Memory Barrier），阻止重排序错误。</span></p></li></ul></li><li><blockquote><p><strong><span>使用分布式事务或 Raft 算法</span></strong><span>: 如果锁的状态较复杂，可以整合分布式事务或共识算法（如 Raft）更新队列状态。</span></p></blockquote></li></ul></li></ol><p>&nbsp;</p><hr /><h2 id='rdma分布式锁设计因素'><span>RDMA分布式锁设计因素</span></h2><p><strong><span>Q13: 假设你需要在 RDMA 环境下实现一个高并发的分布式锁服务，你会如何衡量性能？有哪些关键指标？</span></strong></p><ul><li><p><strong><span>加锁延迟（Lock Latency）</span></strong><span>：</span></p><ul><li><p><span>衡量从发起加锁请求到成功获取锁的总时间。</span></p></li></ul></li><li><p><strong><span>吞吐量（Lock Throughput）</span></strong><span>：</span></p><ul><li><p><span>一个时间段内系统能够处理的锁操作总数。</span></p></li></ul></li><li><p><strong><span>冲突率（Contention Rate）</span></strong><span>：</span></p><ul><li><p><span>测量并发锁请求之间的冲突比例（如 CAS 失败或队列等待）。</span></p></li></ul></li><li><p><strong><span>RDMA 消息大小</span></strong><span>：</span></p><ul><li><p><span>包括锁请求消息和返回成功/失败响应的字节大小，消息小会减少网络开销。</span></p></li></ul></li><li><p><strong><span>公平性（Fairness）</span></strong><span>：</span></p><ul><li><p><span>衡量锁是否存在饥饿问题（FIFO 或优先级处理是否公平）。</span></p></li></ul></li></ul></div></div>
+</body>
+</html>
