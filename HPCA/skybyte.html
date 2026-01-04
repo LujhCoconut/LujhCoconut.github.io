@@ -1,0 +1,620 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'><style type='text/css'>html {overflow-x: initial !important;}</style>
+<style type='text/css'  id="style-base">:root { --bg-color: #ffffff; --text-color: #333333; --select-text-bg-color: #B5D6FC; --select-text-font-color: auto; --monospace: "Lucida Console",Consolas,"Courier",monospace; --title-bar-height: 20px; }
+.mac-os-11 { --title-bar-height: 28px; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, "Segoe UI Emoji", "SF Pro", sans-serif; -webkit-font-smoothing: antialiased; }
+h1, h2, h3, h4, h5 { white-space: pre-wrap; }
+body { margin: 0px; padding: 0px; height: auto; inset: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 36px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p *, #write.first-line-indent svg * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; position: relative; }
+#write svg h1, #write svg h2, #write svg h3, #write svg h4, #write svg h5, #write svg h6, #write svg p { position: static; white-space: nowrap; overflow: visible; }
+foreignobject { overflow: visible; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+li p { orphans: 1; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+thead, tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-fences-adv-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+svg { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li blockquote { margin: 1rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; border-color: transparent !important; padding-top: 0px !important; padding-bottom: 0px !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+  #write > p:nth-child(1) { margin-top: 0px; }
+  .typora-export-show-outline .typora-export-sidebar { display: none; }
+  figure { overflow-x: visible; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+.MathJax_ref { fill: currentcolor; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.reversefootnote { font-family: ui-monospace, sans-serif; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.6; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+.md-expand mark .md-meta { opacity: 0.3 !important; }
+mark .md-meta { color: rgb(0, 0, 0); }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+.md-diagram-panel .messageText { stroke: none !important; }
+.md-diagram-panel .start-state { fill: var(--node-fill); }
+.md-diagram-panel .edgeLabel rect { opacity: 1 !important; }
+.md-fences.md-fences-math { font-size: 1em; }
+.md-fences-advanced:not(.md-focus) { padding: 0px; white-space: nowrap; border: 0px; }
+.md-fences-advanced:not(.md-focus) { background: inherit; }
+.mermaid-svg { margin: auto; }
+.typora-export-show-outline .typora-export-content { max-width: 1440px; margin: auto; display: flex; flex-direction: row; }
+.typora-export-sidebar { width: 300px; font-size: 0.8rem; margin-top: 80px; margin-right: 18px; }
+.typora-export-show-outline #write { --webkit-flex: 2; flex: 2 1 0%; }
+.typora-export-sidebar .outline-content { position: fixed; top: 0px; max-height: 100%; overflow: hidden auto; padding-bottom: 30px; padding-top: 60px; width: 300px; }
+@media screen and (max-width: 1024px) {
+  .typora-export-sidebar, .typora-export-sidebar .outline-content { width: 240px; }
+}
+@media screen and (max-width: 800px) {
+  .typora-export-sidebar { display: none; }
+}
+.outline-content li, .outline-content ul { margin-left: 0px; margin-right: 0px; padding-left: 0px; padding-right: 0px; list-style: none; overflow-wrap: anywhere; }
+.outline-content ul { margin-top: 0px; margin-bottom: 0px; }
+.outline-content strong { font-weight: 400; }
+.outline-expander { width: 1rem; height: 1.42857rem; position: relative; display: table-cell; vertical-align: middle; cursor: pointer; padding-left: 4px; }
+.outline-expander::before { content: ""; position: relative; font-family: Ionicons; display: inline-block; font-size: 8px; vertical-align: middle; }
+.outline-item { padding-top: 3px; padding-bottom: 3px; cursor: pointer; }
+.outline-expander:hover::before { content: ""; }
+.outline-h1 > .outline-item { padding-left: 0px; }
+.outline-h2 > .outline-item { padding-left: 1em; }
+.outline-h3 > .outline-item { padding-left: 2em; }
+.outline-h4 > .outline-item { padding-left: 3em; }
+.outline-h5 > .outline-item { padding-left: 4em; }
+.outline-h6 > .outline-item { padding-left: 5em; }
+.outline-label { cursor: pointer; display: table-cell; vertical-align: middle; text-decoration: none; color: inherit; }
+.outline-label:hover { text-decoration: underline; }
+.outline-item:hover { border-color: rgb(245, 245, 245); background-color: var(--item-hover-bg-color); }
+.outline-item:hover { margin-left: -28px; margin-right: -28px; border-left: 28px solid transparent; border-right: 28px solid transparent; }
+.outline-item-single .outline-expander::before, .outline-item-single .outline-expander:hover::before { display: none; }
+.outline-item-open > .outline-item > .outline-expander::before { content: ""; }
+.outline-children { display: none; }
+.info-panel-tab-wrapper { display: none; }
+.outline-item-open > .outline-children { display: block; }
+.typora-export .outline-item { padding-top: 1px; padding-bottom: 1px; }
+.typora-export .outline-item:hover { margin-right: -8px; border-right: 8px solid transparent; }
+.typora-export .outline-expander::before { content: "+"; font-family: inherit; top: -1px; }
+.typora-export .outline-expander:hover::before, .typora-export .outline-item-open > .outline-item > .outline-expander::before { content: "−"; }
+.typora-export-collapse-outline .outline-children { display: none; }
+.typora-export-collapse-outline .outline-item-open > .outline-children, .typora-export-no-collapse-outline .outline-children { display: block; }
+.typora-export-no-collapse-outline .outline-expander::before { content: "" !important; }
+.typora-export-show-outline .outline-item-active > .outline-item .outline-label { font-weight: 700; }
+.md-inline-math-container mjx-container { zoom: 0.95; }
+mjx-container { break-inside: avoid; }
+.md-alert.md-alert-note { border-left-color: rgb(9, 105, 218); }
+.md-alert.md-alert-important { border-left-color: rgb(130, 80, 223); }
+.md-alert.md-alert-warning { border-left-color: rgb(154, 103, 0); }
+.md-alert.md-alert-tip { border-left-color: rgb(31, 136, 61); }
+.md-alert.md-alert-caution { border-left-color: rgb(207, 34, 46); }
+.md-alert { padding: 0px 1em; margin-bottom: 16px; color: inherit; border-left: 0.25em solid rgb(0, 0, 0); }
+.md-alert-text-note { color: rgb(9, 105, 218); }
+.md-alert-text-important { color: rgb(130, 80, 223); }
+.md-alert-text-warning { color: rgb(154, 103, 0); }
+.md-alert-text-tip { color: rgb(31, 136, 61); }
+.md-alert-text-caution { color: rgb(207, 34, 46); }
+.md-alert-text { font-size: 0.9rem; font-weight: 700; }
+.md-alert-text svg { fill: currentcolor; position: relative; top: 0.125em; margin-right: 1ch; overflow: visible; }
+.md-alert-text-container::after { content: attr(data-text); text-transform: capitalize; pointer-events: none; margin-right: 1ch; }
+
+</style>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&amp;subset=latin,latin-ext' type='text/css' />
+<style type='text/css'  id="style-theme_css">:root {
+    --side-bar-bg-color: #fafafa;
+    --control-text-color: #777;
+}
+
+@include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+
+/* open-sans-regular - latin-ext_latin */
+  /* open-sans-italic - latin-ext_latin */
+    /* open-sans-700 - latin-ext_latin */
+    /* open-sans-700italic - latin-ext_latin */
+  html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: "Open Sans","Clear Sans", "Helvetica Neue", Helvetica, Arial, 'Segoe UI Emoji', 'SF Pro', sans-serif;
+    color: rgb(51, 51, 51);
+    line-height: 1.6;
+}
+
+#write {
+    max-width: 860px;
+  	margin: 0 auto;
+  	padding: 30px;
+    padding-bottom: 100px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1024px;
+	}
+}
+
+@media only screen and (min-width: 1800px) {
+	#write {
+		max-width: 1200px;
+	}
+}
+
+#write > ul:first-child,
+#write > ol:first-child{
+    margin-top: 30px;
+}
+
+a {
+    color: #4183C4;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+h1 tt,
+h1 code {
+    font-size: inherit;
+}
+h2 tt,
+h2 code {
+    font-size: inherit;
+}
+h3 tt,
+h3 code {
+    font-size: inherit;
+}
+h4 tt,
+h4 code {
+    font-size: inherit;
+}
+h5 tt,
+h5 code {
+    font-size: inherit;
+}
+h6 tt,
+h6 code {
+    font-size: inherit;
+}
+h1 {
+    font-size: 2.25em;
+    line-height: 1.2;
+    border-bottom: 1px solid #eee;
+}
+h2 {
+    font-size: 1.75em;
+    line-height: 1.225;
+    border-bottom: 1px solid #eee;
+}
+
+/*@media print {
+    .typora-export h1,
+    .typora-export h2 {
+        border-bottom: none;
+        padding-bottom: initial;
+    }
+
+    .typora-export h1::after,
+    .typora-export h2::after {
+        content: "";
+        display: block;
+        height: 100px;
+        margin-top: -96px;
+        border-top: 1px solid #eee;
+    }
+}*/
+
+h3 {
+    font-size: 1.5em;
+    line-height: 1.43;
+}
+h4 {
+    font-size: 1.25em;
+}
+h5 {
+    font-size: 1em;
+}
+h6 {
+   font-size: 1em;
+    color: #777;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table{
+    margin: 0.8em 0;
+}
+li>ol,
+li>ul {
+    margin: 0 0;
+}
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+li p.first {
+    display: inline-block;
+}
+ul,
+ol {
+    padding-left: 30px;
+}
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 0 15px;
+    color: #777777;
+}
+blockquote blockquote {
+    padding-right: 0;
+}
+table {
+    padding: 0;
+    word-break: initial;
+}
+table tr {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+table tr:nth-child(2n),
+thead {
+    background-color: #f8f8f8;
+}
+table th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    margin: 0;
+    padding: 6px 13px;
+}
+table td {
+    border: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 6px 13px;
+}
+table th:first-child,
+table td:first-child {
+    margin-top: 0;
+}
+table th:last-child,
+table td:last-child {
+    margin-bottom: 0;
+}
+
+.CodeMirror-lines {
+    padding-left: 4px;
+}
+
+.code-tooltip {
+    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
+    border-top: 1px solid #eef2f2;
+}
+
+.md-fences,
+code,
+tt {
+    border: 1px solid #e7eaed;
+    background-color: #f8f8f8;
+    border-radius: 3px;
+    padding: 0;
+    padding: 2px 4px 0px 4px;
+    font-size: 0.9em;
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.md-fences {
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding-top: 8px;
+    padding-bottom: 6px;
+}
+
+
+.md-task-list-item > input {
+  margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+    pre {
+        page-break-inside: avoid;
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+	background-color: #f8f8f8;
+}
+#write pre.md-meta-block {
+	padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block>.code-tooltip {
+	bottom: .375rem;
+}
+
+.md-mathjax-midline {
+    background: #fafafa;
+}
+
+#write>h3.md-focus:before{
+	left: -1.5625rem;
+	top: .375rem;
+}
+#write>h4.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h5.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+#write>h6.md-focus:before{
+	left: -1.5625rem;
+	top: .285714286rem;
+}
+.md-image>.md-meta {
+    /*border: 1px solid #ddd;*/
+    border-radius: 3px;
+    padding: 2px 0px 0px 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: #a7a7a7;
+    opacity: 1;
+}
+
+.md-toc { 
+    margin-top:20px;
+    padding-bottom:20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+/** focus mode */
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header, .context-menu, .megamenu-content, footer{
+    font-family: "Segoe UI", "Arial", sans-serif;
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state{
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: #fafafa;
+    background-color: var(--side-bar-bg-color);
+}
+
+.mac-os #write{
+    caret-color: AccentColor;
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+/*.html-for-mac {
+    --item-hover-bg-color: #E6F0FE;
+}*/
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu .divider {
+    border-color: #e5e5e5;
+    opacity: 0.4;
+}
+
+.ty-preferences .window-content {
+    background-color: #fafafa;
+}
+
+.ty-preferences .nav-group-item.active {
+    color: white;
+    background: #999;
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: #f5f8fa;
+    background-image: linear-gradient( 180deg , hsla(0, 0%, 100%, 0.8), hsla(0, 0%, 100%, 0)); 
+}
+</style>
+<style type='text/css'  id="style-lp">ol, ul {padding-left: 40px}</style>
+
+<title>skybyte</title>
+</head>
+<body class='typora-export os-windows'><div class='typora-export-content'>
+<div id='write'  class=''><h1 id='skybyte-hpca25'><span>SkyByte (HPCA&#39;25)</span></h1><p><span>【Title】SkyByte: Architecting an Efficient Memory-Semantic  CXL-based SSD with OS and Hardware Co-design</span></p><p>&nbsp;</p><h2 id='comments'><span>Comments</span></h2><p><span>把SSD当memory来用，就可以用上一系列内存层次结构的优化方法（tiered / near-far）。这篇论文有蛮多地方值得学习的。但实在是多了太多的硬件。我投 ASPLOS 的时候这么搞，甚至比他硬件动的少，还有reviewer问我投资回报率ROI，说一句太复杂了 weak reject ? 当然，可能还是审稿人比较偏sys，不是很arch。</span></p><p>&nbsp;</p><h2 id='abstract--introduction'><span>Abstract &amp; Introduction</span></h2><p><span>SSD比DRAM便宜，CXL-SSD把SSD当内存来用就能以低成本进行内存扩展。但是:</span></p><ul><li><p><span>Flash访问延迟较高</span></p></li><li><p><span>有out-of-place updates和GC等不可预测事件</span></p></li></ul><p><span>然后host processor(s) 就会 长时间 stall。另一个点是:</span></p><ul><li><p><span>受物理限制，闪存芯片仍只能以页粒度进行访问</span></p></li></ul><p><span>那就会有I/O放大，恶化端到端数据访问性能。</span></p><p>&nbsp;</p><h3 id='上下文切换'><span>上下文切换</span></h3><p><span>这里有一个点，上下文切换。为了隐藏内存访问延迟，处理器通常采用乱序执行，并且并行发出多个内存访问请求，期望在等待内存响应的同时，有足够的非内存指令填充流水线。主机DRAM上，这是有效的；但CXL-SSD不行。核心原因还是延迟太高，除非有超大指令窗口来找到更多可以填充的指令。</span></p><p><span>在现代OS中，当某个线程需要等待一次耗时较长的 SSD 访问时，OS可以执行上下文切换，调度其他线程来利用 CPU 核心。然而，在 CXL-SSD 场景下，这也是不行的。OS无法截获通过 CXL 协议由主机 CPU 直接向 SSD 设备发出的 load/store 内存指令。</span></p><blockquote><p><span>ld/st 语义，OS </span><strong><span>完全不知道</span></strong><span> 这次访问“要去 SSD”，也无法感知 “这是一次慢操作”</span></p></blockquote><p>&nbsp;</p><p><span>SkyByte提出了一种主机操作系统与 SSD 控制器之间的协同设计方法。</span></p><ul><li><p><span>为了</span><strong><span>精确跟踪因 SSD 长访问延迟而被阻塞的具体指令</span></strong><span>，SkyByte 对 </span><strong><span>CXL.mem 响应数据包格式</span></strong><span>进行了扩展，在其中编码了一种</span><strong><span>长延迟提示（long-delay hint）</span></strong><span>。当 SSD 控制器检测到某个 CXL 内存请求将遭受较长访问延迟时，会在响应中向主机返回该提示信息。</span></p></li><li><p><span>主机端的 CXL 控制器随后将这一提示</span><strong><span>以由相应 load/store 指令触发的硬件异常（hardware exception）</span></strong><span>形式</span><strong><span>传递给 CPU 核心</span></strong></p></li><li><p><span>接着，异常处理程序会调用主机操作系统的调度器，执行一次</span><strong><span>上下文切换</span></strong><span>。SkyByte 支持多种策略，用于决定</span><strong><span>何时触发上下文切换</span></strong><span>以及</span><strong><span>下一步应调度哪个线程执行</span></strong></p></li></ul><p>&nbsp;</p><h3 id='ssd-dram管理'><span>SSD DRAM管理</span></h3><p><span>由于现代 SSD 主要被设计为块设备，其 DRAM 缓存通常以页粒度进行组织。然而，对于 CXL-SSD，大多数工作负载在超过 75% 的页面中，仅访问了不足 40% 的缓存行（cacheline）。在 SSD 的 DRAM 中缓存整个页面会</span><strong><span>显著浪费宝贵的 SSD DRAM 空间</span></strong><span> </span></p><p><span>此外，这种做法还会导致严重的写放大（write amplification）：即便一个页面中只有少量缓存行被修改（dirty），仍然需要将整个页面回写到闪存芯片。</span></p><p>&nbsp;</p><p><span>SkyByte将 SSD 内部的 DRAM 组织为缓存行粒度的写日志（write log）与页粒度的读写缓存（read-write cache）两部分。</span></p><ul><li><p><span>写请求首先在缓存行粒度的写日志中得到服务，而无需事先从闪存芯片中读取原始页面。读写缓存则以页粒度进行管理，以充分利用空间局部性，因为在访问闪存芯片时，本身就需要读取整个页面。</span></p></li><li><p><span>当写日志被写满时，SkyByte 会在后台执行</span><strong><span>日志压缩（log compaction）</span></strong><span>，将写入同一页面的数据进行合并。该机制能够显著减少对闪存芯片的写入流量，并有效缓解闪存写入所带来的长延迟。</span></p></li><li><p><span>对于读请求，SkyByte 会并行查找写日志和读写缓存，并通过一种高效的基于哈希的索引机制来定位最新的数据</span></p></li></ul><p>&nbsp;</p><p><span>由于 SSD 内部 DRAM 容量受限，SkyByte通过</span><strong><span>在后台启用自适应页面迁移（adaptive page migration）</span></strong><span>，利用主机内存来扩展 SSD DRAM 的有效容量。SkyByte 会识别 SSD DRAM 中的</span><strong><span>热点页面（hot pages）</span></strong><span>，并以</span><strong><span>透明的方式</span></strong><span>执行页面迁移（详见第 III-C 节）。</span></p><p><span>在页面迁移过程中，SkyByte 通过采用先前研究中提出的、位于 host bridge 中的 promotion buffer 来确保数据一致性。当页面迁移完成后，将更新相应的页表项（page table entry），以反映新的内存地址。</span></p><p>&nbsp;</p><h3 id='实现'><span>实现</span></h3><p><span>用MacSim（进行了扩展，以支持在每个 CPU 核心上模拟上下文切换 + 修改了其内存接口以模拟 </span><strong><span>CXL.mem</span></strong><span> 协议） + SimpleSSD 实现了 CXL-SSD 模拟器，在上面搞了个 SkyByte。CXL 内存请求被发送至 SSD 端，该 SSD 内部包含写日志（write log）、数据缓存（data cache）以及闪存转换层（Flash Translation Layer，FTL）。</span></p><p><span>最后用Pin重放指令轨迹，说是平均性能提升达到 6.11 倍，并将对闪存芯片的 I/O 写放大平均降低 23.08 倍。</span></p><p>&nbsp;</p><p>&nbsp;</p><h2 id='background'><span>Background</span></h2><h3 id='cxl-and-memory-expansion'><span>CXL and Memory Expansion</span></h3><ul><li><p><strong><span>CXL.io</span></strong><span> 在功能上等价于传统的 PCIe 协议；</span><strong><span>CXL.cache</span></strong><span> 用于在互连设备之间实现缓存一致性；</span><strong><span>CXL.mem</span></strong><span> 则允许主机 CPU 通过 </span><strong><span>load/store 指令</span></strong><span>直接访问设备的本地内存。</span></p></li></ul><ul><li><p><strong><span>Type-1</span></strong><span> 设备仅启用 CXL.cache，用于以缓存一致的方式访问主机内存，例如网络接口卡（NIC）等专用加速器；</span><strong><span>Type-2</span></strong><span> 设备同时启用 CXL.cache 和 CXL.mem，使设备与主机 CPU 能够在缓存一致的前提下相互访问彼此的内存；</span><strong><span>Type-3</span></strong><span> 设备仅启用 CXL.mem，允许主机 CPU 以</span><strong><span>缓存行粒度</span></strong><span>访问并缓存设备内存，例如内存扩展器（memory expander）设备</span></p></li></ul><p><span>本文将 SSD 作为一种 </span><strong><span>Type-3 CXL 设备</span></strong><span>使用。整个 SSD 被暴露为</span><strong><span>由主机管理的设备内存（host-managed device memory，HDM）</span></strong><span>，其内存地址空间被映射到主机的</span><strong><span>物理内存空间</span></strong><span>中。借助 </span><strong><span>CXL.mem 协议</span></strong><span>，主机 CPU 能够通过</span><strong><span>可缓存的 load/store 指令</span></strong><span>直接访问 SSD。</span></p><p>&nbsp;</p><h3 id='architecture-of-cxl-based-ssds'><span>Architecture of CXL-based SSDs</span></h3><p><span>构建 CXL-SSD 的一种简单方法是，通过对 SSD 控制器进行少量修改，将 CXL 直接连接到字节可寻址的 SSD。</span></p><p><span>图 1(a) 展示了采用 CXL-SSD 时的内存映射方式。在系统启动过程中，主机会对 CXL-SSD 进行初始化，将其逻辑内存空间映射到系统的物理内存地址空间中。CXL 内存（或主机管理的设备内存，HDM）以普通物理内存的形式暴露给操作系统，支持 CPU 缓存，并可通过 load/store 指令进行访问。</span></p><p><img src="./skybyte_f1.png" style="zoom:50%;" /></p><p><span>然而，与主机 DRAM 相比，CXL-SSD 具有不同的性能特性。因此，整个系统内存可以被视为一种异构内存系统。主机操作系统仍然负责内存放置策略以及虚拟地址到物理地址的映射管理，而 SSD 内部的闪存转换层（Flash Translation Layer，FTL）则负责将逻辑页地址（Logical Page Address，LPA）转换为闪存中的物理页地址（Physical Page Address，PPA）。</span></p><p><span>图 1(b) 展示了 CXL-SSD 的体系结构。当应用程序对 CXL-SSD 发起一次内存访问时，CXL home agent 会通过 CXL.mem 协议发送一条消息。随后，SSD 控制器对该消息进行解析，提取其中的内存请求，并通过与 SSD 固件协同来完成数据服务。为支持缓存行（64B）粒度的访问，控制器利用 SSD 内部的 DRAM 缓存来响应来自主机的内存请求。SSD 的 DRAM 会以页粒度缓存来自闪存芯片的数据。</span></p><p>&nbsp;</p><h3 id='challenges-of-using-cxl-based-ssds'><span>Challenges of Using CXL-Based SSDs</span></h3><p><span>尽管 CXL 技术为具有内存语义的 SSD 的广泛应用提供了良好的机遇，但现有的操作系统和处理器体系结构并不能在开箱即用的情况下很好地支持 CXL-SSD。简单地将 CXL-SSD 视为传统的 DRAM 内存，会导致严重的性能下降。</span></p><p>&nbsp;</p><ul><li><p><strong><span>长尾延迟</span></strong></p><ul><li><p><span>这些工作负载在 CXL-SSD 上的性能仍然比在 DRAM 上差 1.5–31.4 倍</span></p></li><li><p><span>超过 90% 的 CXL-SSD 内存请求延迟低于 200 ns （得益于 SSD 内部的 DRAM 缓存）</span></p></li><li><p><span>尾部延迟可高达数百微秒。当触发垃圾回收时，访问延迟还会进一步升高，例如达到数毫秒级</span></p></li></ul></li></ul><p><img src="./skybyte_f2.png" style="zoom:50%;" /></p><p><img src="./skybyte_f3.png" style="zoom:67%;" /></p><ul><li><p><span>过度的处理器流水线stall</span></p></li></ul><p><img src="./skybyte_f4.png" style="zoom:50%;" /></p><p><span>CXL-SSD 的长尾延迟会引发严重的处理器流水线停顿，从而导致性能下降以及 CPU 和 SSD 带宽利用率不足。</span></p><ul><li><p><span>使用 DRAM 时 62.9%–98.7% 的周期受内存限制相比，使用 CXL-SSD 时内存受限周期的比例上升至 77%–99.8% (参考 Intel 的 Vtune 性能分析工具)</span></p></li><li><p><span>多加CPU能提升带宽利用率，但更多的CPU会stall，加剧计算资源的浪费</span></p><ul><li><p><span>处理器无法维持足够数量 inflight memory requests， 以充分利用 SSD 所能提供的带宽。</span></p></li><li><blockquote><p><span>例如，要在单个 DDR5 通道上实现 32 GB/s 的带宽，且每个 64B 缓存行的访问延迟为 70 ns，至少需要同时发出 70 × 32 / 64 = 35 个并发内存请求。而在假设使用 PCIe 5.0 x4 接口、带宽为 16 GB/s 的情况下，要隐藏闪存的访问延迟（以当前最先进的 Z-NAND 为例，其读取延迟约为 3 μs），则需要同时维持 3000 × 16 / 64 = 750 个内存请求，这对于当今的处理器而言是不可行的。</span></p></blockquote></li></ul></li></ul><p>&nbsp;</p><ul><li><p><span>CXL 接口与闪存之间的访问粒度不匹配</span></p></li></ul><p><span>为隐藏较长的闪存访问延迟，现代 SSD 通常采用以闪存页粒度进行管理的内部 DRAM 缓存，这是由于其主要面向块设备接口设计，且闪存芯片仅支持页粒度访问。因此，由于 CXL 接口采用 64B 缓存行粒度，而闪存内存采用 4KB 甚至更大的页粒度，二者之间的访问粒度不匹配，使得现有的 SSD DRAM 缓存设计在 CXL-SSD 场景下的效果显著下降。</span></p><p>&nbsp;</p><p><img src="./skybyte_f5.png" style="zoom:50%;" /></p><p><img src="./skybyte_f6.png" style="zoom:50%;" /></p><p><span>我们在图 5 和图 6 中量化分析了不同工作负载的内存访问模式。</span></p><ul><li><p><span>许多工作负载在超过 75% 的页面中，仅访问了不足 40% 的缓存行</span></p><ul><li><p><span>当在 SSD 的 DRAM 中缓存整个页面时，由于页面中大多数缓存行并未被访问，DRAM 容量被严重浪费</span></p></li><li><p><span>其次，即使一个页面中只有少量缓存行被写入，仍然需要将整个页面写回闪存，从而导致写放大，并缩短 SSD 的使用寿命。</span></p></li></ul></li><li><p><span>除非 SSD 内部的 DRAM 足够大，能够容纳工作负载的全部工作集，否则单纯扩大 SSD DRAM 容量所带来的性能收益十分有限。</span></p></li></ul><p>&nbsp;</p><h2 id='design'><span>Design</span></h2><p><span>SkyByte 由三个主要组成部分构成：</span></p><ul><li><p><span>基于长 SSD 访问延迟检测的协同上下文切换机制（第 III-A 节）</span></p></li><li><p><span>SSD 控制器中采用的缓存行粒度、日志结构化的内存组织，用于弥合字节粒度的 CXL 接口与页粒度的闪存芯片之间的差距（第 III-B 节）</span></p></li><li><p><span>一种自适应页面迁移机制，通过以透明且一致的方式将热点页面迁移至主机内存，从而利用主机内存扩展 SSD DRAM 的有效容量（第 III-C 节）</span></p></li></ul><p>&nbsp;</p><h3 id='coordinated-context-switch-mechanism'><span>Coordinated Context Switch Mechanism</span></h3><p><span>当某个线程因 SSD DRAM 缓存未命中而遭遇一次较长的 CXL-SSD 访问时，可以通过切换到另一个线程来更有效地利用 CPU 核心。然而，SSD 设备并不了解主机 CPU 的微体系结构状态，例如是哪个核心触发了内存访问未命中，以及该 load 操作是否为推测执行。同样，主机 CPU 也无法判断一次内存访问在 SSD DRAM 缓存中是命中还是未命中。因此，无论是 CPU 还是 SSD，都无法单独决定是否应触发上下文切换。</span></p><p>&nbsp;</p><p><span>为在发生长时间 CXL-SSD 内存停顿时实现上下文切换，我们在主机操作系统与 SSD 控制器之间引入了协同机制。要实现这种协同上下文切换，需要解决以下三个问题：</span></p><p><span>（1）何时触发上下文切换；</span></p><p><span>（2）如何执行上下文切换；</span></p><p><span>（3）采用何种上下文切换策略。</span></p><p><span>为此，我们首先介绍协同上下文切换的具体流程，随后讨论用于决定触发上下文切换时机以及选择下一个执行线程的策略，最后说明实现该机制所需的硬件与软件修改。</span></p><p>&nbsp;</p><h4 id='上下文切换流程'><span>上下文切换流程</span></h4><p><span>图 7 以主机 CPU 发起的一次 CXL 内存读操作为例，展示了上下文切换的具体流程。由于写请求会被缓存在写日志中（见第 III-B 节），因此写操作无需触发上下文切换。</span></p><p><img src="./skybyte_f7.png" style="zoom:80%;" /></p><p><em><strong><span>C1</span></strong><span> 发送带有跟踪信息的 CXL.mem 请求消息</span></em></p><p><span>主机 CPU 向 SSD 控制器发送一条 CXL.mem 的 MemRd 读请求消息。默认情况下，CPU 会维护其微体系结构状态，包括共享 LLC 中的未命中状态处理寄存器（miss status handling registers，MSHR），用于跟踪是哪一个核心中的哪条 load/store 指令正在等待该内存请求的响应。MSHR 还负责执行内存访问合并，因此当来自不同核心的多条指令请求同一缓存行时，一个内存请求可能会关联到多条指令。CXL 控制器通过 CXL.mem 的 MemRd 消息，跟踪主机 CPU 与 SSD 之间的所有内存请求（见图 8）。</span></p><p><img src="./skybyte_f8.png" style="zoom:67%;" /></p><p><em><strong><span>C2</span></strong><span> 通过扩展的 CXL.mem 无数据响应消息发送上下文切换请求</span></em></p><p><span>当发生 SSD DRAM 缓存未命中时，SSD 控制器开始从闪存中读取相应的页面。此时，SSD 控制器会根据对访问延迟的估计结果，决定是否向主机操作系统发送上下文切换请求（具体策略将在后文的上下文切换触发策略中讨论）。SSD 控制器通过一条无数据响应（No Data Response，NDR）消息来发送该上下文切换请求。NDR 消息是一种从从设备到主设备（slave-to-master，S2M）的消息类型，用于表示某个 CXL 内存请求已经完成，但不向主机 CPU 返回任何数据。如图 8 所示，每一条 CXL.mem 事务的 MemRd 消息都包含一个 16 位的标记（tag）。SkyByte 对 NDR 消息规范进行了扩展，引入了一种新的操作码，称为 SkyByte-Delay。该操作码用于指示对应的 MemRd 请求将遭遇较长的访问延迟，例如由于发生了 SSD DRAM 缓存未命中。</span></p><p>&nbsp;</p><p><em><strong><span>C3</span></strong><span> 通过硬件异常触发上下文切换</span></em></p><p><span>SkyByte 利用现代 CPU 中已有的硬件异常机制，精确地定位应当触发上下文切换的具体内存访问指令以及对应的处理器核心。SkyByte 定义了一种新的异常类型，称为 SkyByte 长延迟异常（SkyByte Long Delay Exception）</span></p><p><span>当主机 CPU 从 CXL 控制器接收到带有 SkyByte-Delay 操作码的 NDR 消息后，会查找该内存请求在 LLC 中对应的 MSHR 表项，并沿着上层缓存层级（例如 L1 和 L2 缓存）向上遍历，找出所有正在等待该内存响应且尚未提交的内存访问指令。当其中任意一条指令进入提交（retire）阶段时，就会在相应的处理器核心上触发 SkyByte 长延迟异常，这一过程类似于 load/store 指令触发缺页异常（Page Fault Exception）。</span></p><blockquote><p><span>SSD 先告诉 CPU：这次内存访问会很慢；</span></p><p><span>CPU 先记住“是哪条指令在等”；</span></p><p><span>等这条指令快要真正执行完成时，CPU 人为制造一个“异常”，</span></p><p><span>借机把当前线程换下去。</span></p></blockquote><blockquote><p><span>MSHR记录的是: &quot;针对某一个 cache line 的一次未完成内存请求，目前系统里有哪些指令、哪些核心在等它，以及这个请求的状态是什么。&quot;</span></p><p><span>Cache Line Address (PA) / Request Type / Coherence / Permission / Waiting Instructions</span></p></blockquote><p><span>在发生上下文切换时，该指令的地址会被保存下来，从而保证当线程再次被调度运行时，能够从该指令处继续执行，并重新向 CXL-SSD 发起相同的内存访问请求。</span></p><p><span>这种设计能够消除误触发的上下文切换，即某条 load/store 指令触发了上下文切换，但随后该指令又被回滚（squash）的问题；并且无需额外的硬件开销，因为现代处理器本身就会将异常的处理延迟到指令提交（retire）阶段。例如，投机执行的 load/store 指令以及硬件预取操作，即使发生了 SSD DRAM 缓存未命中，也不会触发任何异常。</span></p><p><span>SkyByte 在 x86 的中断描述符表（IDT）中为 SkyByte 长延迟异常注册了一个专用的异常处理程序。该异常处理程序会调用一种具备 CXL 感知能力的线程调度策略，以决定接下来应当执行哪个线程，并完成相应的上下文切换，具体细节将在后文中讨论。</span></p><p>&nbsp;</p><p><em><strong><span>C4</span></strong><span> 原线程的恢复执行</span></em></p><p><span>当原线程再次被调度运行时，它将从之前触发 SkyByte 长延迟异常的那条未命中的内存访问指令处继续执行，并重新向 CXL-SSD 发起该内存访问请求。如果该指令在重新执行时命中了 SSD DRAM 缓存，数据将通过 CXL.mem 的 MemData 响应返回。</span></p><p><span>当一个线程发生上下文切换时，其所有尚未完成的 load/store 指令都会被回滚（squash）。然而，缓存层级中的 MSHR 是否被释放则取决于具体实现。在长闪存访问延迟的情况下，这可能导致不同线程之间出现严重的 MSHR 竞争。极端情况下，一个线程访问多个 4KB 页面中的 64 条缓存行，并且这些访问全部在 SSD DRAM 缓存中未命中，那么这些请求将在数微秒内至少占用 64 个 MSHR，很容易耗尽系统中所有的 MSHR 资源。</span></p><p><span>为了解决这一问题，SkyByte 在对应指令被回滚时立即释放其占用的 MSHR 表项。由于这一做法同样有利于主机 DRAM 的访问，SkyByte 默认启用该机制。当某个线程在被上下文切换走一段时间后再次被调度执行时，如果所请求的页面已经因为缓存冲突而被逐出 SSD DRAM 缓存，则可能再次触发 SSD DRAM 缓存未命中。不过这一问题并不严重，因为 SSD DRAM 缓存采用的 LRU 逐出策略在大多数情况下可以避免请求页面过早被替换。例如，在我们对多种数据密集型应用的实验中，并未观察到原线程在恢复执行并再次访问该页面之前，该页面就已经被逐出的情况。</span></p><blockquote><p><span>如果线程因为 CXL-SSD 太慢被切走，但它占着的 MSHR 不释放，就会把整个 CPU 的内存系统“卡死”；SkyByte 通过在指令回滚时立刻释放 MSHR 来避免这个问题。</span></p><p><span>squash = 指令被作废 / 回滚</span></p><p><span>当发生上下文切换时：线程 A 的所有还没完成的 load/store,都会被 CPU 强制作废, 它们会：(1) 从 ROB 里删除; (2) 不再执行; (3) 将来重新发射。</span></p><p><span>SkyByte “只要指令被 squash，就立刻释放它占用的 MSHR”</span></p></blockquote><p>&nbsp;</p><p>&nbsp;</p><h4 id='上下文切换触发策略'><span>上下文切换触发策略</span></h4><p><span>当发生 SSD DRAM 缓存未命中时，SSD 控制器可以选择触发一次上下文切换，或者让主机 CPU 继续等待数据返回。直观来看，如果上下文切换的开销小于访问 CXL-SSD 所需的延迟，那么通过上下文切换来隐藏这段延迟是有利的。</span></p><p><span>SkyByte 采用一种基于阈值的策略来决定是否触发上下文切换。SSD 控制器会估计从闪存芯片中读取所请求页面的访问延迟；如果该估计延迟超过预设阈值，则触发一次上下文切换。该阈值可以根据主机的上下文切换开销进行调整。算法 1 给出了基于阈值的上下文切换触发策略的具体流程。</span></p><p><img src="./skybyte_algor1.png"></p><p><span>具体而言，SkyByte 首先查询 FTL 映射表以获得对应的物理页地址（PPA），从而确定该请求将被发送到哪个闪存通道（第 2–3 行）。随后，它通过查询相应闪存控制器的队列状态（即队列中已有的请求数量）来粗略估计闪存访问延迟（第 4 行）。通常，同一通道队列中的请求会按照 FIFO 顺序被服务，因此，类似于以往研究中的方法，SkyByte 通过累加队列中所有请求的延迟来较为准确地估计当前请求的等待时间（第 5–6 行）。如果估计的延迟超过阈值，SkyByte 就会触发一次上下文切换（第 7 行）。</span></p><p><span>如果某个请求被正在进行的 GC 操作阻塞，SkyByte 会立即触发上下文切换，因为 GC 通常持续数毫秒。虽然 GC 会阻塞队列中请求的发出，但其影响已经通过查询闪存通道队列状态被纳入到延迟预测算法中。</span></p><p><span>为了设置合适的阈值，可以测量主机 CPU 上下文切换的平均开销。图 9 展示了在不同阈值设置下，若干代表性工作负载的性能表现。由于本文所用 SSD 的闪存页读取延迟（默认 3 μs）大于常规上下文切换开销（在表 II 所示硬件平台上测得约为 2 μs），因此我们将阈值设置为 2 μs。在实际系统中，该阈值可以根据不同 CPU 和系统配置通过实验进行调优，SkyByte 也允许主机操作系统对其进行配置。</span></p><p><img src="./skybyte_f9.png" style="zoom:50%;" /></p><blockquote><p><span>看起来这个实验没有做的必要？？ </span></p></blockquote><p>&nbsp;</p><h4 id='面向-cxl-的上下文切换的操作系统支持'><span>面向 CXL 的上下文切换的操作系统支持</span></h4><p><span>为了支持“长延迟异常”，我们在 x86 的中断描述符表（IDT）中安装了一个新的异常处理程序。当该异常被触发时，异常处理程序会让当前线程主动让出其占用的 CPU 资源。随后，系统调度器根据预先定义的调度策略决定接下来运行的线程。被让出的线程会重新加入操作系统的运行队列，从而在之后再次被调度执行。</span></p><p><span>我们在 Linux 操作系统中评估了三种调度策略，用于选择下一个可运行的线程：(1) 轮转（Round-Robin，RR）策略，线程依次轮流执行；(2) 随机（Random）策略，随机选择一个线程执行；(3) 完全公平调度器（Complete Fairness Scheduler，CFS）策略，该策略优先选择已获得执行时间最少的线程，以保证各线程公平地共享 CPU 时间片。</span></p><p><span>我们对这三种策略的性能进行了评估，并按照图 4 中对“受限类型”的定义，在图 10 中给出了执行时间的分解结果。实验表明，这三种调度策略的性能表现非常接近。这是因为所有线程主要都受限于内存 I/O，而这三种策略都能为各线程提供相同或相近的机会向 SSD 发起内存请求，即使这些线程在被调度后很快又会因为等待闪存访问而触发上下文切换。多线程并行发起请求能够提升 SSD 带宽的利用率</span></p><p><img src="./skybyte_f10.png" style="zoom:80%;" /></p><p><span>对于某些工作负载（例如 srad），上下文切换会占据相当一部分时间，因为所有线程在等待闪存访问时都会反复触发上下文切换。在少数工作负载中，CFS 策略的性能可能略差，这是因为它需要严格保证线程之间的公平性，可能会导致操作系统再次选择那些刚刚因为 SkyByte 触发的上下文切换而被调度出去的线程。不过，这种影响对整体端到端性能来说是微不足道的。鉴于 CFS 已经成为现代操作系统（如 Linux）中的标准调度策略，SkyByte 默认采用 CFS。</span></p><p>&nbsp;</p><h3 id='cxl-aware-ssd-dram-management'><span>CXL-Aware SSD DRAM Management</span></h3><p><em><span>&quot;SkyByte 通过“二级哈希表按需扩容”的方式，在保证快速查找的同时，大幅降低了写日志索引的内存开销。&quot;</span></em></p><p><span>如第 II-C 节所讨论的，由于 CXL 接口与闪存之间在访问粒度上的不匹配，SSD 内部的 DRAM 缓存往往难以高效工作。一次缓存行级别的访问请求可能会触发一次闪存页级别的访问，这不仅会带来较长的访问延迟，还会浪费宝贵的 SSD DRAM 容量。为了解决这些问题，我们对 SSD DRAM 的组织方式进行了重新设计，如图 11 所示。</span></p><p><img src="./skybyte_f11.png" style="zoom:67%;" /></p><p><span>SkyByte 在 SSD 中引入了一种以缓存行为粒度的双缓冲写日志，用于缓冲来自主机的所有写请求。所有缓存行级别的写操作都会被直接追加到日志中，在关键路径上无需访问闪存，真正写入闪存的过程会在之后延迟进行。与页粒度缓存相比，这种写日志机制具有两方面的优势：</span></p><ul><li><p><span>在写访问局部性较差时，更细粒度的缓存方式可以节省宝贵的 SSD DRAM 空间</span></p></li><li><p><span>写日志提供了更大的写合并窗口，有助于将多个小写请求合并，从而显著减少写入闪存的流量</span></p></li></ul><p><span>此外，SkyByte 维护了一张日志索引表，用于在处理读请求或进行日志压缩（log compaction）时，快速定位写日志数组中对应的最新数据。</span></p><p><span>对于读操作而言，一旦发生 SSD DRAM 缓存未命中并且不可避免地需要访问闪存，就必须从闪存中读取整个页面。因此，SkyByte 使用一个以页为粒度管理的读写数据缓存来缓存从闪存中取回的页面，以利用数据的空间局部性。</span></p><p><span>为了保持写日志与数据缓存之间的数据一致性，SkyByte 在处理写请求时同时更新写日志和数据缓存；在处理读请求时，则优先检查写日志中的最新数据。为提升访问性能，SkyByte 在写入时对写日志和数据缓存进行并行更新，在读取时对二者进行并行查找。</span></p><p><span>写日志和数据缓存均使用逻辑地址进行索引，因为它们构建在闪存转换层（Flash Translation Layer，FTL）之上。下面将分别对这两个结构进行详细说明。</span></p><h4 id='write-log-structure'><span>Write log structure</span></h4><p><span>图 12 展示了写日志的结构。该日志通过一个带有头指针和尾指针的环形缓冲区，记录所有被写入的 64B 缓存行。为了实现对日志项的快速查找，SkyByte 采用哈希表进行索引，因为哈希表能够提供摊还 O(1) 的查找时间复杂度。然而，普通的哈希表会将日志项随机分布，这会导致在日志压缩（compaction）过程中，需要多次查找才能找到同一页面内的所有缓存行。</span></p><p><img src="./skybyte_f12.png" style="zoom:67%;" /></p><p><span>为了解决这一问题，SkyByte 将索引结构设计为两级。第一级使用以逻辑页地址（LPA）为索引的哈希表。每一个有效的一级表项都会指向一个二级哈希表，用于记录该逻辑闪存页中所有已写入缓存行的信息及其在页内的偏移位置。对应缓存行在写日志中的位置（日志偏移）则记录在二级哈希表中。通过遍历相应的二级哈希表，系统可以方便地找出同一页面中所有被更新过的缓存行。</span></p><p><span>在一级哈希表中，每个表项存储一个 8B 的逻辑页地址（LPA）以及一个 8B 的二级哈希表指针，对应一个逻辑页。由于每个页面大小为 4KB，包含 64 条缓存行，因此只需要 6 位即可表示页内偏移。二级哈希表中的每个表项大小为 4B，其中包括 6 位的页内偏移和 26 位的日志偏移。</span></p><p><span>以一个 64MB 的写日志为例，其包含 100 万个日志项。如果在最坏情况下为每个页面都预先分配包含 64 个表项的完整二级哈希表，那么当每个页面只有一条被修改的缓存行时，索引结构将需要高达 272MB 的内存开销。为降低内存占用，SkyByte 并不会一开始就分配完整大小的二级哈希表，而是采用按需扩展的方式，先分配小尺寸的二级哈希表，并在需要时进行扩容。</span></p><p><span>具体而言，SkyByte 为每个二级哈希表初始分配 4 个表项（共 16B），当表的负载因子超过某一阈值（默认 0.75）时，就将表的大小扩大一倍。通过这种动态扩展机制，即使在最坏情况下，索引结构的内存占用也最多约为 32MB（包括 100 万个 16B 的一级哈希表项以及 100 万个 16B 的二级哈希表）。在我们基于真实工作负载轨迹的实验中（见第 VI 节），写日志索引结构的平均内存占用仅为 5.6MB。</span></p><p>&nbsp;</p><h4 id='read-operation'><span>Read operation</span></h4><p><span>图 11 展示了读写操作流程。当一个读请求到达时，SSD 控制器会</span><strong><span>并行</span></strong><span>查找数据缓存（data cache）和写日志（write log）。</span></p><ul><li><p><span>如果请求的数据已经缓存在数据缓存中，则直接从数据缓存中读取并返回给主机（R1）。</span></p></li><li><p><span>如果数据缓存未命中，但写日志中保存了该 cache line，则 SkyByte 从写日志中取回该数据（R2）。</span></p></li><li><p><span>如果写日志和数据缓存都未命中，则需要从闪存中读取</span><strong><span>整个页</span></strong><span>并加载到数据缓存中，然后返回目标 cache line（R3）。</span></p></li></ul><p><span>由于写日志中可能包含最近被更新过的 cache line，需要保证缓存中的页数据是最新的。因此，在将页从闪存加载到数据缓存之后，SkyByte 会查询一级哈希表；如果发现该页在写日志中有对应条目，就会遍历其二级哈希表，将写日志中该页对应的所有 cache line 合并（merge）到刚加载的数据缓存页中。</span></p><p>&nbsp;</p><h4 id='write-operation'><span>Write operation</span></h4><p><span>在写请求到达时，SkyByte 会将被写入的缓存行直接追加到写日志的尾部（W1）。如果数据缓存中已经包含对应的页面，则会并行地对数据缓存进行更新（W2）。同时，SkyByte 还会更新索引表（W3）。如果该写操作更新的是写日志中已经存在的某条缓存行，SkyByte 会将索引表中的对应项更新为指向最新的日志偏移位置。</span></p><p>&nbsp;</p><h4 id='write-log-compaction'><span>Write log compaction</span></h4><p><span>图 13 展示了 SkyByte 执行写日志压缩（log compaction）的过程。为了减少对闪存芯片的写入流量，SkyByte 会在日志压缩阶段对写操作进行合并。由于索引表中只跟踪最新的数据，旧的更新在压缩过程中会被丢弃。</span></p><p><img src="./skybyte_f13.png" style="zoom:80%;" /></p><p><span>SkyByte 首先扫描一级哈希表，找出所有需要被回写到闪存的页面（L1）。对于每一个页面，如果该页面已经缓存在数据缓存中，则直接将缓存中的页面写回闪存（L2）；如果该页面不在缓存中，则先从闪存中将缺失的页面读入到一个合并缓冲区（L3）。接着，SkyByte 遍历该页面在二级哈希表中对应的所有脏缓存行条目，并将这些缓存行与加载的页面进行合并（L4）。合并完成后的页面随后被写回闪存（L5）。</span></p><p><span>在执行闪存写入时，SkyByte 会在写缓冲区中对页面进行批量处理，并将写操作分散到多个通道上，以充分利用 SSD 的通道并行性。SkyByte 维护了一个双缓冲的写日志结构，以避免阻塞新的请求，并在后台执行日志压缩。当其中一个日志写满时，SkyByte 会触发日志压缩过程并切换到一个新的日志；在压缩过程中，新到达的写请求会按照正常的写流程写入新日志。对于读请求，需要同时在新旧两个日志中并行查找最新的数据。</span></p><p><span>由于后台日志压缩不处于内存请求服务的关键路径上，因此不会引入明显的性能开销，单次压缩的平均耗时约为 146 微秒。压缩完成后，SkyByte 会删除旧日志对应的索引表，并回收其占用的内存。</span></p><p>&nbsp;</p><h3 id='adaptive-page-migration'><span>Adaptive Page Migration</span></h3><p><em><span>“基本就是已有的机制”</span></em></p><p><span>由于 SSD 内部 DRAM 容量有限，SkyByte 利用主机内存来扩展 SSD 的 DRAM 缓存。SkyByte 设计了一种自适应的页面迁移机制，将被频繁访问的页面迁移到主机内存中。为了决定哪些页面需要迁移，SkyByte 采用了与已有研究 [7]、[8]、[14]、[19]、[35]、[48]、[61] 类似的策略：SSD 控制器会跟踪闪存页面的访问次数，并将访问次数超过某一阈值的页面选为迁移候选。</span></p><p><span>SkyByte 只迁移位于 SSD DRAM 缓存中的页面，因为这些页面包含了候选的热点数据。在选定迁移目标页面后，SSD 通过发送一个携带 SSD 页面地址的 PCIe MSI-X 中断来触发迁移过程。主机操作系统随后使用默认的伙伴分配器在主机 DRAM 中分配一个物理页面，并将页面内容拷贝到新的页面中。</span></p><p><span>在页面迁移过程中需要保证数据一致性。一种简单的方法是利用操作系统机制，在迁移前将正在迁移的页面在页表项（PTE）中标记为不存在，并修改缺页异常处理程序，在迁移完成后重新执行该请求。然而，这种方法会带来较高的性能开销。SkyByte 参考已有工作 [7]，在根复合体（root complex）中引入了一个提升旁路缓冲区（Promotion Look-aside Buffer，PLB）来跟踪迁移进度。</span></p><p><span>PLB 包含 64 个表项，每个表项大小为 24 字节，用于记录正在进行的迁移，包括源页面和目标页面的地址（各 8 字节）、一个表示缓存行是否已迁移的位图（8 字节），以及一个有效位。因此，当对正在迁移的页面发起读请求时，可以直接从 SSD DRAM 中提供数据；对于写请求，如果对应缓存行的迁移位已经被置位，则请求会被转发到主机 DRAM 中该缓存行的最新副本。</span></p><p><span>在数据迁移完成后，主机操作系统会修改页表项（PTE），将原虚拟地址映射到新的主机 DRAM 页面，并相应更新 TLB。随后，主机操作系统向 SSD 确认迁移完成，SSD 会将该页面从数据缓存中移除，并通过将对应索引项置为 NULL 来使写日志索引失效。</span></p><p><span>由于主机 DRAM 空间同样有限，SkyByte 还允许主机将页面回迁到 SSD 以释放空间。SkyByte 利用 Linux 中已有的页面回收策略 [3]，通过 active/inactive 链表 [6] 选择相对“冷”的页面进行驱逐。随后在 CXL 内存空间中分配一个新页面，并执行页面拷贝操作。主机操作系统会更新相应的页表项，使其指向 SSD 页面，并更新 TLB。</span></p><p>&nbsp;</p><p>&nbsp;</p><p><span>实验略过，但这篇文章做的实验非常多。</span></p></div></div>
+</body>
+</html>
