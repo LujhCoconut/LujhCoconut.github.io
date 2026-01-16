@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CSV ↔ JSON 转换器</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin: 20px; background:#f7f7f8; color:#111; }
+    .wrap { max-width:980px; margin:0 auto; }
+    textarea { width:100%; height:180px; font-family: monospace; padding:8px; box-sizing:border-box; }
+    .row { display:flex; gap:12px; margin-top:12px; align-items:center; flex-wrap:wrap; }
+    label { display:flex; gap:6px; align-items:center; }
+    button { padding:8px 12px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer; }
+    button.primary { background:#0366d6; color:#fff; border-color: #0356b6; }
+    .output { margin-top:12px; white-space:pre-wrap; background:#fff; padding:12px; border-radius:8px; border:1px solid #e1e4e8; min-height:140px; }
+    .controls { display:flex; gap:8px; flex-wrap:wrap; }
+    .small { font-size:90%; padding:6px 8px; }
+    .footer { margin-top:16px; color:#666; font-size:90%; }
+    .flex { flex:1; min-width:220px; }
+    input[type="file"] { display:inline-block; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h2>CSV ↔ JSON 转换器</h2>
+    <p>粘贴或上传 CSV（支持双引号转义字段）。勾选“有表头”将把每行转换为对象。</p>
+
+    <div>
+      <label>上传 CSV 文件 <input id="file" type="file" accept=".csv,text/csv" /></label>
+    </div>
+
+    <div class="row">
+      <div class="flex">
+        <textarea id="input" placeholder="在这里粘贴 CSV，或通过上方上传文件..."></textarea>
+      </div>
+
+      <div style="width:320px;">
+        <div style="display:flex;flex-direction:column; gap:8px;">
+          <label><input id="hasHeader" type="checkbox" checked /> 有表头（第一行作为属性名）</label>
+          <label>分隔符： <input id="delimiter" class="small" style="width:60px" value="," /></label>
+          <label>JSON 缩进： <input id="indent" class="small" style="width:60px" value="2" /></label>
+          <div class="controls">
+            <button id="toJson" class="primary">CSV → JSON</button>
+            <button id="toCsv">JSON → CSV</button>
+            <button id="download" class="small">下载 JSON</button>
+            <button id="copy" class="small">复制输出</button>
+            <button id="clear" class="small">清空</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h3>输出</h3>
+    <div id="output" class="output" contenteditable="false"></div>
+
+    <div class="footer">
+      建议文件小于 5MB。若需要更多功能（例如字段类型推断、批量转换、导出 CSV 时的转义策略），告诉我我可以帮你扩展。
+    </div>
+  </div>
+
+  <script>
+    // 简单但健壮的 CSV 解析（支持 quoted fields，包括内嵌双引号 "" 表示 "）
+    function parseCSV(text, delimiter = ',') {
+      const rows = [];
+      let cur = '', row = [], inQuotes = false;
+      for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        const next = text[i+1];
+        if (inQuotes) {
+          if (ch === '"' && next === '"') { // escaped quote
+            cur += '"'; i++; continue;
+          } else if (ch === '"') {
+            inQuotes = false;
+            continue;
+          } else {
+            cur += ch;
+            continue;
+          }
+        } else {
+          if (ch === '"') {
+            inQuotes = true;
+            continue;
+          }
+          if (ch === delimiter) {
+            row.push(cur);
+            cur = '';
+            continue;
+          }
+          if (ch === '\r') continue;
+          if (ch === '\n') {
+            row.push(cur);
+            rows.push(row);
+            row = [];
+            cur = '';
+            continue;
+          }
+          cur += ch;
+        }
+      }
+      // push last cell/row if exists
+      if (cur !== '' || row.length > 0) {
+        row.push(cur);
+        rows.push(row);
+      }
+      // remove possible trailing empty line
+      if (rows.length > 0 && rows[rows.length-1].length === 1 && rows[rows.length-1][0] === '') {
+        rows.pop();
+      }
+      return rows;
+    }
+
+    function csvToJson(text, hasHeader=true, delimiter=',') {
+      const rows = parseCSV(text, delimiter);
+      if (rows.length === 0) return [];
+      if (hasHeader) {
+        const headers = rows[0].map(h => h.trim());
+        const out = [];
+        for (let i = 1; i < rows.length; i++) {
+          const r = rows[i];
+          const obj = {};
+          for (let j = 0; j < headers.length; j++) {
+            obj[headers[j] || (`field${j+1}`)] = (j < r.length) ? r[j] : '';
+          }
+          out.push(obj);
+        }
+        return out;
+      } else {
+        // return array of arrays
+        return rows;
+      }
+    }
+
+    function jsonToCsv(json, delimiter=',') {
+      let rows = [];
+      if (!Array.isArray(json)) {
+        throw new Error('输入 JSON 必须为数组');
+      }
+      if (json.length === 0) return '';
+      if (typeof json[0] === 'object' && !Array.isArray(json[0])) {
+        // infer headers as union of keys (stable order by first occurrence)
+        const headers = [];
+        const seen = new Set();
+        json.forEach(obj => {
+          Object.keys(obj).forEach(k => { if (!seen.has(k)) { seen.add(k); headers.push(k); }});
+        });
+        rows.push(headers);
+        json.forEach(obj => {
+          rows.push(headers.map(h => obj[h] == null ? '' : String(obj[h])));
+        });
+      } else {
+        // array of arrays
+        rows = json;
+      }
+      // escape values
+      const esc = v => {
+        if (v == null) v = '';
+        v = String(v);
+        if (v.includes('"') || v.includes(delimiter) || v.includes('\n')) {
+          return '"' + v.replace(/"/g, '""') + '"';
+        }
+        return v;
+      };
+      return rows.map(r => r.map(esc).join(delimiter)).join('\n');
+    }
+
+    // UI
+    const input = document.getElementById('input');
+    const output = document.getElementById('output');
+    const fileElem = document.getElementById('file');
+    const hasHeaderElem = document.getElementById('hasHeader');
+    const delimiterElem = document.getElementById('delimiter');
+    const indentElem = document.getElementById('indent');
+
+    document.getElementById('toJson').addEventListener('click', () => {
+      const text = input.value.trim();
+      if (!text) { output.textContent = '// 无输入'; return; }
+      const delim = delimiterElem.value || ',';
+      try {
+        const result = csvToJson(text, hasHeaderElem.checked, delim);
+        const indent = Math.max(0, parseInt(indentElem.value) || 0);
+        output.textContent = JSON.stringify(result, null, indent);
+      } catch (e) {
+        output.textContent = '错误: ' + e.message;
+      }
+    });
+
+    document.getElementById('toCsv').addEventListener('click', () => {
+      const text = input.value.trim();
+      if (!text) { output.textContent = '// 无输入'; return; }
+      try {
+        const obj = JSON.parse(text);
+        const delim = delimiterElem.value || ',';
+        const csv = jsonToCsv(obj, delim);
+        output.textContent = csv;
+      } catch (e) {
+        output.textContent = 'JSON 解析错误: ' + e.message;
+      }
+    });
+
+    document.getElementById('copy').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(output.textContent);
+        alert('已复制到剪贴板');
+      } catch {
+        alert('复制失败，可能浏览器不支持。');
+      }
+    });
+
+    document.getElementById('clear').addEventListener('click', () => {
+      input.value = '';
+      output.textContent = '';
+    });
+
+    document.getElementById('download').addEventListener('click', () => {
+      const text = output.textContent;
+      if (!text) { alert('无输出可下载'); return; }
+      const blob = new Blob([text], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'data.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    fileElem.addEventListener('change', (ev) => {
+      const f = ev.target.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = () => { input.value = String(r.result); };
+      r.readAsText(f);
+    });
+
+    // drag-drop support
+    document.addEventListener('dragover', e => e.preventDefault());
+    document.addEventListener('drop', e => {
+      e.preventDefault();
+      if (e.dataTransfer.files && e.dataTransfer.files.length) {
+        const f = e.dataTransfer.files[0];
+        const reader = new FileReader();
+        reader.onload = () => input.value = String(reader.result);
+        reader.readAsText(f);
+      } else {
+        // drop text
+        const t = e.dataTransfer.getData('text/plain');
+        if (t) input.value = t;
+      }
+    });
+  </script>
+</body>
+</html>
