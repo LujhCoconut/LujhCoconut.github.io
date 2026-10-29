@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+	<title>Coconut's Homepage</title>
+	
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Xiaoying Riley at 3rd Wave Media">    
+	<!-- <link rel="shortcut icon" href="favicon.ico">  -->
+	
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+	
+	<!-- FontAwesome JS-->
+	<script defer src="assets/fontawesome/js/all.min.js"></script>
+	
+	<!-- Theme CSS -->  
+	<link id="theme-style" rel="stylesheet" href="assets/css/devresume.css">
+
+	<style>
+		#github svg {
+			transition: all 1s;
+			fill: #222;
+			color: #fff;
+			position: absolute;
+			top: 0;
+			right: 0;
+			border: 0;
+			width: 80px;
+			height: 80px;
+		}
+		#github:hover svg {
+			width: 160px;
+			height: 160px;
+		}
+
+		.colored-resume-degree {
+			color: #2c3e50;
+			font-weight: bold;
+			font-size: 1.2em;
+		}
+
+		.colored-resume-org {
+			color: #3498db;
+			font-style: italic;
+		}
+
+		.colored-resume-time {
+			color: #95a5a6;
+		}
+
+		 /* 论文标题样式 */
+		.paper-title {
+            color: #3498db;
+            font-weight: bold;
+        }
+		</style>
+
+</head> 
+
+<body>
+	<a id="github" href="https://github.com/LujhCoconut" target="_blank" title="Visit the open-source code on GitHub!">
+		<svg viewBox="0 0 250 250" aria-hidden="true">
+			<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+			<path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" class="octo-arm"></path>
+			<path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+		</svg>
+	</a>
+	<script src="../autoload.js"></script>
+	<div class="main-wrapper">
+		<div class="container px-3 px-lg-5">
+			<article class="resume-wrapper mx-auto theme-bg-light p-5 mb-5 my-5 shadow-lg">
+				
+				<div class="resume-header">
+					<div class="row align-items-center">
+						<div class="resume-title col-12 col-md-6 col-lg-8 col-xl-9">
+							<h2 class="resume-name mb-0 text-uppercase">Coconut</h2><h2 >Jiahao Lu (卢佳豪)<h2>
+							<a href="./index.html" style="display:inline-block;margin-top:6px;font-family:Consolas,monospace;font-size:13px;text-decoration:none;color:#24744c;">[ terminal mode ]</a>
+							<!-- <div class="resume-tagline mb-3 mb-md-0">M.S. Student of Xiamen University</div> -->
+						</div><!--//resume-title-->
+						<div class="resume-contact col-12 col-md-6 col-lg-4 col-xl-3">
+							<ul class="list-unstyled mb-0">
+								<!-- <li class="mb-2"><i class="fas fa-phone-square fa-fw fa-lg me-2 "></i><a class="resume-link" href="tel:#">0123 4567 890</a></li> -->
+								<li class="mb-2"><i class="fas fa-envelope-square fa-fw fa-lg me-2"></i><a class="resume-link" href="mailto:#">lujhcoconut@foxmail.com</a></li>
+								<!-- <li class="mb-2"><i class="fas fa-globe fa-fw fa-lg me-2"></i><a class="resume-link" href="#">www.yourwebsite.com</a></li> -->
+								<li class="mb-0"><i class="fas fa-map-marker-alt fa-fw fa-lg me-2"></i>Xiamen China & Ningbo China</li>
+							</ul>
+						</div><!--//resume-contact-->
+					</div><!--//row-->
+					
+				</div><!--//resume-header-->
+				<hr>
+				<div class="resume-intro py-3">
+					<div class="row align-items-center">
+						<div class="col-12 col-md-3 col-xl-2 text-center">
+						    <img class="resume-profile-image mb-3 mb-md-0 me-md-5  ms-md-0 rounded mx-auto" src="fll.jpg" alt="image">
+						</div>
+						
+						<div class="col text-start">
+						<p> My name is Jiahao Lu (卢佳豪). I am currently a third-year (2024-2027) Master's student in Artificial Intelligence at Xiamen University(XMU). My specific research focus are <b>computer architecture</b> and <b>operating system</b>.</p>
+
+                        <p>🔭 I’m currently working on memory architecture and systems. Specifically, my focus includes memory pooling and tiering (including support for AI infrastructure) and cache design for accelerators. Additionally, I’m exploring page tables, optical (fiber) memory, microkernels, agentic OS, self-evolving agent and sandbox.</p>
+
+						<p>✨ I interned at <b>Approaching.AI</b> (2026.03-2026.08), working on the development of <b>Mooncake</b>. <i>Approaching.AI</i> is a company with an exceptional culture that blends academic rigor with engineering excellence. We warmly welcome you to join us.</p>
+						
+						<p>🤔 Feel free to reach out via email for any related questions.</p>
+						
+						</div><!--//col-->
+					</div>
+				</div><!--//resume-intro-->
+				<hr>
+				<div class="resume-body">
+					<div class="row">
+						<div class="resume-main col-12 col-lg-8 col-xl-9   pe-0   pe-lg-5">
+							<section class="work-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Publications</h3>
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Conference</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end"></div>
+
+									</div>
+									
+									<div class="item-content">
+										<p><b>[ACM/IEEE SC'26]</b>  <span class="paper-title">Chisa: Dynamic Logical Way Partitioning for Efficient Caching in Sparse Accelerators. </span><i><b>Jiahao Lu</b>, Zhirong Shen<sup><b>*</b></sup>, and Jiwu Shu.</i><br/>
+									</div>
+										
+
+									<div class="item-content">
+										<p><b>[USENIX ATC'24]</b>  <span class="paper-title">Removing Obstacles before Breaking Through the Memory Wall: A Close Look at HBM Errors in the Field. </span><i>Ronglong Wu, Shuyue Zhou, <b>Jiahao Lu</b>, Zhirong Shen<sup><b>*</b></sup>, Zikang Xu, Jiwu Shu, Kunlin Yang, Feilong Lin and Yiming Zhang.</i><br/>
+									</div>
+
+
+									<div class="item-content">
+										<p><b>[Under Review]</b> Three papers are currently under review, two of which I am the first author on. <span class="paper-title"></i><br/>
+									</div>
+
+									<div class="item-content">
+										<p><b>[WIP]</b> Something big is coming. <span class="paper-title"></i><br/>
+									</div>
+
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Journal</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end"></div>
+										
+									</div>
+									<div class="item-content">
+										<p><b>[ACM TOS]</b> <span class="paper-title">Looking Back to Move Forward: Unveiling the Mysteries of HBM Errors to Predict Future Failures.</span> <i>Shuyue Zhou, Xinbin Hu, Ronglong Wu, <b>Jiahao Lu</b>, Zhirong Shen<sup><b>*</b></sup> , Zikang Xu, Jiwu Shu, Kunlin Yang, Feilong Lin, Yue Yu and Yiming Zhang.</i> (Extended ATC'24 Paper)<br/>
+										<!-- <p><b>[TOS]</b> <span class="paper-title">Looking Back to Move Forward: Unveiling the Mysteries of HBM Errors to Predict Future Failures.</span> <i>Shuyue Zhou, Xinbin Hu, Ronglong Wu, <b>Jiahao Lu</b>, Zhirong Shen<sup><b>*</b></sup> , Zikang Xu, Jiwu Shu, Kunlin Yang, Feilong Lin, Yue Yu and Yiming Zhang.</i> (Extended ATC'24 Paper)<br/> -->
+									</div>
+
+									<div class="item-content">
+										<p><b>[Under Review]</b> Two papers are currently under review. <span class="paper-title"></i><br/>
+									</div>
+
+									<!-- <div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Insignificant Papers</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end"></div>
+										
+									</div>
+									<div class="item-content">
+										<p><b>[#1]</b> <span class="paper-title"> <a href="./insignificant/galois_scattering.pdf">Deterministic Online Load Balancing via Exponential Scattering in Finite Fields.</a> </span> <i> <b>Jiahao Lu</b>.</i><br/>
+									</div> -->
+									
+
+
+									<!-- <div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Insignificant Paper</h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end"></div>
+										
+									</div>
+									<div class="item-content">
+										<p><b>[I1] </b><span class="paper-title"></span>Deterministic Online Load Balancing via Exponential Scattering in Finite Fields. </span> <i> <b>Jiahao Lu.</b><br/>
+									</div> -->
+
+								</div>
+								
+							</section><!--//work-section-->
+
+
+							<section class="project-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Presentation</h3>
+
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Meetup</a> </h4>		
+									</div>
+									<div class="item-content">
+										<p><b>[vLLM Meetup] </b><a href="presentation/vllm_meetup_hangzhou_jiahaolu.pptx">Mooncake x llm-d: Building High-Performance Inference Clusters in the Era of Agentic AI</a><br/> Location: <i>Hangzhou, Zhejiang, China</i>. Time: <i>2026-05-23, 15:00</i></p>
+									</div>
+
+									<div class="item-content">
+										<p><b>[vLLM mini courses] </b> <a href="https://www.bilibili.com/video/BV1gRNF6PEc3/?spm_id_from=333.337.search-card.all.click">vLLM x Mooncake: KV Connector -- The Past, The Present, The Future</a><br/> Location: <i>Online, Bilibili</i>. Time: <i>2026-07-11, 11:00 a.m.</i></p>
+									</div>
+								</div>
+
+
+
+
+							<section class="project-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Service</h3>
+
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Program Commitee</a> </h4>		
+									</div>
+									<div class="item-content">
+										<p><b>2025:</b> gem5 Workshop (@ISCA'25)</p>
+									</div>
+								</div>
+
+							</section><!--//project-section-->
+
+
+							<section class="project-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Skills</h3>
+
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">Specific Knowledge</a> </h4>		
+									</div>
+									<div class="item-content">
+										<p><a href="https://github.com/LujhCoconut/domain_knowledge_agent">My domain knowledge agent skill. (WIP)</a></p>
+									</div>
+
+									<div class="item-content">
+										<p><a href="https://github.com/LujhCoconut/MooncakeAgentSkills/">My Mooncake agent skill. (WIP)</a></p>
+									</div>
+								</div>
+
+							</section><!--//project-section-->
+							
+							<section class="project-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Blogs</h3>
+
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="OSDI.html" class="theme-link">OSDI</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">OSDI</div>
+										
+									</div>
+									<div class="item-content">
+										<p>Operating Systems Design and Implementation </p>
+										
+									</div>
+								</div>
+
+
+								
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./SOSP.html" class="theme-link">SOSP</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">SOSP</div>
+										
+									</div>
+									<div class="item-content">
+										<p>Symposium on Operating Systems Principles</p>
+										
+									</div>
+								</div>
+
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="HPCA.html" class="theme-link">HPCA</a></h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">HPCA</div>
+										
+									</div>
+									<div class="item-content">
+										<p>High Performance Computer Architechture </p>
+									</div>
+								</div>
+								
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="ASPLOS.html" class="theme-link">ASPLOS</a></h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">ASPLOS</div>
+										
+									</div>
+									<div class="item-content">
+										<p>Architectural Support for Programming Languages and Operating Systems </p>
+										
+									</div>
+								</div>
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./MICRO.html" class="theme-link">MICRO</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">MICRO</div>
+										
+									</div>
+									<div class="item-content">
+										<p>Microarchitecture </p>
+										
+									</div>
+								</div>
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="to_be_updated.html" class="theme-link">ISCA</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">ISCA</div>
+										
+									</div>
+									<div class="item-content">
+										<p>International Symposium on Computer Architecture. </p>
+										
+									</div>
+								</div>
+
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="to_be_updated.html" class="theme-link">USENIX ATC</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">USENIX ATC</div>
+										
+									</div>
+									<div class="item-content">
+										<p>USENIX Annual Technical Conference </p>
+										
+									</div>
+								</div>
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="to_be_updated.html" class="theme-link">FAST</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">FAST</div>
+										
+									</div>
+									<div class="item-content">
+										<p>File and Storage Technologies </p>
+										
+									</div>
+								</div>
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="EuroSys.html" class="theme-link">EuroSys</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">EuroSys</div>
+										
+									</div>
+									<div class="item-content">
+										<p>the European Systems Conference </p>
+										
+									</div>
+								</div>
+
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="others.html" class="theme-link">Others</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">Others</div>
+										
+									</div>
+									<div class="item-content">
+										<p>SIGMOD VLDB ICDE Security SRDS etc. </p>
+										
+									</div>
+								</div>
+							</section><!--//project-section-->	
+
+
+							<section class="project-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Column</h3>
+
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./simulator/simulator.html" class="theme-link">Simulators</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">QEMU/ZSim/gem5</div>
+										
+									</div>
+									<div class="item-content">
+										<p>QEMU/ZSim/gem5</p>
+										
+									</div>
+								</div>
+
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./to_be_updated.html" class="theme-link">Heterogeneous/Tiered/Hybrid Memory System/Architecture</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">Memory</div>
+										
+									</div>
+									<div class="item-content">
+										<p>Heterogeneous/Tiered/Hybrid Memory</p>
+										
+									</div>
+								</div>
+
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./to_be_updated.html" class="theme-link">AI Infra</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">AI Infra</div>
+										
+									</div>
+									<div class="item-content">
+										<p>AI Infra</p>
+										
+									</div>
+								</div>
+
+								<div class="item">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./to_be_updated.html" class="theme-link">Process-in-Memory / Near Data Processing / In-Memory Computing</a> </h4>
+										<div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">PIM-Architecture</div>
+										
+									</div>
+									<div class="item-content">
+										<p>PIM-Architecture</p>
+										
+									</div>
+								</div>
+
+							</section>
+
+
+							<section class="work-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Tool Chains Tutorial</h3>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="pim.html" class="theme-link">PIM/NDP</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>存内计算/近数据处理</p>
+									</div>
+								</div>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="gem5.html" class="theme-link">gem5 Emulator</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>gem5 Emulator Tutorial from Source Code Perspective.</p>
+									</div>
+								</div>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="tutor_gem5.html" class="theme-link">The Missing Lectures of Computer System and Architechture: Simulator</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>The Missing Lectures of Computer System and Architechture: A More Frendly Tutorial of Simulator</p>
+									</div>
+								</div>
+
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./GPULearning.html" class="theme-link">GPU Learning</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>GPU Learning (Memory)</p>
+									</div>
+								</div>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./problems.html" class="theme-link">Bug & Problems Fixed</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>一些遇到的问题顺手记录一下</p>
+									</div>
+								</div>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./MLSys.html" class="theme-link">MLSys / LLMSys / LLM Application</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>Machine Learning for System and Architecture.</p>
+									</div>
+								</div>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="tools.html" class="theme-link">Fundamental Tools</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>Linux Basic CLI / Vim / SSH / SCP etc..</p>
+									</div>
+								</div>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./draw/draw.html" class="theme-link">科研制图Python模板</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>Python科研制图：多类图形、配色方案</p>
+									</div>
+								</div>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./CPP/L1.md" class="theme-link">C++:从模拟器源码开始的异世界</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>学习ZSim、gem5模拟器中的C++代码</p>
+									</div>
+								</div>
+								
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./zsim_tutorial.html" class="theme-link">ZSim</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>ZSim控制逻辑、编程模型....【探索版】</p>
+									</div>
+								</div>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./debug.html" class="theme-link">调试理论</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>调试理论【先遣版】</p>
+									</div>
+								</div>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="./linux_kernel.html" class="theme-link">Understand the Linux Kernel</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>Linux Kernel【先遣版】</p>
+									</div>
+								</div>
+							</section><!--//work-section-->
+
+							<section class="work-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Guide Books Notes</h3>
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">OSTEP</h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>Operating System:Three Easy Pieces     原书开源链接：<a href="https://pages.cs.wisc.edu/~remzi/OSTEP/" class="theme-link">OSTEP(国内译名：操作系统导论)</a></p>
+										
+									</div>
+								</div>
+							
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">计算机组成与设计：硬件/软件接口</h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>Computer Organization and Design: Hardware/Software Interface (RISC-V Edition)</p>
+									</div>
+								</div>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">计算机体系结构：量化研究方法</h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>Computer Architecture:A Quantitative Approach (6th Edition)</p>
+									</div>
+								</div>
+							</section><!--//work-section-->
+
+							<section class="work-section py-3">
+								<h3 class="text-uppercase resume-section-heading mb-4">Rising Idea</h3>
+
+								<div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="trivial_obs.html" class="theme-link">杂货铺</a></h4>
+										<!-- <div class="item-meta col-12 col-md-6 col-lg-4 text-muted text-start text-md-end">[CCF-A] </div>
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0">[USENIX ATC'2024]</h4> -->
+									</div>
+									<div class="item-content">
+										<p>一些各种地方看到的稀奇古怪的点，拼拼凑凑说不定能够发现新大陆</p>
+									</div>
+								</div>
+
+								<!-- <div class="item mb-3">
+									<div class="item-heading row align-items-center mb-2">
+										<h4 class="item-title col-12 col-md-6 col-lg-8 mb-2 mb-md-0"><a href="to_be_read.html" class="theme-link">待看论文、待上传笔记</a></h4>
+									</div>
+									<div class="item-content">
+										<p>Push 自己</p>
+									</div>
+								</div> -->
+
+							</section><!--//work-section-->
+
+						</div><!--//resume-main-->
+						<aside class="resume-aside col-12 col-lg-4 col-xl-3 px-lg-4 pb-lg-4">
+										<section class="skills-section py-3">
+										<!-- <h3 class="text-uppercase resume-section-heading mb-4">Skills</h3> -->
+										<div class="item">
+										<section class="education-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Education</h3>
+										<ul class="list-unstyled resume-education-list">
+											<li class="mb-3">
+												<div class="resume-degree font-weight-bold">B.Eng Degree in Software Engineering</div>
+												<div class="colored-resume-org">Zhejiang Normal University</div>
+												<div class="resume-degree-time text-muted">2020 - 2024</div>
+											</li>
+											<li class="mb-3"></li>
+												<div class="resume-degree font-weight-bold">M.S Student in Artificial Intelligence</div>
+												<div class="colored-resume-org">Xiamen University</div>
+												<div class="resume-degree-time text-muted">2024 - now</div>
+											</li>
+											<!-- <li>
+												<div class="resume-degree font-weight-bold">BSc Maths and Physics</div>
+												<div class="resume-degree-org text-muted">Imperial College London</div>
+												<div class="resume-degree-time text-muted">2016 - 2017</div>
+											</li> -->
+										</ul>
+									</section><!--//education-section-->
+
+									<section class="education-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Intern</h3>
+										<ul class="list-unstyled resume-education-list">
+											<li class="mb-3">
+												<div class="colored-resume-degree">Mooncake</div>
+												<div class="colored-resume-org">Approaching AI</div>
+												<div class="colored-resume-time">2026.03 - 2026.08</div>
+											</li>
+											<!-- <li class="mb-3"></li>
+												<div class="resume-degree font-weight-bold">M.S Student in Artificial Intelligence</div>
+												<div class="resume-degree-org text-muted">Xiamen University</div>
+												<div class="resume-degree-time text-muted">2024 - now</div>
+											</li> -->
+											<!-- <li>
+												<div class="resume-degree font-weight-bold">BSc Maths and Physics</div>
+												<div class="resume-degree-org text-muted">Imperial College London</div>
+												<div class="resume-degree-time text-muted">2016 - 2017</div>
+											</li> -->
+										</ul>
+									</section><!--//education-section-->
+
+									<!-- <section class="education-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Awards</h3>
+										<ul class="list-unstyled resume-awards-list">
+										</ul>
+									</section> -->
+									
+									<!-- <section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Languages</h3>
+										<ul class="list-unstyled resume-lang-list">
+											<li class="mb-2">Chinese <span class="text-muted">(Native)</span></li>
+											<li>English <span class="text-muted">(CET-6)</span></li>
+										</ul>
+									</section>
+									<section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Interests</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2">Football</li>
+											<li>Travelling</li>
+										</ul>
+									</section> -->
+
+									
+									<!-- <section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Trivial Notes</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="./leetcode.html" class="theme-link">LeetCode刷题笔记</a></li>
+
+										</ul>
+									</section> -->
+
+									<section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Misc.</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="./misc/ld_preload.html" class="theme-link">LD_PRELOAD拦截库函数</a></li>
+											<li class="mb-2"><a href="./Others/tutorial/queue.html" class="theme-link">Queueing Questions</a></li>
+											<li class="mb-2"><a href="./misc/lock.html" class="theme-link">锁/lock</a></li>
+										</ul>
+									</section>
+
+									<section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Tricky</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="./tricky/noise/moore_majority.html" class="theme-link">投票-摩尔投票法</a></li>
+											<li class="mb-2"><a href="./tricky/hyperparams/simulated_annealing.html" class="theme-link">超参数优化-模拟退火(SA)</a></li>
+											<li class="mb-2"><a href="./tricky/statistic/ewma.html" class="theme-link">统计-指数加权滑动平均(EWMA)</a></li>
+											<li class="mb-2"><a href="./tricky/statistic/pwa.html" class="theme-link">统计-分位数加权平均(PWA)</a></li>
+											<li class="mb-2"><a href="./tricky/feedback/aimd.html" class="theme-link">反馈调节-加性增大乘性减小(AIMD)</a></li>
+										</ul>
+									</section>
+
+									<section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">科研入门必读</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="https://jyywiki.cn/Letter.md" class="theme-link">jyy的劝退信</a></li>
+										</ul>
+									</section><!--//certificates-section-->
+									
+									<section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Interesting Paper Recommendation</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="https://jm233333.github.io/assets/papers/visualinux-eurosys25.pdf" class="theme-link">Understanding the Linux Kernel, Visually【EuroSys'25】</a></li>
+										</ul>
+									</section><!--//certificates-section-->
+
+									<!-- <section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Paper Recommendation</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="https://dl.acm.org/doi/abs/10.1145/3694715.3695944" class="theme-link">OZZ 【SOSP'24 Best Paper】</a></li>
+											<li class="mb-2"><a href="https://dl.acm.org/doi/10.1145/3694715.3695968" class="theme-link">Colloid 【SOSP'24】</a></li>
+											<li class="mb-2"><a href="https://dl.acm.org/doi/10.1145/3470496.3527442" class="theme-link">Sibyl 【ISCA'22】</a></li>
+											<li class="mb-2"><a href="https://dl.acm.org/doi/abs/10.1145/3600006.3613160" class="theme-link">TreeSLS 【SOSP'23 Best Paper】</a></li>
+										</ul>
+									</section> -->
+									<!--//certificates-section-->
+
+									<!-- <section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Tutorial Recommendation</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="./Others/tutorial/queue.html" class="theme-link">Queueing Questions [Doc]</a></li>
+											<li class="mb-2"><a href="https://www.karlrupp.net/2016/02/strided-memory-access-on-cpus-gpus-and-mic/" class="theme-link">Strided Memory Access</a></li>
+											<li class="mb-2"><a href="https://arthurchiao.art/blog/gpu-advanced-notes-1-zh/" class="theme-link">GPU Architechture</a></li>
+										</ul>
+									</section> -->
+									<!--//certificates-section-->
+									
+									<section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Recent Update</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="./misc/TuxBot_ana.pdf" class="theme-link">TuxBot [SOSP'26]</a></li>
+											<li class="mb-2"><a href="./misc/AgentSight_ana.pdf" class="theme-link">AgentSight (eunomia-bpf & UCSC) [misc]</a></li>
+											<li class="mb-2"><a href="./misc/AgentCgroup_ana.pdf" class="theme-link">AgentCgroup (eunomia-bpf & UCSC) [misc]</a></li>
+											<li class="mb-2"><a href="./misc/Rethink-the-Sync.pdf" class="theme-link">Rethink-the-Sync [OSDI'06 Best Paper]</a></li>
+											<li class="mb-2"><a href="./misc/ds-sandbox-analysis.pdf" class="theme-link">Deepseek Sandbox Infra [misc]</a></li>
+											<li class="mb-2"><a href="./misc/AgentENV-misc.pdf" class="theme-link">AgentEnv [misc]</a></li>
+											<li class="mb-2"><a href="./misc/network-zcube.pdf" class="theme-link">智算网络（ZCube etc.） [misc]</a></li>
+											<li class="mb-2"><a href="./misc/gb-nvl72.pdf" class="theme-link">NVIDIA GB300/NVL72 [misc]</a></li>
+											<li class="mb-2"><a href="./misc/basic-1.new.pdf" class="theme-link">LLM Tutorial #1 [misc]</a></li>
+											<li class="mb-2"><a href="./misc/store-basic.pdf" class="theme-link">StorageMisc-01 [misc]</a></li>
+											<li class="mb-2"><a href="./misc/agentic-os-one-repo.pdf" class="theme-link">Agentic-OS (personal-repo) [misc]</a></li>
+											<!-- <pre class="brush: html; toolbar: false;"><a href="vibelearning/cache_replacement_policies.pdf" target="_blank" style="font-size: 20px;"> <b>Cache_Replacement.pdf [vibe pdf]</b> </a></pre> -->
+											<li class="mb-2"><a href="./simulator/skybyte.html" class="theme-link">SkyByte-Sim [simulator]</a></li>
+											<li class="mb-2"><a href="./tricky/noise/moore_majority.html" class="theme-link">投票-摩尔投票法[tricky]</a></li>
+											<li class="mb-2"><a href="./HPCA/skybyte.html" class="theme-link">SkyByte [HPCA'25]</a></li>
+											<li class="mb-2"><a href="./tricky/feedback/aimd.html" class="theme-link">反馈调节-加性增大乘性减小(AIMD)[tricky]</a></li>
+											<li class="mb-2"><a href="./tricky/statistic/ewma.html" class="theme-link">统计-指数加权滑动平均[tricky]</a></li>
+											<li class="mb-2"><a href="./tricky/hyperparams/simulated_annealing.html" class="theme-link">超参数优化-模拟退火[tricky]</a></li>
+											<li class="mb-2"><a href="./tricky/statistic/pwa.html" class="theme-link">统计-分位数加权平均(PWA)[tricky]</a></li>
+											<li class="mb-2"><a href="./misc/ld_preload.html" class="theme-link">LD_PRELOAD对象跟踪和对象流分析 [Misc]</a></li>
+											<li class="mb-2"><a href="./Others/tutorial/vm_in_the_cloud.html" class="theme-link">VM in the Cloud & Protean [OSDI'20 & Doc]</a></li>
+											<li class="mb-2"><a href="./simulator/QEMU/QEMU_T3/qemu_003.html" class="theme-link">Understanding QEMU L02.1 事件循环 [QEMU Lec.002]</a></li>
+											<li class="mb-2"><a href="./simulator/QEMU/QEMU_T2/qemu_002.html" class="theme-link">Understanding QEMU L01 [QEMU Lec.002]</a></li>
+											<li class="mb-2"><a href="./misc/lock.html" class="theme-link">锁、lock [misc]</a></li>
+											<li class="mb-2"><a href="./EuroSys/PET_25/pet_25.html" class="theme-link">PET [EuroSys'25]</a></li>
+											<li class="mb-2"><a href="./Others/tutorial/queue.html" class="theme-link">Queueing Questions [Doc]</a></li>
+											<li class="mb-2"><a href="./OSDI/kamino_osdi25.html" class="theme-link">Kamino [OSDI'25]</a></li>
+											<li class="mb-2"><a href="./simulator/QEMU/QEMU_T1/qemu_001.html" class="theme-link">QEMU Lec.01 [Quick Start & BusyBox]]</a></li>
+											<li class="mb-2"><a href="./micro/blenda.html" class="theme-link">Blenda [MICRO'24]</a></li>
+											<li class="mb-2"><a href="./HPCA/tdram.html" class="theme-link">TDRAM [HPCA'25]</a></li>
+											<li class="mb-2"><a href="https://github.com/LujhCoconut/zsim-bumblebee" class="theme-link">ZSim-Bumblebee [Reproduce DAC'23]</a></li>
+											<li class="mb-2"><a href="https://github.com/LujhCoconut/zsim-hybrid2" class="theme-link">ZSim-hybrid2 [Reproduce HPCA'20]</a></li>
+											<li class="mb-2"><a href="./sosp/colloid_tmp.html" class="theme-link">Colloid [SOSP'24]</a></li>
+											<li class="mb-2"><a href="./Zsim/zsim_cache_system.html" class="theme-link">ZSim Tutorial [Cache System Simulation]</a></li>
+											<li class="mb-2"><a href="./zsim_tutorial.html" class="theme-link">ZSim Tutorial 框架[摸索版]</a></li>
+											<li class="mb-2"><a href="./debug.html" class="theme-link">调试理论 [框架]</a></li>
+											<li class="mb-2"><a href="./Zsim/zsim1.html" class="theme-link">ZSim Tutorial [摸索版]</a></li>
+											<li class="mb-2"><a href="./micro/banshee.html" class="theme-link">Banshee 速通 [MICRO'17]</a></li>
+											<li class="mb-2"><a href="./gem5/Lecture1/gem5_lecture_1.html" class="theme-link">gem5 [Tutorial] Lecture-1</a></li>
+											<li class="mb-2"><a href="./ASPLOS/pond.html" class="theme-link">Pond [ASPLOS'23]</a></li>
+											<li class="mb-2"><a href="./OSDI/memstrata.html" class="theme-link">Memstrata [OSDI'24]</a></li>
+										</ul>
+									</section><!--//certificates-section-->
+
+									<!-- <section class="skills-section py-3"></section>
+										<h3 class="text-uppercase resume-section-heading mb-4">我（希望）在世界各地开会这件事</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="./plog.html" class="theme-link">Plog</a></li>
+										</ul>
+									</section> -->
+									<!--//certificates-section-->
+
+									<section class="skills-section py-3"></section>
+										<h3 class="text-uppercase resume-section-heading mb-4">Vibe Learning</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="./vibelearning/cache_replacement_policies.pdf" class="theme-link">Cache Replacement</a></li>
+										</ul>
+									</section><!--//certificates-section-->
+
+
+									<!-- <section class="skills-section py-3">
+										<h3 class="text-uppercase resume-section-heading mb-4">Games</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><b>FPS</b>: CSOL2 (Shut down​​), CODOL (Shut down​​), CODM, NZ, CFHD</li>
+											<li><b>Anime Game</b>: Wuthering Waves</li>
+											<li><b>MOBA Game</b>: League of Legends</li>
+										</ul>
+									</section>//certificates-section -->
+
+									<section class="skills-section py-3"></section>
+										<h3 class="text-uppercase resume-section-heading mb-4">Open-source Project</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="https://github.com/LujhCoconut/zsim-hybrid2" class="theme-link">ZSim-hybrid2 [Reproduce HPCA'20]</a></li>
+											<li class="mb-2"><a href="https://github.com/LujhCoconut/zsim-bumblebee" class="theme-link">ZSim-Bumblebee [Reproduce DAC'23]</a></li>
+										</ul>
+									</section><!--//certificates-section-->
+
+									<section class="skills-section py-3"></section>
+										<h3 class="text-uppercase resume-section-heading mb-4">Open-source Tutorial</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="https://github.com/LujhCoconut/tmm_kernel_learning/" class="theme-link">Tiered Memory Management: Kernel Code</a></li>
+										</ul>
+									</section><!--//certificates-section-->
+
+									<section class="skills-section py-3"></section>
+										<h3 class="text-uppercase resume-section-heading mb-4">Gists</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="./gists/csv-to-json.html" class="theme-link">CSV To JSON</a></li>
+										</ul>
+									</section><!--//certificates-section-->
+
+									<!-- <section class="skills-section py-3"></section>
+										<h3 class="text-uppercase resume-section-heading mb-4">碎碎念</h3>
+										<ul class="list-unstyled resume-interests-list mb-0">
+											<li class="mb-2"><a href="./hole/hole.html" class="theme-link">填坑列表</a></li>
+										</ul>
+									</section> -->
+									<!--//certificates-section-->
+
+								</aside><!--//resume-aside-->
+							</div><!--//row-->
+						</div><!--//resume-body-->
+						<hr>
+						<div class="resume-footer text-center">
+							<ul class="resume-social-list list-inline mx-auto mb-0 d-inline-block text-muted">
+								<li class="list-inline-item mb-lg-0 me-3"><a class="resume-link" href="#"><i class="fab fa-github-square fa-2x me-2" data-fa-transform="down-4"></i><span class="d-none d-lg-inline-block text-muted">github.com/LujhCoconut</span></a></li>
+								<!-- <li class="list-inline-item mb-lg-0 me-3"><a class="resume-link" href="#"><i class="fab fa-linkedin fa-2x me-2" data-fa-transform="down-4"></i><span class="d-none d-lg-inline-block text-muted">linkedin.com/in/username</span></a></li> -->
+								<!-- <li class="list-inline-item mb-lg-0 me-lg-3"><a class="resume-link" href="#"><i class="fab fa-twitter-square fa-2x me-2" data-fa-transform="down-4"></i><span class="d-none d-lg-inline-block text-muted">@twittername</span></a></li> -->
+							</ul>
+						</div><!--//resume-footer-->
+					</article>
+					
+				</div><!--//container-->
+				
+				<footer class="footer text-center py-4">
+					<!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+					<small class="copyright text-muted">Last Update : UTC+8 2026-10-16 [16:23]</small>
+					<!-- <br/>
+					<small class="copyright text-muted">饮水思源：  <a class="theme-link" href="https://chinasys.org/opensource/" target="_blank">ChinaSys学术开源创新平台</a> </small>
+					<br/>-->
+					<br/>
+					<small class="copyright text-muted">INFP, 二次元, 希望每篇论文都是以喜欢的二次元角色为题！</small> 
+				</footer>
+				
+			</div><!--//main-wrapper-->
+			
+
+</body>
+</html> 

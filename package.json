@@ -5,6 +5,10 @@
   "main": "autoload.js",
   "type": "module",
   "scripts": {
+    "predev": "npm run generate:recent",
+    "dev": "vite",
+    "generate:recent": "node scripts/generate-recent.mjs",
+    "build:site": "npm run generate:recent && node scripts/build-site.mjs",
     "build": "rollup -c rollup.config.js -f iife | terser -c -m > waifu-tips.js",
     "build-dev": "rollup -c rollup.config.js -f iife -o waifu-tips.js -w"
   },
@@ -26,6 +30,7 @@
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/pluginutils": "^5.0.1",
     "rollup": "^3.2.3",
-    "terser": "^5.15.1"
+    "terser": "^5.15.1",
+    "vite": "^6.0.0"
   }
 }
