@@ -25,6 +25,11 @@ function appendEcho(command) {
   echo.innerHTML = '<span class="prompt"><span class="prompt-user">coconut</span><span class="prompt-dim">@</span><span class="prompt-host">homepage</span><span class="prompt-dim">:~$</span></span><span class="command-text"></span>';
   echo.querySelector('.command-text').textContent = command;
   output.append(echo);
+
+  const classic = document.createElement('div');
+  classic.className = 'terminal-classic-top';
+  classic.innerHTML = 'Prefer a conventional résumé layout? <a class="terminal-link" href="./classic.html">Return to the classic homepage</a>.';
+  output.append(classic);
 }
 
 function appendResult(html, className = '') {
@@ -42,9 +47,9 @@ function helpPage() {
       <span>${commandLink('about')}</span><span>profile and research interests</span>
       <span>${commandLink('publications')}</span><span>selected publications · alias: pubs</span>
       <span>${commandLink('recent')}</span><span>recently added notes and reading · alias: updates</span>
-      <span>${commandLink('projects')}</span><span>open-source projects and agent skills</span>
-      <span>${commandLink('talks')}</span><span>presentations and mini courses</span>
+      <span>${commandLink('presentations')}</span><span>presentations and mini courses</span>
       <span>${commandLink('notes')}</span><span>notes and tutorials · alias: blog</span>
+      <span>${commandLink('essays')}</span><span>碎碎念与随笔 · alias: essay</span>
       <span>${commandLink('contact')}</span><span>email and GitHub</span>
       <span>cat &lt;file&gt;</span><span>print a page, e.g. cat about.txt</span>
       <span>ls / tree</span><span>list the virtual filesystem</span>
@@ -65,9 +70,9 @@ function listPage() {
       <li>${commandLink('about', 'about.txt')}</li>
       <li>${commandLink('publications', 'publications.txt')}</li>
       <li>${commandLink('recent', 'recent.txt')}</li>
-      <li>${commandLink('projects', 'projects.txt')}</li>
-      <li>${commandLink('talks', 'talks.txt')}</li>
+      <li>${commandLink('presentations', 'presentations.txt')}</li>
       <li>${commandLink('notes', 'notes/')}</li>
+      <li>${commandLink('essays', 'essays/')}</li>
       <li>${commandLink('contact', 'contact.txt')}</li>
     </ul>
     <p class="terminal-dim">Use cat &lt;file&gt; or click a filename.</p>`;
@@ -78,13 +83,13 @@ function treePage() {
 ├── about.txt
 ├── publications.txt
 ├── recent.txt
-├── projects.txt
-├── talks.txt
+├── presentations.txt
 ├── contact.txt
-└── notes/
-    ├── systems/
-    ├── paper-notes/
-    └── tutorials/</pre>
+├── notes/
+│   ├── systems/
+│   ├── paper-notes/
+│   └── tutorials/
+└── essays/</pre>
     <p class="terminal-dim">A virtual view of this homepage, not your actual filesystem.</p>`;
 }
 

@@ -171,6 +171,14 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   color: var(--text);
 }
 .command-text { margin-left: 10px; }
+.terminal-classic-top {
+  margin: -6px 0 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+}
+.terminal-classic-top a { color: var(--link); }
 .prompt { white-space: nowrap; }
 .prompt-user, .prompt-host { color: var(--accent); font-weight: 700; }
 .prompt-dim { color: var(--muted); }

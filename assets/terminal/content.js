@@ -1,5 +1,6 @@
 // Page copy lives here so the terminal logic does not become another legacy pile.
 import { recentUpdates } from './recent.generated.js';
+import { essayEntries } from './essays.generated.js';
 
 const command = (name, label = name) =>
   `<a class="terminal-link" href="#${encodeURIComponent(name)}" data-command="${name}">${label}</a>`;
@@ -29,9 +30,9 @@ export const pages = {
     <ul class="terminal-list links">
       <li>${command('publications')} <span class="terminal-dim">— selected papers</span></li>
       <li>${command('recent')} <span class="terminal-dim">— recently added notes and reading</span></li>
-      <li>${command('projects')} <span class="terminal-dim">— open-source work and agent skills</span></li>
-      <li>${command('talks')} <span class="terminal-dim">— presentations and mini courses</span></li>
+      <li>${command('presentations')} <span class="terminal-dim">— presentations and mini courses</span></li>
       <li>${command('notes')} <span class="terminal-dim">— long-form notes from the legacy site</span></li>
+      <li>${command('essays')} <span class="terminal-dim">— 碎碎念与随笔</span></li>
       <li>${command('contact')} <span class="terminal-dim">— email and GitHub</span></li>
     </ul>
     <p class="terminal-tip">This page doubles as a small shell. Type ${command('help')}, click any command, or press Tab to complete one.</p>`,
@@ -39,15 +40,15 @@ export const pages = {
   publications: `${heading('Selected Publications')}
     <div class="terminal-entry">
       <p><span class="terminal-tag">SC'26</span><strong>Chisa: Dynamic Logical Way Partitioning for Efficient Caching in Sparse Accelerators</strong></p>
-      <p class="terminal-dim">Jiahao Lu, Zhirong Shen, and Jiwu Shu.</p>
+      <p class="terminal-dim"><strong>Jiahao Lu</strong>, Zhirong Shen, and Jiwu Shu.</p>
     </div>
     <div class="terminal-entry">
       <p><span class="terminal-tag">ATC'24</span><strong>Removing Obstacles before Breaking Through the Memory Wall: A Close Look at HBM Errors in the Field</strong></p>
-      <p class="terminal-dim">Ronglong Wu, Shuyue Zhou, Jiahao Lu, Zhirong Shen, Zikang Xu, Jiwu Shu, et al.</p>
+      <p class="terminal-dim">Ronglong Wu, Shuyue Zhou, <strong>Jiahao Lu</strong>, Zhirong Shen, Zikang Xu, Jiwu Shu, et al.</p>
     </div>
     <div class="terminal-entry">
       <p><span class="terminal-tag">ACM TOS</span><strong>Looking Back to Move Forward: Unveiling the Mysteries of HBM Errors to Predict Future Failures</strong></p>
-      <p class="terminal-dim">Shuyue Zhou, Xinbin Hu, Ronglong Wu, Jiahao Lu, Zhirong Shen, Zikang Xu, et al. Extended ATC'24 paper.</p>
+      <p class="terminal-dim">Shuyue Zhou, Xinbin Hu, Ronglong Wu, <strong>Jiahao Lu</strong>, Zhirong Shen, Zikang Xu, et al. Extended ATC'24 paper.</p>
     </div>
     <p class="terminal-dim">More work is under review and in progress.</p>`,
 
@@ -57,22 +58,7 @@ export const pages = {
       ${recentUpdates.map(([href, label]) => `<li>${link(href, label)}</li>`).join('\n      ')}
     </ul>`,
 
-  projects: `${heading('Projects & Open Source')}
-    <h2 class="terminal-section">## Systems</h2>
-    <ul class="terminal-list links">
-      <li>${link('https://github.com/LujhCoconut/zsim-hybrid2', 'ZSim-hybrid2')} <span class="terminal-dim">— reproduce HPCA'20 hybrid memory research</span></li>
-      <li>${link('https://github.com/LujhCoconut/zsim-bumblebee', 'ZSim-Bumblebee')} <span class="terminal-dim">— reproduce DAC'23 research</span></li>
-      <li>${link('https://github.com/LujhCoconut/tmm_kernel_learning/', 'Tiered Memory Management')} <span class="terminal-dim">— Linux kernel code-learning notes</span></li>
-    </ul>
-    <h2 class="terminal-section">## Agent Skills · WIP</h2>
-    <ul class="terminal-list links">
-      <li>${link('https://github.com/LujhCoconut/domain_knowledge_agent', 'domain_knowledge_agent')} <span class="terminal-dim">— domain knowledge agent skill</span></li>
-      <li>${link('https://github.com/LujhCoconut/MooncakeAgentSkills/', 'MooncakeAgentSkills')} <span class="terminal-dim">— Mooncake agent skill</span></li>
-    </ul>
-    <h2 class="terminal-section">## Internship</h2>
-    <p><strong>Mooncake · Approaching.AI</strong><br><span class="terminal-dim">2026.03—2026.08 · High-performance inference infrastructure</span></p>`,
-
-  talks: `${heading('Presentations')}
+  presentations: `${heading('Presentations')}
     <div class="terminal-entry">
       <p><span class="terminal-tag">Meetup</span>${link('./presentation/vllm_meetup_hangzhou_jiahaolu.pptx', 'Mooncake x llm-d: Building High-Performance Inference Clusters in the Era of Agentic AI')}</p>
       <p class="terminal-dim">vLLM Meetup · Hangzhou · 2026-05-23</p>
@@ -107,14 +93,19 @@ export const pages = {
       <li>${link('./trivial_obs.html', '杂货铺')} <span class="terminal-dim">— assorted ideas and observations</span></li>
     </ul>`,
 
+  essays: `${heading('碎碎念 / Essays')}
+    <p>零散想法、日常记录和不一定成熟的随笔。</p>
+    ${essayEntries.length
+      ? `<ul class="terminal-list links">${essayEntries.map(([href, label]) => `<li>${link(href, label)}</li>`).join('')}</ul>`
+      : '<p class="terminal-dim">No essays yet. Add a Markdown or HTML file to the essays/ directory and it will appear here automatically.</p>'}`,
+
   contact: `${heading('Contact')}
     <dl class="terminal-kv">
       <dt>email</dt><dd>${link('mailto:lujhcoconut@foxmail.com', 'lujhcoconut@foxmail.com')}</dd>
       <dt>github</dt><dd>${link('https://github.com/LujhCoconut', 'github.com/LujhCoconut')}</dd>
       <dt>location</dt><dd>Xiamen, China · Ningbo, China</dd>
     </dl>
-    <p>Feel free to reach out about computer architecture, operating systems, memory systems, or anything adjacent.</p>
-    <p class="terminal-tip">Prefer a conventional résumé layout? ${link('./classic.html', 'Return to the classic homepage')}.</p>`,
+    <p>Feel free to reach out about computer architecture, operating systems, memory systems, or anything adjacent.</p>`,
 };
 
 export const aliases = {
@@ -126,8 +117,16 @@ export const aliases = {
   papers: 'publications',
   update: 'recent',
   updates: 'recent',
+  presentation: 'presentations',
+  talk: 'presentations',
+  talks: 'presentations',
   blog: 'notes',
   tutorials: 'notes',
+  essay: 'essays',
+  musings: 'essays',
+  thoughts: 'essays',
+  '碎碎念': 'essays',
+  '随笔': 'essays',
   mail: 'contact',
 };
 
@@ -138,12 +137,15 @@ export const fileToPage = {
   'publications.txt': 'publications',
   'recent': 'recent',
   'recent.txt': 'recent',
-  'projects': 'projects',
-  'projects.txt': 'projects',
-  'talks': 'talks',
-  'talks.txt': 'talks',
+  'presentations': 'presentations',
+  'presentations.txt': 'presentations',
+  'talks': 'presentations',
+  'talks.txt': 'presentations',
   'notes': 'notes',
   'notes/': 'notes',
+  'essays': 'essays',
+  'essays/': 'essays',
+  'essays.txt': 'essays',
   'contact': 'contact',
   'contact.txt': 'contact',
 };

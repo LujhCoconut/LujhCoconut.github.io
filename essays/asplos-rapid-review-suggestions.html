@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Suggestions for improving the ASPLOS Rapid Review process: AI-assisted triage, dynamic reviewer allocation, and a short rebuttal stage." />
+    <title>Suggestions for Improving the ASPLOS Rapid Review Process · Coconut</title>
+    <link rel="canonical" href="https://lujhcoconut.github.io/essays/asplos-rapid-review-suggestions.html" />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f3f5f2;
+        --paper: #fbfcf9;
+        --text: #29332d;
+        --muted: #68736c;
+        --accent: #24744c;
+        --border: #d8dfd8;
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        font-size: 17px;
+        line-height: 1.85;
+      }
+      main {
+        width: min(780px, calc(100% - 32px));
+        margin: clamp(24px, 6vw, 64px) auto;
+        padding: clamp(24px, 6vw, 56px);
+        background: var(--paper);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        box-shadow: 0 18px 55px rgba(37, 55, 44, 0.09);
+      }
+      a { color: var(--accent); text-underline-offset: 3px; }
+      a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+      .back {
+        display: inline-block;
+        margin-bottom: 30px;
+        color: var(--muted);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 13px;
+        text-decoration: none;
+      }
+      .back:hover { color: var(--accent); }
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--accent);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 0 0 30px;
+        font-size: clamp(28px, 5vw, 42px);
+        line-height: 1.22;
+        letter-spacing: -0.025em;
+      }
+      p { margin: 0 0 22px; }
+      ol { margin: 24px 0 26px; padding: 0; list-style: none; counter-reset: suggestions; }
+      li {
+        counter-increment: suggestions;
+        position: relative;
+        margin: 0 0 22px;
+        padding: 20px 22px 20px 66px;
+        background: #eef4ee;
+        border-left: 3px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+      }
+      li::before {
+        content: "0" counter(suggestions);
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        color: var(--accent);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      li strong { color: var(--accent); }
+      .closing { margin-bottom: 0; }
+      .footer {
+        margin-top: 34px;
+        padding-top: 18px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-family: "SFMono-Regular", Consolas, monospace;
+        font-size: 12px;
+      }
+      @media (max-width: 560px) {
+        body { font-size: 16px; }
+        main { width: 100%; margin: 0; border: 0; border-radius: 0; }
+        li { padding: 18px 18px 18px 54px; }
+        li::before { left: 15px; top: 18px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <a class="back" href="../index.html#essays">← essays / 碎碎念</a>
+      <article>
+        <p class="eyebrow">Essays · Peer Review</p>
+        <h1>Suggestions for Improving the ASPLOS Rapid Review Process</h1>
+
+        <p>I recently submitted a paper to the ASPLOS '27 September Cycle that spans both operating systems and computer architecture. The paper was rejected by the ASPLOS '27 Rapid Review (RR). The outcome is difficult for me to understand: the three reviewers offered three entirely inconsistent assessments of the paper's domain contribution. Reviewer A judged the paper to contribute to both architecture and operating systems; Reviewer B concluded it contributes only to architecture; and Reviewer C concluded it contributes only to operating systems. The rejection rationale was ultimately that the paper makes no contribution at the intersection of these fields.</p>
+
+        <p>That said, I fully recognize the need for a fast review mechanism in the current climate of surging submissions and an increasingly strained peer-review system. With that in mind, I would like to offer a few suggestions:</p>
+
+        <ol>
+          <li><strong>Use AI-assisted triage at the intersection of ASPLOS's three domains.</strong> Since ASPLOS RR explicitly targets work at the intersection of architecture, programming languages, and operating systems, an AI-assisted preliminary screening step could determine domain fit quickly, potentially completing the RR process within one week.</li>
+          <li><strong>Dynamically allocate reviewers based on preliminary novelty assessment.</strong> AI-assisted triage could also gauge a paper's apparent novelty and adjust the number of assigned reviewers accordingly, giving more innovative submissions a more thorough and forgiving evaluation.</li>
+          <li><strong>Introduce a short rebuttal stage for RR.</strong> A concise rebuttal (for example, 200 words within two days) would allow authors to quickly correct misunderstandings that arise during the rapid review process.</li>
+        </ol>
+
+        <p class="closing">ASPLOS was once one of my favorite conferences, and this year's experience has left me genuinely disappointed.</p>
+      </article>
+      <footer class="footer">Jiahao Lu · Essays</footer>
+    </main>
+  </body>
+</html>
