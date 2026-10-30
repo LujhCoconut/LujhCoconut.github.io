@@ -40,15 +40,15 @@ export const pages = {
   publications: `${heading('Selected Publications')}
     <div class="terminal-entry">
       <p><span class="terminal-tag">SC'26</span><strong>Chisa: Dynamic Logical Way Partitioning for Efficient Caching in Sparse Accelerators</strong></p>
-      <p class="terminal-dim"><strong>Jiahao Lu</strong>, Zhirong Shen, and Jiwu Shu.</p>
+      <p class="terminal-dim"><strong>Jiahao Lu</strong>, Zhirong Shen<sup>*</sup>, and Jiwu Shu.</p>
     </div>
     <div class="terminal-entry">
       <p><span class="terminal-tag">ATC'24</span><strong>Removing Obstacles before Breaking Through the Memory Wall: A Close Look at HBM Errors in the Field</strong></p>
-      <p class="terminal-dim">Ronglong Wu, Shuyue Zhou, <strong>Jiahao Lu</strong>, Zhirong Shen, Zikang Xu, Jiwu Shu, et al.</p>
+      <p class="terminal-dim">Ronglong Wu, Shuyue Zhou, <strong>Jiahao Lu</strong>, Zhirong Shen<sup>*</sup>, Zikang Xu, Jiwu Shu, Kunlin Yang, Feilong Lin and Yiming Zhang.</p>
     </div>
     <div class="terminal-entry">
       <p><span class="terminal-tag">ACM TOS</span><strong>Looking Back to Move Forward: Unveiling the Mysteries of HBM Errors to Predict Future Failures</strong></p>
-      <p class="terminal-dim">Shuyue Zhou, Xinbin Hu, Ronglong Wu, <strong>Jiahao Lu</strong>, Zhirong Shen, Zikang Xu, et al. Extended ATC'24 paper.</p>
+      <p class="terminal-dim">Shuyue Zhou, Xinbin Hu, Ronglong Wu, <strong>Jiahao Lu</strong>, Zhirong Shen<sup>*</sup>, Zikang Xu, Jiwu Shu, Kunlin Yang, Feilong Lin, Yue Yu and Yiming Zhang. (Extended ATC'24 Paper)</p>
     </div>
     <p class="terminal-dim">More work is under review and in progress.</p>`,
 
